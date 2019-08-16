@@ -3,11 +3,12 @@ module.exports = {
     es6: true,
   },
   extends: [
-    'airbnb', 'prettier'
+    'airbnb', 'prettier', 'prettier/react'
   ],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
+    __DEV__: 'readonly'
   },
   parserOptions: {
     ecmaFeatures: {
@@ -16,11 +17,11 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module',
   },
-  plugins: [
-    'react', 'prettier', 'prettier/react'
-  ],
+  plugins: ['react', 'prettier', 'jsx-a11y', 'import', 'react-hooks'],
   rules: {
     'prettier/prettier': 'error',
-    'react/jsx-filename-extension': ['warn', { extensions: ['.js', '.jsx']}]
+    'react/jsx-filename-extension': ['warn', { extensions: ['.js', '.jsx']}],
+    'import/prefer-default-export': 'off',
+    'react/jsx-props-no-spreading': 'off'
   },
 };
