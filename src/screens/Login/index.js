@@ -41,6 +41,7 @@ export default function Login({navigation}) {
         <Input
           label="Password"
           isSecure
+          returnKeyType="send"
           onChangeText={setPassword}
           onSubmitEditing={handleLogin}
           value={password}

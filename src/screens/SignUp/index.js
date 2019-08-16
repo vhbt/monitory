@@ -52,6 +52,27 @@ export default function SignUp({navigation}) {
         <Input
           label="Password"
           isSecure
+          returnKeyType="send"
+          onChangeText={setPassword}
+          onSubmitEditing={handleSignUp}
+          value={password}
+          style={{marginBottom: 15}}
+          ref={passwordRef}
+        />
+        <Input
+          label="Password"
+          isSecure
+          returnKeyType="send"
+          onChangeText={setPassword}
+          onSubmitEditing={handleSignUp}
+          value={password}
+          style={{marginBottom: 15}}
+          ref={passwordRef}
+        />
+        <Input
+          label="Password"
+          isSecure
+          returnKeyType="send"
           onChangeText={setPassword}
           onSubmitEditing={handleSignUp}
           value={password}
