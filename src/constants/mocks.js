@@ -42,4 +42,4 @@ const profile = {
   notifications: true,
 };
 
-export default {subjects, monitors, profile};
+export {subjects, monitors, profile};
