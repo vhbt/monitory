@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {forwardRef} from 'react';
 
 import Text from '../Text';
 
 import {TextComponent} from './styles';
 
-export default function Input({isSecure, inputType, label, ...rest}) {
+function Input({isSecure, inputType, label, ...rest}, ref) {
   return (
     <>
       <Text gray>{label}</Text>
@@ -14,8 +14,11 @@ export default function Input({isSecure, inputType, label, ...rest}) {
         autoCapitalize="none"
         autoCorrect={false}
         keyboardType={inputType}
+        ref={ref}
         {...rest}
       />
     </>
   );
 }
+
+export default forwardRef(Input);

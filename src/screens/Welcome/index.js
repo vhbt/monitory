@@ -61,7 +61,7 @@ export default function Welcome({navigation}) {
         <Button gradient onPress={() => navigation.navigate('Login')}>
           <Text white>Login</Text>
         </Button>
-        <Button>
+        <Button onPress={() => navigation.navigate('SignUp')}>
           <Text white>Cadastrar-se</Text>
         </Button>
         <Button

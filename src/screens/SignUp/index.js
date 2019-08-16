@@ -8,14 +8,16 @@ import Button from '../../components/Button';
 
 import {Container, Form} from './styles';
 
-export default function Login({navigation}) {
+export default function SignUp({navigation}) {
   const [loading, setLoading] = useState(false);
+  const [name, setName] = useState('Vitor Hariel');
   const [email, setEmail] = useState('vhbarauna@gmail.com');
   const [password, setPassword] = useState('password');
 
+  const emailRef = useRef();
   const passwordRef = useRef();
 
-  async function handleLogin() {
+  async function handleSignUp() {
     setLoading(true);
 
     Keyboard.dismiss();
@@ -26,9 +28,17 @@ export default function Login({navigation}) {
   return (
     <Container>
       <Text h1 bold style={{marginBottom: 10}}>
-        Login
+        Cadastrar-se
       </Text>
       <Form>
+        <Input
+          label="Nome"
+          returnKeyType="next"
+          onChangeText={setName}
+          onSubmitEditing={() => emailRef.current.focus()}
+          value={name}
+          style={{marginBottom: 10}}
+        />
         <Input
           label="E-mail"
           keyboardType="email-address"
@@ -37,12 +47,13 @@ export default function Login({navigation}) {
           onSubmitEditing={() => passwordRef.current.focus()}
           value={email}
           style={{marginBottom: 10}}
+          ref={emailRef}
         />
         <Input
           label="Password"
           isSecure
           onChangeText={setPassword}
-          onSubmitEditing={handleLogin}
+          onSubmitEditing={handleSignUp}
           value={password}
           style={{marginBottom: 15}}
           ref={passwordRef}
@@ -51,17 +62,9 @@ export default function Login({navigation}) {
         <Button
           gradient
           loading={loading}
-          onPress={handleLogin}
+          onPress={handleSignUp}
           style={{height: 44, alignSelf: 'stretch'}}>
-          <Text white>Login</Text>
-        </Button>
-        <Button
-          borderless
-          loading={loading}
-          style={{height: 44, alignSelf: 'stretch'}}>
-          <Text gray style={{textAlign: 'center'}}>
-            Esqueci minha senha
-          </Text>
+          <Text white>Cadastrar</Text>
         </Button>
       </Form>
     </Container>

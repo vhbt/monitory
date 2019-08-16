@@ -6,12 +6,14 @@ import backIcon from './assets/back.png';
 
 import Welcome from './screens/Welcome';
 import Login from './screens/Login';
+import SignUp from './screens/SignUp';
 
 export default createAppContainer(
   createStackNavigator(
     {
       Welcome,
       Login,
+      SignUp,
     },
     {
       defaultNavigationOptions: {
