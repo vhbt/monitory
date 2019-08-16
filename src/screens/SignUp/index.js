@@ -1,10 +1,11 @@
 import React, {useState, useRef} from 'react';
 import {Keyboard} from 'react-native';
-import {showMessage} from 'react-native-flash-message';
+import PropTypes from 'prop-types';
 
 import Text from '../../components/Text';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+import Picker from '../../components/Picker';
 
 import {Container, Form} from './styles';
 
@@ -13,9 +14,22 @@ export default function SignUp({navigation}) {
   const [name, setName] = useState('Vitor Hariel');
   const [email, setEmail] = useState('vhbarauna@gmail.com');
   const [password, setPassword] = useState('password');
+  const [selectedClass, setSelectedClass] = useState('');
 
   const emailRef = useRef();
   const passwordRef = useRef();
+  const pickerRef = useRef();
+
+  const schoolClassList = [
+    'INFO 1A',
+    'INFO 2A',
+    'INFO 3A',
+    'INFO 4A',
+    'MECA 1A',
+    'MECA 2A',
+    'MECA 3A',
+    'MECA 4A',
+  ];
 
   async function handleSignUp() {
     setLoading(true);
@@ -52,32 +66,20 @@ export default function SignUp({navigation}) {
         <Input
           label="Password"
           isSecure
-          returnKeyType="send"
+          returnKeyType="next"
           onChangeText={setPassword}
-          onSubmitEditing={handleSignUp}
+          onSubmitEditing={() => pickerRef.current.focus()}
           value={password}
-          style={{marginBottom: 15}}
+          style={{marginBottom: 10}}
           ref={passwordRef}
         />
-        <Input
-          label="Password"
-          isSecure
-          returnKeyType="send"
-          onChangeText={setPassword}
-          onSubmitEditing={handleSignUp}
-          value={password}
-          style={{marginBottom: 15}}
-          ref={passwordRef}
-        />
-        <Input
-          label="Password"
-          isSecure
-          returnKeyType="send"
-          onChangeText={setPassword}
-          onSubmitEditing={handleSignUp}
-          value={password}
-          style={{marginBottom: 15}}
-          ref={passwordRef}
+        <Picker
+          label="Turma"
+          items={schoolClassList}
+          selectedValue={selectedClass}
+          onValueChange={value => setSelectedClass(value)}
+          style={{marginBottom: 20}}
+          ref={pickerRef}
         />
 
         <Button
@@ -91,3 +93,9 @@ export default function SignUp({navigation}) {
     </Container>
   );
 }
+
+SignUp.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};

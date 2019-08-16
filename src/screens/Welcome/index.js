@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Modal} from 'react-native';
+import PropTypes from 'prop-types';
 
 import Text from '../../components/Text';
 import Button from '../../components/Button';
@@ -78,4 +79,10 @@ export default function Welcome({navigation}) {
 
 Welcome.navigationOptions = {
   header: null,
+};
+
+Welcome.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 };

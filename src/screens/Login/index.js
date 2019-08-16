@@ -1,6 +1,6 @@
 import React, {useState, useRef} from 'react';
 import {Keyboard} from 'react-native';
-import {showMessage} from 'react-native-flash-message';
+import PropTypes from 'prop-types';
 
 import Text from '../../components/Text';
 import Input from '../../components/Input';
@@ -68,3 +68,9 @@ export default function Login({navigation}) {
     </Container>
   );
 }
+
+Login.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};
