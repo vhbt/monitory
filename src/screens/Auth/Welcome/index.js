@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {Modal} from 'react-native';
 import PropTypes from 'prop-types';
 
-import Text from '../../components/Text';
-import Button from '../../components/Button';
+import Text from '../../../components/Text';
+import Button from '../../../components/Button';
 
 import {
   Container,
@@ -15,7 +15,7 @@ import {
   TermsButton,
 } from './styles';
 
-import welcome from '../../assets/welcome.png';
+import welcome from '../../../assets/welcome.png';
 
 export default function Welcome({navigation}) {
   const [showTerms, setShowTerms] = useState(false);

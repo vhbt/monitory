@@ -2,9 +2,9 @@ import React, {useState, useRef} from 'react';
 import {Keyboard} from 'react-native';
 import PropTypes from 'prop-types';
 
-import Text from '../../components/Text';
-import Input from '../../components/Input';
-import Button from '../../components/Button';
+import Text from '../../../components/Text';
+import Input from '../../../components/Input';
+import Button from '../../../components/Button';
 
 import {Container, Form} from './styles';
 
@@ -39,7 +39,7 @@ export default function Login({navigation}) {
           style={{marginBottom: 10}}
         />
         <Input
-          label="Password"
+          label="Senha"
           isSecure
           returnKeyType="send"
           onChangeText={setPassword}
@@ -59,6 +59,7 @@ export default function Login({navigation}) {
         <Button
           borderless
           loading={loading}
+          onPress={() => navigation.navigate('ForgotPassword')}
           style={{height: 44, alignSelf: 'stretch'}}>
           <Text gray style={{textAlign: 'center'}}>
             Esqueci minha senha

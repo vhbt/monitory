@@ -4,9 +4,10 @@ import {createAppContainer, createStackNavigator} from 'react-navigation';
 
 import backIcon from './assets/back.png';
 
-import Welcome from './screens/Welcome';
-import Login from './screens/Login';
-import SignUp from './screens/SignUp';
+import Welcome from './screens/Auth/Welcome';
+import Login from './screens/Auth/Login';
+import SignUp from './screens/Auth/SignUp';
+import ForgotPassword from './screens/Auth/ForgotPassword';
 
 export default createAppContainer(
   createStackNavigator(
@@ -14,6 +15,7 @@ export default createAppContainer(
       Welcome,
       Login,
       SignUp,
+      ForgotPassword,
     },
     {
       defaultNavigationOptions: {

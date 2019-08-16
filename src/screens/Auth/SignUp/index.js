@@ -2,10 +2,10 @@ import React, {useState, useRef} from 'react';
 import {Keyboard} from 'react-native';
 import PropTypes from 'prop-types';
 
-import Text from '../../components/Text';
-import Input from '../../components/Input';
-import Button from '../../components/Button';
-import Picker from '../../components/Picker';
+import Text from '../../../components/Text';
+import Input from '../../../components/Input';
+import Button from '../../../components/Button';
+import Picker from '../../../components/Picker';
 
 import {Container, Form} from './styles';
 
@@ -64,7 +64,7 @@ export default function SignUp({navigation}) {
           ref={emailRef}
         />
         <Input
-          label="Password"
+          label="Senha"
           isSecure
           returnKeyType="next"
           onChangeText={setPassword}
