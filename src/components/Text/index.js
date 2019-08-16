@@ -8,5 +8,9 @@ export default function Text({children, ...rest}) {
 }
 
 Text.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+};
+
+Text.defaultProps = {
+  children: '',
 };
