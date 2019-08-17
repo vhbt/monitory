@@ -4,7 +4,6 @@ import {
   createAppContainer,
   createStackNavigator,
   createSwitchNavigator,
-  createBottomTabNavigator,
 } from 'react-navigation';
 
 import backIcon from './assets/back.png';
@@ -42,9 +41,16 @@ export default createAppContainer(
           },
         },
       ),
-      app: createBottomTabNavigator({
-        Home,
-      }),
+      app: createStackNavigator(
+        {
+          Home,
+        },
+        {
+          defaultNavigationOptions: {
+            header: null,
+          },
+        },
+      ),
     },
     {
       initialRouteName: 'app',

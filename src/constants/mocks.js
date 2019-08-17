@@ -20,6 +20,48 @@ const subjects = [
     count: 4,
     image: 'https://static.thenounproject.com/png/350289-200.png',
   },
+  {
+    id: 4,
+    name: 'Química',
+    tags: ['programacao', 'cisco'],
+    count: 4,
+    image: 'https://static.thenounproject.com/png/350289-200.png',
+  },
+  {
+    id: 5,
+    name: 'Matemática III',
+    tags: ['programacao', 'cisco'],
+    count: 4,
+    image: 'https://static.thenounproject.com/png/350289-200.png',
+  },
+  {
+    id: 6,
+    name: 'Sociologia III',
+    tags: ['programacao', 'cisco'],
+    count: 4,
+    image: 'https://static.thenounproject.com/png/350289-200.png',
+  },
+  {
+    id: 7,
+    name: 'Língua Portuguesa e Literatura III',
+    tags: ['programacao', 'cisco'],
+    count: 4,
+    image: 'https://static.thenounproject.com/png/350289-200.png',
+  },
+  {
+    id: 8,
+    name: 'História I',
+    tags: ['programacao', 'cisco'],
+    count: 4,
+    image: 'https://static.thenounproject.com/png/350289-200.png',
+  },
+  {
+    id: 9,
+    name: 'Desenvolvimento de Projeto Integrador',
+    tags: ['programacao', 'cisco'],
+    count: 4,
+    image: 'https://static.thenounproject.com/png/350289-200.png',
+  },
 ];
 
 const monitors = [

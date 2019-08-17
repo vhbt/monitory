@@ -1,11 +1,14 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.SafeAreaView`
+export const Container = styled.View`
+  padding-top: 20px;
+`;
+
+export const TopContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-
-  padding: 30px;
+  padding: 0 30px;
 `;
 
 export const Avatar = styled.Image`
@@ -13,4 +16,8 @@ export const Avatar = styled.Image`
   height: 50px;
   border-radius: 25px;
   background: #ddd;
+`;
+
+export const TabContainer = styled.View`
+  margin: 20px 30px 0 30px;
 `;
