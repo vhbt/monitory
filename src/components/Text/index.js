@@ -8,7 +8,11 @@ export default function Text({children, ...rest}) {
 }
 
 Text.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  children: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.array,
+    PropTypes.node,
+  ]),
 };
 
 Text.defaultProps = {

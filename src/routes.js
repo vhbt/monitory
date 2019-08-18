@@ -6,6 +6,7 @@ import {
   createSwitchNavigator,
   createBottomTabNavigator,
 } from 'react-navigation';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import backIcon from './assets/back.png';
 import colors from './constants/theme';
@@ -15,6 +16,10 @@ import Login from './screens/Auth/Login';
 import SignUp from './screens/Auth/SignUp';
 import Home from './screens/App/Home';
 import Profile from './screens/App/Profile';
+
+import Central from './screens/App/Student/Central';
+import SelectReport from './screens/App/Student/SelectReport';
+import Report from './screens/App/Student/Report';
 
 export default (isSigned = false) =>
   createAppContainer(
@@ -46,6 +51,42 @@ export default (isSigned = false) =>
         app: createBottomTabNavigator(
           {
             Home,
+            Student: {
+              screen: createStackNavigator(
+                {
+                  Central,
+                  SelectReport,
+                  Report: {
+                    screen: Report,
+                    navigationOptions: ({navigation}) => ({
+                      title: navigation.getParam('period'),
+                    }),
+                  },
+                },
+                {
+                  defaultNavigationOptions: {
+                    headerStyle: {
+                      backgroundColor: 'white',
+                      borderBottomColor: 'transparent',
+                      elevation: 0,
+                    },
+                    headerLeftContainerStyle: {
+                      alignItems: 'center',
+                      marginLeft: 16,
+                      paddingRight: 16,
+                    },
+                    headerBackImage: <Image source={backIcon} />,
+                    headerBackTitle: null,
+                  },
+                },
+              ),
+              navigationOptions: {
+                tabBarLabel: 'Aluno',
+                tabBarIcon: ({tintColor}) => (
+                  <Icon name="ios-school" size={32} color={tintColor} />
+                ),
+              },
+            },
             Profile,
           },
           {
