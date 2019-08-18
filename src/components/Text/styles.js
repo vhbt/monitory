@@ -15,10 +15,14 @@ const styles = {
   h2: `font-size: 20`,
   h3: `font-size: 18`,
 
-  bold: `font-weight: bold`,
+  semibold: `font-family: SFProText-SemiBold`,
+  bold: `font-family: SFProText-Bold`,
+  medium: `font-family: SFProText-Medium`,
 };
 
 export const TextComponent = styled.Text`
+  font-family: 'SFProText-Regular';
+
   ${props => props.accent && styles.accent};
   ${props => props.primary && styles.primary};
   ${props => props.secondary && styles.secondary};
@@ -30,6 +34,7 @@ export const TextComponent = styled.Text`
   ${props => props.h1 && styles.h1};
   ${props => props.h2 && styles.h2};
   ${props => props.h3 && styles.h3};
+  ${props => props.semibold && styles.semibold};
   ${props => props.bold && styles.bold};
-  font-family: 'SFProText-Regular';
+  ${props => props.medium && styles.medium};
 `;
