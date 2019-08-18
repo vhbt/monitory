@@ -59,7 +59,13 @@ export default function Home({navigation}) {
         )}
       </View>
       <View style={{paddingHorizontal: 0, paddingVertical: 10}}>
-        <Text h3 style={{paddingBottom: 10, paddingHorizontal: 30}}>
+        <Text
+          h3
+          style={{
+            paddingBottom: 10,
+            paddingHorizontal: 30,
+            fontFamily: 'SFProText-Medium',
+          }}>
           Noticias
         </Text>
         <FlatList
