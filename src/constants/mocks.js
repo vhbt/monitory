@@ -82,6 +82,46 @@ const profile = {
   avatar:
     'https://scontent.fnat2-1.fna.fbcdn.net/v/t1.0-9/66033502_1062595433945631_1528851165867933696_n.jpg?_nc_cat=101&_nc_oc=AQkTl8QRjjQQqGT2WCecQXY4VpezNQi1Giu6TqeP5eaVlZ_X8ihgcwFgYSPg8S-NECd9-ZDppIsLDX0qOG4dpiZs&_nc_ht=scontent.fnat2-1.fna&oh=b831dd6c857ebab962b09529dda5b6dc&oe=5DE5D16A',
   notifications: true,
+  configured: false,
 };
 
-export {subjects, monitors, profile};
+const news = [
+  {
+    id: 1,
+    title: 'Noticia titulo',
+    description: 'Noticia desc lorem ipsum lorem adquantum',
+    content:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    tags: ['update', 'importante'],
+    banner:
+      'https://image.shutterstock.com/image-vector/breaking-news-background-world-tv-260nw-719752474.jpg',
+  },
+  {
+    id: 2,
+    title: 'Noticia titulo',
+    description: 'Noticia desc lorem ipsum lorem adquantum',
+    tags: ['update', 'importante'],
+    banner:
+      'https://image.shutterstock.com/image-vector/breaking-news-background-world-tv-260nw-719752474.jpg',
+  },
+  {
+    id: 3,
+    title: 'Noticia titulo',
+    description: 'Noticia desc lorem ipsum lorem adquantum',
+    tags: ['update', 'importante'],
+    banner:
+      'https://image.shutterstock.com/image-vector/breaking-news-background-world-tv-260nw-719752474.jpg',
+  },
+  {
+    id: 4,
+    title: 'Noticia titulo',
+    description: 'Noticia desc lorem ipsum lorem adquantum',
+    content:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    tags: ['update', 'importante'],
+    banner:
+      'https://image.shutterstock.com/image-vector/breaking-news-background-world-tv-260nw-719752474.jpg',
+  },
+];
+
+export {subjects, monitors, profile, news};

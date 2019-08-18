@@ -83,7 +83,6 @@ export default function SignUp({navigation}) {
         />
 
         <Button
-          gradient
           loading={loading}
           onPress={handleSignUp}
           style={{height: 44, alignSelf: 'stretch'}}>

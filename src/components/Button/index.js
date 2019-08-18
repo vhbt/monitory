@@ -1,6 +1,7 @@
 import React from 'react';
 import {ActivityIndicator} from 'react-native';
 import PropTypes from 'prop-types';
+import Colors from '../../constants/theme';
 
 import {ButtonComponent, GradientButton, BorderlessButton} from './styles';
 
@@ -11,15 +12,20 @@ export default function Button({
   gradient,
   borderless,
   style,
+  colors,
   ...rest
 }) {
   return borderless ? (
-    <BorderlessButton {...rest} onPress={onPress} style={style}>
+    <BorderlessButton
+      {...rest}
+      onPress={onPress}
+      style={style}
+      disabled={loading}>
       {loading ? <ActivityIndicator size="small" color="#fff" /> : children}
     </BorderlessButton>
   ) : (
-    <GradientButton gradient={gradient} style={style}>
-      <ButtonComponent {...rest} onPress={onPress}>
+    <GradientButton gradient={gradient} colors={colors} style={style}>
+      <ButtonComponent {...rest} onPress={onPress} disabled={loading}>
         {loading ? <ActivityIndicator size="small" color="#fff" /> : children}
       </ButtonComponent>
     </GradientButton>
@@ -34,6 +40,7 @@ Button.propTypes = {
   gradient: PropTypes.bool,
   borderless: PropTypes.bool,
   style: PropTypes.oneOfType(PropTypes.string, PropTypes.number),
+  colors: PropTypes.arrayOf(PropTypes.string),
 };
 
 Button.defaultProps = {
@@ -45,4 +52,5 @@ Button.defaultProps = {
     height: 44,
     width: 220,
   },
+  colors: [Colors.primary, Colors.secondary],
 };

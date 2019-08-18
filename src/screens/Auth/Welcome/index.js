@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Modal} from 'react-native';
 import PropTypes from 'prop-types';
+import Colors from '../../../constants/theme';
 
 import Text from '../../../components/Text';
 import Button from '../../../components/Button';
@@ -24,15 +25,12 @@ export default function Welcome({navigation}) {
     return (
       <Modal animationType="slide" visible={showTerms}>
         <Text black style={{margin: 10}}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+          Nos nao salvamos, em hipotese alguma, seus dados de login do SUAP. As
+          informacoes coletadas sao referentes aos dados necessarios para a
+          distribuicao de conteudo baseado em criterios internos, tais como o
+          curso e ano do aluno. Nenhum dado e fornecido a terceiros.
         </Text>
-        <TermsButton gradient onPress={() => setShowTerms(false)}>
+        <TermsButton onPress={() => setShowTerms(false)}>
           <Text white>Eu entendi</Text>
         </TermsButton>
       </Modal>
@@ -59,17 +57,20 @@ export default function Welcome({navigation}) {
       </WelcomeText>
       <WelcomeImage source={welcome} style={{resizeMode: 'contain'}} />
       <BottomButtons>
-        <Button gradient onPress={() => navigation.navigate('Login')}>
+        <Button onPress={() => navigation.navigate('Login')}>
           <Text white>Login</Text>
         </Button>
-        <Button onPress={() => navigation.navigate('SignUp')}>
-          <Text white>Cadastrar-se</Text>
+        <Button
+          disabled
+          onPress={() => navigation.navigate('SignUp')}
+          colors={[Colors.black, Colors.black]}>
+          <Text gray>Cadastrar-se</Text>
         </Button>
         <Button
           borderless
           style={{marginTop: 10, alignSelf: 'center'}}
           onPress={() => setShowTerms(true)}>
-          <Text gray>Termos de uso</Text>
+          <Text gray>Política de Privacidade</Text>
         </Button>
       </BottomButtons>
       {renderTerms()}

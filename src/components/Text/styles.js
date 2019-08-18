@@ -19,18 +19,14 @@ const styles = {
 };
 
 export const TextComponent = styled.Text`
-  ${props => props.accent && styles.accent}
-  ${props => props.primary && styles.primary}
-  ${props => props.secondary && styles.secondary}
-  ${props => props.tertiary && styles.tertiary}
-  ${props => props.black && styles.black}
-  ${props => props.white && styles.white}
-  ${props => props.gray && styles.gray}
-  ${props => props.gray2 && styles.gray2}
-
-  ${props => props.h1 && styles.h1}
-  ${props => props.h2 && styles.h2}
-  ${props => props.h3 && styles.h3}
-
-  ${props => props.bold && styles.bold}
+    ${props => props.accent && styles.accent}
+      ${props => props.primary && styles.primary}
+      ${props => props.secondary && styles.secondary}
+      ${props => props.tertiary && styles.tertiary}
+      ${props => props.black && styles.black}
+      ${props => props.white && styles.white}
+      ${props => props.gray && styles.gray}
+      ${props => props.gray2 && styles.gray2} ${props => props.h1 && styles.h1}
+      ${props => props.h2 && styles.h2} ${props => props.h3 && styles.h3}
+      ${props => props.bold && styles.bold};
 `;
