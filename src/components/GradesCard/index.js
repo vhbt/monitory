@@ -11,7 +11,7 @@ export default function GradesCard({title, colors, style, white, grades}) {
       <Text
         white={white}
         semibold
-        style={{alignSelf: 'center', textAlign: 'center'}}>
+        style={{alignSelf: 'center', textAlign: 'center', width: 300}}>
         {title}
       </Text>
       <View
@@ -20,6 +20,7 @@ export default function GradesCard({title, colors, style, white, grades}) {
           justifyContent: 'space-between',
           alignItems: 'center',
           marginTop: 25,
+          marginLeft: 5,
         }}>
         {grades.map(grade => (
           <Tag key={grade[1]}>
