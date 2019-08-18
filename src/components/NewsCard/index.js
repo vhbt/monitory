@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Image} from 'react-native';
+import PropTypes from 'prop-types';
 
 import Text from '../Text';
 
@@ -30,3 +31,15 @@ export default function NewsCard({title, desc, tags, banner, onPress}) {
     </Container>
   );
 }
+
+NewsCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  desc: PropTypes.string.isRequired,
+  tags: PropTypes.arrayOf(PropTypes.string, PropTypes.number).isRequired,
+  banner: PropTypes.string.isRequired,
+  onPress: PropTypes.func,
+};
+
+NewsCard.defaultProps = {
+  onPress: null,
+};

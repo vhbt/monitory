@@ -1,5 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
+import PropTypes from 'prop-types';
 
 import Text from '../Text';
 
@@ -38,3 +39,18 @@ export default function GradesCard({title, colors, style, white, grades}) {
     </Container>
   );
 }
+
+GradesCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  colors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  style: PropTypes.oneOfType(PropTypes.string, PropTypes.number),
+  white: PropTypes.bool,
+  grades: PropTypes.arrayOf(
+    PropTypes.oneOfType(PropTypes.number, PropTypes.string),
+  ).isRequired,
+};
+
+GradesCard.defaultProps = {
+  style: {},
+  white: false,
+};

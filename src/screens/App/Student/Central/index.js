@@ -1,12 +1,13 @@
 import React from 'react';
 import {SafeAreaView} from 'react-native';
+import PropTypes from 'prop-types';
 
 import Text from '../../../../components/Text';
 import Button from '../../../../components/Button';
 
 import {Container} from './styles';
 
-export default function Student({navigation}) {
+export default function Central({navigation}) {
   return (
     <SafeAreaView>
       <Container>
@@ -18,7 +19,18 @@ export default function Student({navigation}) {
           onPress={() => navigation.navigate('SelectReport')}>
           <Text white>Meu Boletim</Text>
         </Button>
+        <Button
+          style={{height: 44, alignSelf: 'stretch', marginTop: 5}}
+          onPress={() => navigation.navigate('SelectSchedules')}>
+          <Text white>Meus Horários</Text>
+        </Button>
       </Container>
     </SafeAreaView>
   );
 }
+
+Central.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};

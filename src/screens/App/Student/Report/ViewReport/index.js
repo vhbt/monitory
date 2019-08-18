@@ -1,14 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
-import {View, FlatList, ActivityIndicator} from 'react-native';
+import {FlatList, ActivityIndicator} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
+import PropTypes from 'prop-types';
 
-import Text from '../../../../components/Text';
-import Button from '../../../../components/Button';
-import GradesCard from '../../../../components/GradesCard';
+import GradesCard from '../../../../../components/GradesCard';
 
-import {suap_api} from '../../../../services/api';
-import colors from '../../../../constants/theme';
+import {suap_api} from '../../../../../services/api';
+import colors from '../../../../../constants/theme';
 
 import {Container} from './styles';
 
@@ -71,8 +70,8 @@ export default function Report({navigation}) {
               [item.nota_etapa_2.nota, 2],
               [item.nota_etapa_3.nota, 3],
               [item.nota_etapa_4.nota, 4],
-              [item.media_disciplina, 'Media'],
-              [item.nota_avaliacao_final.nota, 'Final'],
+              [item.media_disciplina, 'M'],
+              [item.nota_avaliacao_final.nota, 'F'],
               [item.media_final_disciplina, 'Media Final'],
             ]}
             style={{marginBottom: 10, height: 120, borderRadius: 4}}
@@ -82,3 +81,10 @@ export default function Report({navigation}) {
     </Container>
   );
 }
+
+Report.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+    getParam: PropTypes.func,
+  }).isRequired,
+};
