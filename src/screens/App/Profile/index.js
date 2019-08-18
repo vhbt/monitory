@@ -26,16 +26,21 @@ export default function Profile() {
   const [selectedClassYear, setSelectedClassYear] = useState(
     user.curso_ano || 1,
   );
+  const [selectedClassTurn, setSelectedClassTurn] = useState(
+    user.curso_turno || 'Matutino',
+  );
 
   const classYear = ['1', '2', '3', '4'];
+  const classTurn = ['Matutino', 'Vespertino'];
   const {id} = user;
 
   useEffect(() => {
-    if (!(user.email && user.curso_ano)) {
+    if (!(user.email && user.curso_ano && user.curso_turno)) {
       showMessage({
         type: 'info',
         message: 'Complete seu perfil',
-        description: 'Por favor, preencha seu e-mail pessoal e ano de curso.',
+        description:
+          'Por favor, preencha seu e-mail pessoal, ano de curso e turno.',
         duration: 3000,
       });
     }
@@ -73,12 +78,26 @@ export default function Profile() {
             items={classYear}
             selectedValue={selectedClassYear}
             onValueChange={value => setSelectedClassYear(value)}
+            style={{marginBottom: 10}}
+          />
+          <Picker
+            label="Turno"
+            items={classTurn}
+            selectedValue={selectedClassTurn}
+            onValueChange={value => setSelectedClassTurn(value)}
           />
           <Button
             style={{height: 44, alignSelf: 'stretch', marginTop: 20}}
             loading={loading}
             onPress={() =>
-              dispatch(updateUserRequest({id, email, selectedClassYear}))
+              dispatch(
+                updateUserRequest({
+                  id,
+                  email,
+                  selectedClassYear,
+                  selectedClassTurn,
+                }),
+              )
             }>
             <Text white>Salvar</Text>
           </Button>

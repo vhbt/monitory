@@ -60,12 +60,12 @@ export default function Welcome({navigation}) {
         <Button onPress={() => navigation.navigate('Login')}>
           <Text white>Login</Text>
         </Button>
-        <Button
+        {/* <Button
           disabled
           onPress={() => navigation.navigate('SignUp')}
           colors={[Colors.black, Colors.black]}>
           <Text gray>Cadastrar-se</Text>
-        </Button>
+        </Button> */}
         <Button
           borderless
           style={{marginTop: 10, alignSelf: 'center'}}

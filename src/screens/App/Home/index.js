@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
 import {View, FlatList, Modal, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import PropTypes from 'prop-types';
 
 import {news} from '../../../constants/mocks';
 
@@ -94,4 +95,10 @@ Home.navigationOptions = {
   tabBarIcon: ({tintColor}) => (
     <Icon name="ios-home" size={32} color={tintColor} />
   ),
+};
+
+Home.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
 };

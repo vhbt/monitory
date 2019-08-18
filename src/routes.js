@@ -18,8 +18,11 @@ import Home from './screens/App/Home';
 import Profile from './screens/App/Profile';
 
 import Central from './screens/App/Student/Central';
-import SelectReport from './screens/App/Student/SelectReport';
-import Report from './screens/App/Student/Report';
+import SelectReport from './screens/App/Student/Report/SelectReport';
+import ViewReport from './screens/App/Student/Report/ViewReport';
+
+import SelectSchedules from './screens/App/Student/Schedules/SelectSchedules';
+import ViewSchedules from './screens/App/Student/Schedules/ViewSchedules';
 
 export default (isSigned = false) =>
   createAppContainer(
@@ -56,10 +59,21 @@ export default (isSigned = false) =>
                 {
                   Central,
                   SelectReport,
-                  Report: {
-                    screen: Report,
+                  ViewReport: {
+                    screen: ViewReport,
                     navigationOptions: ({navigation}) => ({
-                      title: navigation.getParam('period'),
+                      title: `Boletim ${
+                        navigation.getParam('period').split('/')[0]
+                      }`,
+                    }),
+                  },
+                  SelectSchedules,
+                  ViewSchedules: {
+                    screen: ViewSchedules,
+                    navigationOptions: ({navigation}) => ({
+                      title: `${navigation.getParam('selectedClass').name} ${
+                        navigation.getParam('selectedClass').year
+                      } - ${navigation.getParam('selectedClass').turn}`,
                     }),
                   },
                 },

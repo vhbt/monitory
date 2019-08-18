@@ -1,5 +1,6 @@
 import {all, takeLatest, call, put} from 'redux-saga/effects';
 import {showMessage} from 'react-native-flash-message';
+import {Keyboard} from 'react-native';
 
 import {api, suap_api} from '../../../services/api';
 
@@ -29,7 +30,11 @@ export function* login({payload}) {
 
     yield put(loginSuccess({token, user}));
   } catch (err) {
-    showMessage({type: 'danger', message: err.response.data.detail});
+    if (err.response) {
+      showMessage({type: 'danger', message: err.response.data.detail});
+    } else {
+      showMessage({type: 'danger', message: 'Erro de conexão.'});
+    }
 
     yield put(loginFailed());
   }
@@ -37,25 +42,41 @@ export function* login({payload}) {
 
 export function* updateUser({payload}) {
   try {
-    const {id, email, selectedClassYear: curso_ano} = payload;
+    const {
+      id,
+      email,
+      selectedClassYear: curso_ano,
+      selectedClassTurn: curso_turno,
+    } = payload;
 
     const response = yield call(api.put, '/users', {
       id,
       email,
       curso_ano,
+      curso_turno,
     });
 
     showMessage({type: 'success', message: 'Dados atualizados com sucesso.'});
 
     yield put(updateUserSuccess(response.data));
   } catch (err) {
-    showMessage({type: 'danger', message: err.response.data.detail});
+    if (err.response) {
+      showMessage({type: 'danger', message: err.response.data.detail});
+    } else {
+      showMessage({type: 'danger', message: 'Erro de conexão.'});
+    }
 
     yield put(updateUserFailed());
   }
+  Keyboard.dismiss();
+}
+
+export function* resetLoading() {
+  yield put(loginFailed());
 }
 
 export default all([
   takeLatest('@profile/LOGIN_REQUEST', login),
   takeLatest('@profile/UPDATE_USER_REQUEST', updateUser),
+  takeLatest('persist/REHYDRATE', resetLoading),
 ]);
