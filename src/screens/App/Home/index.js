@@ -1,37 +1,84 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
+import {useSelector} from 'react-redux';
+import {View, FlatList, Modal, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+import {news} from '../../../constants/mocks';
+
 import Header from '../../../components/Header';
-import SubjectCard from '../../../components/SubjectCard';
+import Text from '../../../components/Text';
+import Button from '../../../components/Button';
+import ImportantWarning from '../../../components/ImportantWarning';
+import NewsCard from '../../../components/NewsCard';
 
-import {subjects} from '../../../constants/mocks';
+import {Container} from './styles';
 
-import {Container, SubjectsList, SubjectsView} from './styles';
+export default function Home({navigation}) {
+  const [showNews, setShowNews] = useState(null);
 
-export default function Home() {
-  const [loading, setLoading] = useState(true);
+  const user = useSelector(state => state.profile.user);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, []);
+  function renderNews() {
+    return (
+      <Modal animationType="slide" visible={Boolean(showNews)}>
+        <Image
+          source={{uri: showNews && showNews.banner}}
+          style={{height: 200, width: '100%'}}
+        />
+        <View style={{margin: 10, flex: 1}}>
+          <Text h1 black bold>
+            {showNews && showNews.title}
+          </Text>
+          <Text>{showNews && showNews.content}</Text>
+        </View>
+        <Button
+          gradient
+          onPress={() => setShowNews('')}
+          style={{
+            height: 44,
+            alignSelf: 'stretch',
+            marginLeft: 10,
+            marginRight: 10,
+            marginBottom: 15,
+          }}>
+          <Text white>Fechar</Text>
+        </Button>
+      </Modal>
+    );
+  }
 
   return (
     <Container>
-      <Header loading={loading} />
-      <SubjectsList>
-        <SubjectsView>
-          {subjects.map(subject => (
-            <SubjectCard
-              key={subject.id}
-              source={subject.image}
-              name={subject.name}
-              count={subject.count}
+      <Header />
+      <View style={{paddingHorizontal: 30, paddingVertical: 20}}>
+        {user.email && user.curso_ano ? null : (
+          <ImportantWarning
+            content="Voce ainda não configurou seu perfil. Clique aqui."
+            onPress={() => navigation.navigate('Profile')}
+          />
+        )}
+      </View>
+      <View style={{paddingHorizontal: 0, paddingVertical: 10}}>
+        <Text h3 style={{paddingBottom: 10, paddingHorizontal: 30}}>
+          Noticias
+        </Text>
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={news}
+          keyExtractor={item => String(item.id)}
+          renderItem={({item}) => (
+            <NewsCard
+              title={item.title}
+              desc={item.description}
+              tags={item.tags}
+              banner={item.banner}
+              onPress={() => setShowNews(item)}
             />
-          ))}
-        </SubjectsView>
-      </SubjectsList>
+          )}
+        />
+      </View>
+      {renderNews()}
     </Container>
   );
 }

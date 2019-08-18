@@ -20,9 +20,7 @@ export const BorderlessButton = styled.TouchableOpacity`
 export const GradientButton = styled(LinearGradient).attrs(props => ({
   start: {x: 0, y: 0},
   end: {x: 1, y: 1},
-  colors: props.gradient
-    ? [colors.primary, colors.secondary]
-    : [colors.black, colors.black],
+  colors: props.colors,
   shadowColor: colors.black,
   shadowOffset: {width: 0, height: 2},
   shadowOpacity: 0.1,

@@ -17,7 +17,3 @@ export const Avatar = styled.Image`
   border-radius: 25px;
   background: #ddd;
 `;
-
-export const TabContainer = styled.View`
-  margin: 20px 30px 0 30px;
-`;
