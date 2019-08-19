@@ -1,4 +1,4 @@
-import {all, takeLatest, call, put} from 'redux-saga/effects';
+import {all, takeLatest, call, put, select} from 'redux-saga/effects';
 import {showMessage} from 'react-native-flash-message';
 import {Keyboard} from 'react-native';
 
@@ -9,6 +9,7 @@ import {
   loginSuccess,
   updateUserSuccess,
   updateUserFailed,
+  logout,
 } from './actions';
 
 export function* login({payload}) {
@@ -71,12 +72,30 @@ export function* updateUser({payload}) {
   Keyboard.dismiss();
 }
 
-export function* resetLoading() {
+export function* refresh() {
+  // unset loading
   yield put(loginFailed());
+
+  const state = yield select();
+  const {token} = state.profile;
+
+  if (!token) return;
+
+  try {
+    const response = yield call(suap_api.post, '/autenticacao/token/refresh/', {
+      token,
+    });
+
+    if (!(response.status === 200)) {
+      yield put(logout());
+    }
+  } catch (err) {
+    yield put(logout());
+  }
 }
 
 export default all([
   takeLatest('@profile/LOGIN_REQUEST', login),
   takeLatest('@profile/UPDATE_USER_REQUEST', updateUser),
-  takeLatest('persist/REHYDRATE', resetLoading),
+  takeLatest('persist/REHYDRATE', refresh),
 ]);
