@@ -23,6 +23,7 @@ function Picker({label, items, selectedValue, onValueChange, style}, ref) {
             onValueChange={onValueChange}
             items={options}
             value={selectedValue}
+            style={{inputIOS: {paddingTop: 15}}}
           />
         ) : (
           <PickerComponent
