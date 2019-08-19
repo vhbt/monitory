@@ -1,6 +1,7 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {FlatList, ActivityIndicator} from 'react-native';
+import Config from 'react-native-config';
 import PropTypes from 'prop-types';
 
 import Text from '../../../../../components/Text';
@@ -18,49 +19,49 @@ export default function SelectSchedules({navigation}) {
       name: 'Informática',
       year: 1,
       turn: 'Matutino',
-      path: 'http://10.0.3.2:3333/files/horarios/info1m.png',
+      path: `http://${Config.API_URL}/files/horarios/info1m.png`,
     },
     {
       name: 'Informática',
       year: 2,
       turn: 'Matutino',
-      path: 'http://10.0.3.2:3333/files/horarios/info2m.png',
+      path: `http://${Config.API_URL}/files/horarios/info2m.png`,
     },
     {
       name: 'Informática',
       year: 3,
       turn: 'Matutino',
-      path: 'http://10.0.3.2:3333/files/horarios/info3m.png',
+      path: `http://${Config.API_URL}/files/horarios/info3m.png`,
     },
     {
       name: 'Informática',
       year: 4,
       turn: 'Matutino',
-      path: 'http://10.0.3.2:3333/files/horarios/info4m.png',
+      path: `http://${Config.API_URL}/files/horarios/info4m.png`,
     },
     {
       name: 'Mecatrônica',
       year: 1,
       turn: 'Matutino',
-      path: 'http://10.0.3.2:3333/files/horarios/meca1m.png',
+      path: `http://${Config.API_URL}/files/horarios/meca1m.png`,
     },
     {
       name: 'Mecatrônica',
       year: 2,
       turn: 'Matutino',
-      path: 'http://10.0.3.2:3333/files/horarios/meca2m.png',
+      path: `http://${Config.API_URL}/files/horarios/meca2m.png`,
     },
     {
       name: 'Mecatrônica',
       year: 3,
       turn: 'Matutino',
-      path: 'http://10.0.3.2:3333/files/horarios/meca3m.png',
+      path: `http://${Config.API_URL}/files/horarios/meca3m.png`,
     },
     {
       name: 'Mecatrônica',
       year: 4,
       turn: 'Matutino',
-      path: 'http://10.0.3.2:3333/files/horarios/meca4m.png',
+      path: `http://${Config.API_URL}/files/horarios/meca4m.png`,
     },
   ];
 

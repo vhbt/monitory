@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {useSelector} from 'react-redux';
 import {FlatList, ActivityIndicator} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import PropTypes from 'prop-types';
@@ -12,7 +11,6 @@ import colors from '../../../../../constants/theme';
 import {Container} from './styles';
 
 export default function Report({navigation}) {
-  const token = useSelector(state => state.profile.token);
   const period = navigation.getParam('period');
 
   const [grades, setGrades] = useState([]);
@@ -21,10 +19,7 @@ export default function Report({navigation}) {
     async function getGrades() {
       try {
         const response = await suap_api.get(
-          `/minhas-informacoes/boletim/${period}`,
-          {
-            headers: {Authorization: `JWT ${token}`},
-          },
+          `/minhas-informacoes/boletim/${period}/`,
         );
 
         const data = response.data.map(grade => ({
@@ -42,7 +37,8 @@ export default function Report({navigation}) {
             description: 'Ainda não há registros para o período selecionado.',
           });
         } else {
-          showMessage({type: 'danger', message: err.response.detail});
+          navigation.navigate('SelectReport');
+          showMessage({type: 'danger', message: err.response.data.detail});
         }
       }
     }

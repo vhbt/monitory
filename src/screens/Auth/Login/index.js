@@ -14,8 +14,8 @@ import {Container, Form} from './styles';
 export default function Login({navigation}) {
   const dispatch = useDispatch();
   const loading = useSelector(state => state.profile.loading);
-  const [username, setUsername] = useState('***REMOVED***');
-  const [password, setPassword] = useState('***REMOVED***');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   const passwordRef = useRef();
 
