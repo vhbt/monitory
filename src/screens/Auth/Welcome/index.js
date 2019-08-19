@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Modal} from 'react-native';
+import {Modal, SafeAreaView} from 'react-native';
 import PropTypes from 'prop-types';
 import Colors from '../../../constants/theme';
 
@@ -24,15 +24,17 @@ export default function Welcome({navigation}) {
   function renderTerms() {
     return (
       <Modal animationType="slide" visible={showTerms}>
-        <Text black style={{margin: 10}}>
-          Nos nao salvamos, em hipotese alguma, seus dados de login do SUAP. As
-          informacoes coletadas sao referentes aos dados necessarios para a
-          distribuicao de conteudo baseado em criterios internos, tais como o
-          curso e ano do aluno. Nenhum dado e fornecido a terceiros.
-        </Text>
-        <TermsButton onPress={() => setShowTerms(false)}>
-          <Text white>Eu entendi</Text>
-        </TermsButton>
+        <SafeAreaView>
+          <Text black style={{margin: 10}}>
+            Nos nao salvamos, em hipotese alguma, seus dados de login do SUAP.
+            As informacoes coletadas sao referentes aos dados necessarios para a
+            distribuicao de conteudo baseado em criterios internos, tais como o
+            curso e ano do aluno. Nenhum dado e fornecido a terceiros.
+          </Text>
+          <TermsButton onPress={() => setShowTerms(false)}>
+            <Text white>Eu entendi</Text>
+          </TermsButton>
+        </SafeAreaView>
       </Modal>
     );
   }
