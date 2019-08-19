@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Modal, SafeAreaView} from 'react-native';
 import PropTypes from 'prop-types';
-import Colors from '../../../constants/theme';
 
 import Text from '../../../components/Text';
 import Button from '../../../components/Button';
