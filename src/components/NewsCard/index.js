@@ -20,12 +20,14 @@ export default function NewsCard({title, desc, tags, banner, onPress}) {
           {desc}
         </Text>
         <View
-          style={{flexDirection: 'row', paddingHorizontal: 10, paddingTop: 5}}>
-          {tags.map(tag => (
-            <Tag key={tag}>
-              <Text gray>{tag}</Text>
-            </Tag>
-          ))}
+          style={{
+            flexDirection: 'row',
+            paddingHorizontal: 10,
+            paddingTop: 5,
+          }}>
+          <Tag>
+            <Text gray>{tags}</Text>
+          </Tag>
         </View>
       </View>
     </Container>
@@ -35,7 +37,7 @@ export default function NewsCard({title, desc, tags, banner, onPress}) {
 NewsCard.propTypes = {
   title: PropTypes.string.isRequired,
   desc: PropTypes.string.isRequired,
-  tags: PropTypes.arrayOf(PropTypes.string, PropTypes.number).isRequired,
+  tags: PropTypes.string.isRequired,
   banner: PropTypes.string.isRequired,
   onPress: PropTypes.func,
 };

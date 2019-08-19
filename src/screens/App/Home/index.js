@@ -1,10 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {View, FlatList, Modal, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PropTypes from 'prop-types';
-
-import {news} from '../../../constants/mocks';
 
 import Header from '../../../components/Header';
 import Text from '../../../components/Text';
@@ -12,12 +10,25 @@ import Button from '../../../components/Button';
 import ImportantWarning from '../../../components/ImportantWarning';
 import NewsCard from '../../../components/NewsCard';
 
+import {api} from '../../../services/api';
+
 import {Container} from './styles';
 
 export default function Home({navigation}) {
   const [showNews, setShowNews] = useState(null);
+  const [news, setNews] = useState([]);
 
   const user = useSelector(state => state.profile.user);
+
+  useEffect(() => {
+    async function getNews() {
+      const newsArray = await api.get('/news');
+
+      setNews(newsArray.data);
+    }
+
+    getNews();
+  }, []);
 
   function renderNews() {
     return (
