@@ -76,7 +76,7 @@ export default function Profile() {
           <Picker
             label="Ano"
             items={classYear}
-            selectedValue={selectedClassYear}
+            selectedValue={String(selectedClassYear)}
             onValueChange={value => setSelectedClassYear(value)}
             style={{marginBottom: 10}}
           />
