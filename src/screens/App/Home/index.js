@@ -63,7 +63,7 @@ export default function Home({navigation}) {
     <Container>
       <Header />
       <View style={{paddingHorizontal: 30, paddingVertical: 20}}>
-        {user.email && user.curso_ano ? null : (
+        {user.email && user.curso_ano && user.curso_turno ? null : (
           <ImportantWarning
             content="Voce ainda não configurou seu perfil. Clique aqui."
             onPress={() => navigation.navigate('Profile')}
