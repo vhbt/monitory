@@ -16,7 +16,7 @@ export default function ImportantWarning({content, onPress, disabled}) {
         style={{
           height: 44,
           alignSelf: 'stretch',
-          padding: 25,
+          padding: Platform.OS === 'ios' ? 0 : 20,
         }}
         onPress={onPress}>
         <Text white style={{textAlign: 'center', width: 260}}>
