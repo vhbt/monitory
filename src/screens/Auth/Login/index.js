@@ -14,8 +14,8 @@ import {Container, Form} from './styles';
 export default function Login({navigation}) {
   const dispatch = useDispatch();
   const loading = useSelector(state => state.profile.loading);
-  const [username, setUsername] = useState('20171144010050');
-  const [password, setPassword] = useState('Supremo00');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   const passwordRef = useRef();
 

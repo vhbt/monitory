@@ -12,17 +12,12 @@ import colors from '../../../../../constants/theme';
 import {Container} from './styles';
 
 export default function SelectReport({navigation}) {
-  const token = useSelector(state => state.profile.token);
-
   const [periods, setPeriods] = useState([]);
 
   useEffect(() => {
     async function getPeriods() {
       const response = await suap_api.get(
         '/minhas-informacoes/meus-periodos-letivos/',
-        {
-          headers: {Authorization: `JWT ${token}`},
-        },
       );
 
       const data = response.data.filter(d => {

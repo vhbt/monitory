@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
-import {View, FlatList, Modal, Image} from 'react-native';
+import {View, FlatList, Modal, Image, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PropTypes from 'prop-types';
 
@@ -49,9 +49,9 @@ export default function Home({navigation}) {
           style={{
             height: 44,
             alignSelf: 'stretch',
-            marginLeft: 10,
-            marginRight: 10,
-            marginBottom: 15,
+            marginLeft: Platform.OS === 'ios' ? 15 : 10,
+            marginRight: Platform.OS === 'ios' ? 15 : 10,
+            marginBottom: Platform.OS === 'ios' ? 30 : 15,
           }}>
           <Text white>Fechar</Text>
         </Button>

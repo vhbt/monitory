@@ -89,6 +89,8 @@ export function* refresh() {
     if (!(response.status === 200)) {
       yield put(logout());
     }
+
+    suap_api.defaults.headers.authorization = `JWT ${token}`;
   } catch (err) {
     yield put(logout());
   }
