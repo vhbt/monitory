@@ -68,7 +68,7 @@ export default function SelectSchedules({navigation}) {
     if (user.curso_ano && user.curso_turno) {
       return (
         user.curso.includes(mc.name) &&
-        user.curso_ano === mc.year &&
+        Number(user.curso_ano) === mc.year &&
         user.curso_turno === mc.turn
       );
     }
