@@ -1,4 +1,5 @@
 import React from 'react';
+import {Platform} from 'react-native';
 import PropTypes from 'prop-types';
 
 import Button from '../Button';
@@ -12,9 +13,15 @@ export default function ImportantWarning({content, onPress, disabled}) {
       <Button
         gradient
         disabled={disabled}
-        style={{height: 44, alignSelf: 'stretch'}}
+        style={{
+          height: 44,
+          alignSelf: 'stretch',
+          padding: 25,
+        }}
         onPress={onPress}>
-        <Text white>{content}</Text>
+        <Text white style={{textAlign: 'center', width: 260}}>
+          {content}
+        </Text>
       </Button>
     </Container>
   );
