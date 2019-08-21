@@ -29,6 +29,9 @@ export function* login({payload}) {
 
     const user = response.data;
 
+    suap_api.defaults.headers.authorization = `JWT ${token}`;
+    api.defaults.headers.authorization = `JWT ${token}`;
+
     yield put(loginSuccess({token, user}));
   } catch (err) {
     if (err.response) {
@@ -91,6 +94,7 @@ export function* refresh() {
     }
 
     suap_api.defaults.headers.authorization = `JWT ${token}`;
+    api.defaults.headers.authorization = `JWT ${token}`;
   } catch (err) {
     yield put(logout());
   }

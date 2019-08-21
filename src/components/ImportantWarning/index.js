@@ -1,5 +1,4 @@
 import React from 'react';
-import {Platform} from 'react-native';
 import PropTypes from 'prop-types';
 
 import Button from '../Button';
@@ -16,7 +15,6 @@ export default function ImportantWarning({content, onPress, disabled}) {
         style={{
           height: 44,
           alignSelf: 'stretch',
-          padding: Platform.OS === 'ios' ? 0 : 20,
         }}
         onPress={onPress}>
         <Text white style={{textAlign: 'center', width: 260}}>

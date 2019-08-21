@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 import Text from '../Text';
 
-import {TextComponent} from './styles';
+import {Container, TextComponent} from './styles';
 
-function Input({isSecure, keyboardType, label, ...rest}, ref) {
+function Input({isSecure, keyboardType, label, multiline, ...rest}, ref) {
   return (
-    <>
+    <Container>
       <Text gray>{label}</Text>
       <TextComponent
         secureTextEntry={isSecure}
@@ -15,10 +15,11 @@ function Input({isSecure, keyboardType, label, ...rest}, ref) {
         autoCapitalize="none"
         autoCorrect={false}
         keyboardType={keyboardType}
+        multiline={multiline}
         ref={ref}
         {...rest}
       />
-    </>
+    </Container>
   );
 }
 
@@ -26,11 +27,13 @@ Input.propTypes = {
   isSecure: PropTypes.bool,
   keyboardType: PropTypes.string,
   label: PropTypes.string.isRequired,
+  multiline: PropTypes.string,
 };
 
 Input.defaultProps = {
   isSecure: false,
   keyboardType: 'default',
+  multiline: false,
 };
 
 export default forwardRef(Input);
