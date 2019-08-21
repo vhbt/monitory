@@ -1,6 +1,7 @@
 import React, {useState, useRef} from 'react';
 import {showMessage} from 'react-native-flash-message';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import PropTypes from 'prop-types';
 
 import Text from '../../../../../../components/Text';
 import Input from '../../../../../../components/Input';
@@ -10,7 +11,7 @@ import {api} from '../../../../../../services/api';
 
 import {Container} from './styles';
 
-export default function PostNews() {
+export default function PostNews({navigation}) {
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const [tag, setTag] = useState('');
@@ -22,8 +23,12 @@ export default function PostNews() {
   const contentRef = useRef();
   const bannerRef = useRef();
 
+  const [loading, setLoading] = useState(false);
+
   async function handleSubmit() {
     try {
+      setLoading(true);
+
       await api.post('news', {
         title,
         description: desc,
@@ -31,6 +36,10 @@ export default function PostNews() {
         content,
         banner,
       });
+
+      showMessage({type: 'success', message: 'Noticia criada com sucesso.'});
+      navigation.navigate('StudentCentral');
+      setLoading(false);
     } catch (err) {
       showMessage({type: 'danger', message: err.response.data.detail});
     }
@@ -84,6 +93,7 @@ export default function PostNews() {
           onSubmitEditing={handleSubmit}
         />
         <Button
+          loading={loading}
           style={{height: 44, alignSelf: 'stretch', marginTop: 20}}
           onPress={handleSubmit}>
           <Text white>Postar</Text>
@@ -92,3 +102,9 @@ export default function PostNews() {
     </KeyboardAwareScrollView>
   );
 }
+
+PostNews.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};
