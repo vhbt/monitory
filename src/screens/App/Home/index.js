@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {format, parseISO} from 'date-fns';
+import ptbr from 'date-fns/locale/pt-BR';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {showMessage} from 'react-native-flash-message';
 import PropTypes from 'prop-types';
@@ -41,6 +42,9 @@ export default function Home({navigation}) {
       formattedDate: format(
         parseISO(newsDataRaw.createdAt),
         "d 'de' MMMM 'as' HH:MM",
+        {
+          locale: ptbr,
+        },
       ),
     }));
 
