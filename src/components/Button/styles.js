@@ -25,7 +25,7 @@ export const GradientButton = styled(LinearGradient).attrs(props => ({
   shadowOffset: {width: 0, height: 2},
   shadowOpacity: 0.1,
   shadowRadius: 10,
-  elevation: 5,
+  elevation: 2,
 }))`
   margin: 5px 0;
   border-radius: 4px;
