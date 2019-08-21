@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {SafeAreaView, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {showMessage} from 'react-native-flash-message';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Button from '../../../components/Button';
@@ -47,68 +48,75 @@ export default function Profile() {
   }, []);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <Container>
-        <Text h1 bold style={{marginVertical: 50}}>
-          Perfil
-        </Text>
-        <Text gray style={{marginBottom: 5}}>
-          Matricula
-        </Text>
-        <Text style={{marginBottom: 15}}>{user.matricula}</Text>
-        <Text gray style={{marginBottom: 5}}>
-          E-mail do SUAP
-        </Text>
-        <Text style={{marginBottom: 15}}>{user.email_suap}</Text>
-        <Text gray style={{marginBottom: 5}}>
-          Curso
-        </Text>
-        <Text style={{marginBottom: 15}}>{user.curso}</Text>
-        <View>
-          <Input
-            label="E-mail pessoal"
-            keyboardType="email-address"
-            onChangeText={setEmail}
-            value={email}
-            style={{marginBottom: 10}}
-          />
+    <SafeAreaView>
+      <KeyboardAwareScrollView>
+        <Container>
+          <Text h1 bold style={{marginVertical: 10}}>
+            Perfil
+          </Text>
+          <Text gray style={{marginBottom: 5}}>
+            Matricula
+          </Text>
+          <Text style={{marginBottom: 15}}>{user.matricula}</Text>
+          <Text gray style={{marginBottom: 5}}>
+            E-mail do SUAP
+          </Text>
+          <Text style={{marginBottom: 15}}>{user.email_suap}</Text>
+          <Text gray style={{marginBottom: 5}}>
+            Curso
+          </Text>
+          <Text style={{marginBottom: 15}}>{user.curso}</Text>
+          <View>
+            <Input
+              label="E-mail pessoal"
+              keyboardType="email-address"
+              onChangeText={setEmail}
+              value={email}
+              style={{marginBottom: 10}}
+            />
 
-          <Picker
-            label="Ano"
-            items={classYear}
-            selectedValue={String(selectedClassYear)}
-            onValueChange={value => setSelectedClassYear(value)}
-            style={{marginBottom: 10}}
-          />
-          <Picker
-            label="Turno"
-            items={classTurn}
-            selectedValue={selectedClassTurn}
-            onValueChange={value => setSelectedClassTurn(value)}
-          />
-          <Button
-            style={{height: 44, alignSelf: 'stretch', marginTop: 20}}
-            loading={loading}
-            onPress={() =>
-              dispatch(
-                updateUserRequest({
-                  id,
-                  email,
-                  selectedClassYear,
-                  selectedClassTurn,
-                }),
-              )
-            }>
-            <Text white>Salvar</Text>
-          </Button>
-          <Button
-            style={{height: 44, alignSelf: 'stretch', marginTop: 5}}
-            colors={[colors.accent, colors.accent2]}
-            onPress={() => dispatch(logout())}>
-            <Text white>Sair</Text>
-          </Button>
-        </View>
-      </Container>
+            <Picker
+              label="Ano"
+              items={classYear}
+              selectedValue={String(selectedClassYear)}
+              onValueChange={value => setSelectedClassYear(value)}
+              style={{marginBottom: 10}}
+            />
+            <Picker
+              label="Turno"
+              items={classTurn}
+              selectedValue={selectedClassTurn}
+              onValueChange={value => setSelectedClassTurn(value)}
+            />
+            <Button
+              style={{height: 44, alignSelf: 'stretch', marginTop: 20}}
+              loading={loading}
+              onPress={() =>
+                dispatch(
+                  updateUserRequest({
+                    id,
+                    email,
+                    selectedClassYear,
+                    selectedClassTurn,
+                  }),
+                )
+              }>
+              <Text white>Salvar</Text>
+            </Button>
+            <Button
+              style={{
+                height: 44,
+                alignSelf: 'stretch',
+                marginTop: 5,
+                marginBottom: 8,
+              }}
+              colors={[colors.accent, colors.accent2]}
+              onPress={() => dispatch(logout())}>
+              <Text white>Sair</Text>
+            </Button>
+          </View>
+        </Container>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 }
