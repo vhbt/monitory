@@ -17,12 +17,14 @@ import SignUp from './screens/Auth/SignUp';
 import Home from './screens/App/Home';
 import Profile from './screens/App/Profile';
 
-import Central from './screens/App/Student/Central';
+import StudentCentral from './screens/App/Student/Central';
 import SelectReport from './screens/App/Student/Report/SelectReport';
 import ViewReport from './screens/App/Student/Report/ViewReport';
 
 import SelectSchedules from './screens/App/Student/Schedules/SelectSchedules';
 import ViewSchedules from './screens/App/Student/Schedules/ViewSchedules';
+
+import PostNews from './screens/App/Student/Admin/News/PostNews';
 
 export default (isSigned = false) =>
   createAppContainer(
@@ -57,7 +59,7 @@ export default (isSigned = false) =>
             Student: {
               screen: createStackNavigator(
                 {
-                  Central,
+                  StudentCentral,
                   SelectReport,
                   ViewReport: {
                     screen: ViewReport,
@@ -76,6 +78,7 @@ export default (isSigned = false) =>
                       } - ${navigation.getParam('selectedClass').turn}`,
                     }),
                   },
+                  PostNews,
                 },
                 {
                   defaultNavigationOptions: {
