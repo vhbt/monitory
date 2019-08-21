@@ -6,5 +6,5 @@ export const suap_api = axios.create({
 });
 
 export const api = axios.create({
-  baseURL: Config.RN_API_URL,
+  baseURL: Config.API_URL,
 });
