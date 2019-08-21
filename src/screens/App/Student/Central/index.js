@@ -1,4 +1,5 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 import {SafeAreaView, ScrollView} from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -8,7 +9,8 @@ import Button from '../../../../components/Button';
 import {Container} from './styles';
 
 export default function Central({navigation}) {
-  const isAdmin = true;
+  const user = useSelector(state => state.profile.user);
+  const isAdmin = user.admin;
 
   return (
     <SafeAreaView>

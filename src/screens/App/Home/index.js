@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {View, FlatList, Modal, Image, Platform} from 'react-native';
+import {format, parseISO, formatRelative} from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PropTypes from 'prop-types';
 
@@ -22,9 +24,20 @@ export default function Home({navigation}) {
 
   useEffect(() => {
     async function getNews() {
-      const newsArray = await api.get('/news');
+      const response = await api.get('/news');
 
-      setNews(newsArray.data);
+      const newsData = response.data.map(newsDataRaw => ({
+        ...newsDataRaw,
+        formattedDate: format(
+          parseISO(newsDataRaw.createdAt),
+          "d 'de' MMMM 'as' HH:MM",
+          {
+            locale: ptBR,
+          },
+        ),
+      }));
+
+      setNews(newsData);
     }
 
     getNews();
@@ -41,7 +54,8 @@ export default function Home({navigation}) {
           <Text h1 black bold>
             {showNews && showNews.title}
           </Text>
-          <Text>{showNews && showNews.content}</Text>
+          <Text gray>Postado: {showNews && showNews.formattedDate}</Text>
+          <Text style={{marginTop: 10}}>{showNews && showNews.content}</Text>
         </View>
         <Button
           gradient
