@@ -8,3 +8,10 @@ export const suap_api = axios.create({
 export const api = axios.create({
   baseURL: Config.API_URL,
 });
+
+export const onesignal = axios.create({
+  baseURL: 'https://onesignal.com/api/v1',
+  headers: {
+    Authorization: `BASIC ${Config.ONESIGNAL_KEY}`,
+  },
+});

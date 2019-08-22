@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.TouchableOpacity`
-  width: 200px;
+  width: 230px;
   height: 200px;
   border-width: 0.7;
   border-color: #ddd;
@@ -9,9 +9,9 @@ export const Container = styled.TouchableOpacity`
 `;
 
 export const Tag = styled.View`
-  padding: 0 10px;
+  padding: 0 5px;
   height: 20px;
+  justify-content: center;
   border-width: 0.7;
   border-color: #ddd;
-  margin-right: 8px;
 `;
