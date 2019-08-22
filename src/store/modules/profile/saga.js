@@ -1,6 +1,7 @@
 import {all, takeLatest, call, put, select} from 'redux-saga/effects';
 import {showMessage} from 'react-native-flash-message';
 import {Keyboard} from 'react-native';
+import OneSignal from 'react-native-onesignal';
 
 import {api, suap_api} from '../../../services/api';
 
@@ -31,6 +32,13 @@ export function* login({payload}) {
 
     suap_api.defaults.headers.authorization = `JWT ${token}`;
     api.defaults.headers.authorization = `JWT ${token}`;
+
+    OneSignal.sendTags({
+      matricula: user.matricula,
+      curso: user.curso,
+      curso_ano: user.curso_ano,
+      curso_turno: user.curso_turno,
+    });
 
     yield put(loginSuccess({token, user}));
   } catch (err) {
