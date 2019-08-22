@@ -36,6 +36,11 @@ export default function Central({navigation}) {
                 onPress={() => navigation.navigate('PostNews')}>
                 <Text white>Postar Noticia</Text>
               </Button>
+              <Button
+                style={{height: 44, alignSelf: 'stretch', marginTop: 5}}
+                onPress={() => navigation.navigate('Notifications')}>
+                <Text white>Enviar Notificacao</Text>
+              </Button>
             </>
           ) : null}
         </ScrollView>

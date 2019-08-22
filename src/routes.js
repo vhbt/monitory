@@ -1,5 +1,4 @@
 import React from 'react';
-import {Image} from 'react-native';
 import {
   createAppContainer,
   createStackNavigator,
@@ -8,7 +7,6 @@ import {
 } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import backIcon from './assets/back.png';
 import colors from './constants/theme';
 
 import Welcome from './screens/Auth/Welcome';
@@ -25,6 +23,7 @@ import SelectSchedules from './screens/App/Student/Schedules/SelectSchedules';
 import ViewSchedules from './screens/App/Student/Schedules/ViewSchedules';
 
 import PostNews from './screens/App/Student/Admin/News/PostNews';
+import Notifications from './screens/App/Student/Admin/Notifications';
 
 export default (isSigned = false) =>
   createAppContainer(
@@ -78,6 +77,7 @@ export default (isSigned = false) =>
                     }),
                   },
                   PostNews,
+                  Notifications,
                 },
                 {
                   defaultNavigationOptions: {

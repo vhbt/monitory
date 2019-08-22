@@ -3,16 +3,17 @@ import {useSelector} from 'react-redux';
 import {
   View,
   FlatList,
-  Modal,
   Image,
   Platform,
   Alert,
+  Modal,
   ActivityIndicator,
 } from 'react-native';
 import {format, parseISO} from 'date-fns';
 import ptbr from 'date-fns/locale/pt-BR';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {showMessage} from 'react-native-flash-message';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import PropTypes from 'prop-types';
 
 import Header from '../../../components/Header';
@@ -100,25 +101,29 @@ export default function Home({navigation}) {
   function renderNews() {
     return (
       <Modal animationType="slide" visible={Boolean(showNews)}>
-        <Image
-          source={{uri: showNews && showNews.banner}}
-          style={{height: 200, width: '100%'}}
-        />
-        <View style={{margin: 10, flex: 1}}>
-          <Text h1 black bold>
-            {showNews && showNews.title}
-          </Text>
-          <Text gray>Postado: {showNews && showNews.formattedDate}</Text>
-          {isAdmin ? (
-            <Button
-              style={{height: 26, width: 110}}
-              colors={[colors.accent, colors.accent]}
-              onPress={() => handleConfirmDelete(showNews.id)}>
-              <Text white>Deletar</Text>
-            </Button>
-          ) : null}
-          <Text style={{marginTop: 10}}>{showNews && showNews.content}</Text>
-        </View>
+        <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
+          <Image
+            source={{uri: showNews && showNews.banner}}
+            style={{height: 200, width: '100%'}}
+          />
+          <View style={{flex: 1, margin: 15}}>
+            <Text h2 black bold style={{textAlign: 'justify'}}>
+              {showNews && showNews.title}
+            </Text>
+            <Text gray>Postado: {showNews && showNews.formattedDate}</Text>
+            {isAdmin ? (
+              <Button
+                style={{height: 26, width: 110}}
+                colors={[colors.accent, colors.accent]}
+                onPress={() => handleConfirmDelete(showNews.id)}>
+                <Text white>Deletar</Text>
+              </Button>
+            ) : null}
+            <Text style={{marginTop: 10, textAlign: 'justify'}}>
+              {showNews && showNews.content}
+            </Text>
+          </View>
+        </KeyboardAwareScrollView>
         <Button
           gradient
           onPress={() => setShowNews('')}
@@ -127,7 +132,7 @@ export default function Home({navigation}) {
             alignSelf: 'stretch',
             marginLeft: Platform.OS === 'ios' ? 15 : 10,
             marginRight: Platform.OS === 'ios' ? 15 : 10,
-            marginBottom: Platform.OS === 'ios' ? 30 : 15,
+            marginBottom: Platform.OS === 'ios' ? 20 : 5,
           }}>
           <Text white>Fechar</Text>
         </Button>
@@ -149,6 +154,7 @@ export default function Home({navigation}) {
       <View style={{paddingHorizontal: 0, paddingVertical: 10}}>
         <Text
           h3
+          black
           style={{
             paddingBottom: 10,
             paddingHorizontal: 30,
