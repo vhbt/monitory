@@ -10,20 +10,18 @@ export default function NewsCard({title, desc, tags, banner, onPress}) {
   return (
     <Container onPress={onPress}>
       <View>
-        <Image source={{uri: banner}} style={{width: 200, height: 100}} />
+        <Image source={{uri: banner}} style={{width: '100%', height: 100}} />
       </View>
-      <View>
-        <Text h3 style={{textAlign: 'center'}}>
+      <View style={{flex: 1, paddingHorizontal: 7, paddingTop: 5}}>
+        <Text medium black>
           {title}
-        </Text>
-        <Text style={{textAlign: 'justify', paddingHorizontal: 10}}>
-          {desc}
         </Text>
         <View
           style={{
             flexDirection: 'row',
-            paddingHorizontal: 10,
-            paddingTop: 5,
+            flex: 1,
+            alignItems: 'flex-end',
+            paddingBottom: 10,
           }}>
           <Tag>
             <Text gray>{tags}</Text>

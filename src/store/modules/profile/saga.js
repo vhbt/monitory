@@ -1,6 +1,7 @@
 import {all, takeLatest, call, put, select} from 'redux-saga/effects';
 import {showMessage} from 'react-native-flash-message';
 import {Keyboard} from 'react-native';
+import OneSignal from 'react-native-onesignal';
 
 import {api, suap_api} from '../../../services/api';
 
@@ -32,6 +33,14 @@ export function* login({payload}) {
     suap_api.defaults.headers.authorization = `JWT ${token}`;
     api.defaults.headers.authorization = `JWT ${token}`;
 
+    OneSignal.setExternalUserId(user.matricula);
+
+    OneSignal.sendTags({
+      curso: user.curso,
+      curso_ano: user.curso_ano,
+      curso_turno: user.curso_turno,
+    });
+
     yield put(loginSuccess({token, user}));
   } catch (err) {
     if (err.response) {
@@ -60,9 +69,19 @@ export function* updateUser({payload}) {
       curso_turno,
     });
 
+    const user = response.data;
+
+    OneSignal.setExternalUserId(user.matricula);
+
+    OneSignal.sendTags({
+      curso: user.curso,
+      curso_ano: user.curso_ano,
+      curso_turno: user.curso_turno,
+    });
+
     showMessage({type: 'success', message: 'Dados atualizados com sucesso.'});
 
-    yield put(updateUserSuccess(response.data));
+    yield put(updateUserSuccess(user));
   } catch (err) {
     if (err.response) {
       showMessage({type: 'danger', message: err.response.data.detail});
@@ -81,6 +100,7 @@ export function* refresh() {
 
   const state = yield select();
   const {token} = state.profile;
+  const {user} = state.profile;
 
   if (!token) return;
 
@@ -95,13 +115,26 @@ export function* refresh() {
 
     suap_api.defaults.headers.authorization = `JWT ${token}`;
     api.defaults.headers.authorization = `JWT ${token}`;
+
+    OneSignal.setExternalUserId(user.matricula);
+
+    OneSignal.sendTags({
+      curso: user.curso,
+      curso_ano: user.curso_ano,
+      curso_turno: user.curso_turno,
+    });
   } catch (err) {
     yield put(logout());
   }
 }
 
+export function logOut() {
+  OneSignal.removeExternalUserId();
+}
+
 export default all([
   takeLatest('@profile/LOGIN_REQUEST', login),
   takeLatest('@profile/UPDATE_USER_REQUEST', updateUser),
+  takeLatest('@profile/LOGOUT', logOut),
   takeLatest('persist/REHYDRATE', refresh),
 ]);

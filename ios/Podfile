@@ -31,6 +31,10 @@ target 'monitory' do
 
   pod 'react-native-config', :path => '../node_modules/react-native-config'
 
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
+  pod 'react-native-onesignal', :path => '../node_modules/react-native-onesignal'
+
   target 'monitoryTests' do
     inherit! :search_paths
     # Pods for testing

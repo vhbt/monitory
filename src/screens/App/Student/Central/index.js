@@ -31,13 +31,15 @@ export default function Central({navigation}) {
           </Button>
           {isAdmin ? (
             <>
-              <Text h1 semibold style={{marginTop: 20}}>
-                Central do Admin
-              </Text>
               <Button
                 style={{height: 44, alignSelf: 'stretch', marginTop: 30}}
                 onPress={() => navigation.navigate('PostNews')}>
                 <Text white>Postar Noticia</Text>
+              </Button>
+              <Button
+                style={{height: 44, alignSelf: 'stretch', marginTop: 5}}
+                onPress={() => navigation.navigate('Notifications')}>
+                <Text white>Enviar Notificacao</Text>
               </Button>
             </>
           ) : null}
