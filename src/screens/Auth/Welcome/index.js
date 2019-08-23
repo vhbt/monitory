@@ -25,10 +25,10 @@ export default function Welcome({navigation}) {
       <Modal animationType="slide" visible={showTerms}>
         <SafeAreaView>
           <Text black style={{margin: 10}}>
-            Nos nao salvamos, em hipotese alguma, seus dados de login do SUAP.
-            As informacoes coletadas sao referentes aos dados necessarios para a
-            distribuicao de conteudo baseado em criterios internos, tais como o
-            curso e ano do aluno. Nenhum dado e fornecido a terceiros.
+            Nos não salvamos, em hipótese alguma, seus dados de login do SUAP.
+            As informaçoes coletadas são referentes aos dados necessários para a
+            distribuição de conteúdo baseado em critérios internos, tais como o
+            curso e ano do aluno. Nenhum dado é fornecido a terceiros.
           </Text>
           <TermsButton onPress={() => setShowTerms(false)}>
             <Text white>Eu entendi</Text>
@@ -52,7 +52,7 @@ export default function Welcome({navigation}) {
         </Title>
         <SubTitle>
           <Text h3 gray>
-            Encontreu seu monitor ideal.
+            Seu assistente escolar.
           </Text>
         </SubTitle>
       </WelcomeText>

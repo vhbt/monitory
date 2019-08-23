@@ -27,7 +27,6 @@ export const GradientButton = styled(LinearGradient).attrs(props => ({
   shadowRadius: 10,
   elevation: 2,
 }))`
-  margin: 5px 0;
   border-radius: 4px;
   justify-content: center;
   align-items: center;

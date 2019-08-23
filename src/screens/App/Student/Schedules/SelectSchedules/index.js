@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {
   FlatList,
@@ -10,7 +10,6 @@ import {
 import ImageViewer from 'react-native-image-zoom-viewer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Config from 'react-native-config';
-import PropTypes from 'prop-types';
 
 import Text from '../../../../../components/Text';
 import Button from '../../../../../components/Button';
@@ -19,7 +18,7 @@ import colors from '../../../../../constants/theme';
 
 import {Container} from './styles';
 
-export default function SelectSchedules({navigation}) {
+export default function SelectSchedules() {
   const user = useSelector(state => state.profile.user);
   const [showImage, setShowImage] = useState(null);
 
@@ -84,24 +83,33 @@ export default function SelectSchedules({navigation}) {
     }
     return mc;
   });
+
+  useEffect(() => {
+    if (myClasses.length === 1) {
+      setShowImage(myClasses[0].path);
+    }
+  }, []);
+
   function renderImage() {
     return (
       <Modal animationType="slide" visible={Boolean(showImage)}>
-        <TouchableOpacity
-          onPress={() => setShowImage(null)}
-          style={{
-            backgroundColor: '#000',
-            alignItems: 'flex-end',
-            padding: 20,
-          }}>
-          <Icon name="ios-close" size={42} color="#fff" />
-        </TouchableOpacity>
         <ImageViewer
           imageUrls={[{url: showImage}]}
+          enableSwipeDown
+          onCancel={() => setShowImage(false)}
+          renderIndicator={() => {}}
+          renderHeader={props => (
+            <TouchableOpacity
+              onPress={() => setShowImage(null)}
+              style={{
+                padding: 20,
+              }}>
+              <Icon name="ios-close" size={42} color="#fff" />
+            </TouchableOpacity>
+          )}
           renderImage={props => (
             <Image {...props} style={{width: '100%', aspectRatio: 1.47}} />
           )}
-          // style={{width: '100%', aspectRatio: 1.47}}
         />
       </Modal>
     );
@@ -131,9 +139,3 @@ export default function SelectSchedules({navigation}) {
     </Container>
   );
 }
-
-SelectSchedules.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func,
-  }).isRequired,
-};

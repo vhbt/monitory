@@ -75,7 +75,7 @@ export default function Home({navigation}) {
 
       const newDataNews = news.filter(n => n.id !== id);
 
-      showMessage({type: 'success', message: 'Noticia deletada com sucesso.'});
+      showMessage({type: 'success', message: 'Notícia deletada com sucesso.'});
       setNews(newDataNews);
       setShowNews('');
     } catch (err) {
@@ -86,11 +86,11 @@ export default function Home({navigation}) {
 
   function handleConfirmDelete(id) {
     Alert.alert(
-      'Confirmacao',
-      'Tem certeza que deseja deletar essa noticia?',
+      'Confirmacão',
+      'Tem certeza que deseja deletar essa notícia?',
       [
         {
-          text: 'Nao',
+          text: 'Não',
           style: 'cancel',
         },
         {text: 'Sim', onPress: () => handleDelete(id)},
@@ -104,7 +104,7 @@ export default function Home({navigation}) {
       <Modal animationType="slide" visible={Boolean(showNews)}>
         <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
           <Image
-            source={{uri: showNews && showNews.banner}}
+            source={{uri: showNews && showNews.banner_path}}
             style={{height: 200, width: '100%'}}
           />
           <View style={{flex: 1, margin: 15}}>
@@ -185,7 +185,7 @@ export default function Home({navigation}) {
                 title={item.title}
                 desc={item.description}
                 tags={item.tags}
-                banner={item.banner}
+                banner={item.banner_path}
                 onPress={() => setShowNews(item)}
               />
             )}

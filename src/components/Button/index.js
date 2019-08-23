@@ -33,8 +33,7 @@ export default function Button({
 }
 
 Button.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.array, PropTypes.element])
-    .isRequired,
+  children: PropTypes.oneOfType([PropTypes.array, PropTypes.element]),
   onPress: PropTypes.func,
   loading: PropTypes.bool,
   gradient: PropTypes.bool,
@@ -44,6 +43,7 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
+  children: null,
   onPress: null,
   loading: false,
   gradient: false,
