@@ -13,8 +13,8 @@ export default function Central({navigation}) {
   const isAdmin = user.admin;
 
   return (
-    <SafeAreaView>
-      <Container>
+    <SafeAreaView style={{flex: 1}}>
+      <Container style={{flex: 1}}>
         <ScrollView showsHorizontalScrollIndicator={false}>
           <Text h1 semibold>
             Central do Aluno
@@ -34,12 +34,12 @@ export default function Central({navigation}) {
               <Button
                 style={{height: 44, alignSelf: 'stretch', marginTop: 30}}
                 onPress={() => navigation.navigate('PostNews')}>
-                <Text white>Postar Noticia</Text>
+                <Text white>Postar Notícia</Text>
               </Button>
               <Button
                 style={{height: 44, alignSelf: 'stretch', marginTop: 5}}
                 onPress={() => navigation.navigate('Notifications')}>
-                <Text white>Enviar Notificacao</Text>
+                <Text white>Enviar Notificação</Text>
               </Button>
             </>
           ) : null}

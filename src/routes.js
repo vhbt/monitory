@@ -20,7 +20,6 @@ import SelectReport from './screens/App/Student/Report/SelectReport';
 import ViewReport from './screens/App/Student/Report/ViewReport';
 
 import SelectSchedules from './screens/App/Student/Schedules/SelectSchedules';
-import ViewSchedules from './screens/App/Student/Schedules/ViewSchedules';
 
 import PostNews from './screens/App/Student/Admin/News/PostNews';
 import Notifications from './screens/App/Student/Admin/Notifications';
@@ -68,22 +67,14 @@ export default (isSigned = false) =>
                     }),
                   },
                   SelectSchedules,
-                  ViewSchedules: {
-                    screen: ViewSchedules,
-                    navigationOptions: ({navigation}) => ({
-                      title: `${navigation.getParam('selectedClass').name} ${
-                        navigation.getParam('selectedClass').year
-                      } - ${navigation.getParam('selectedClass').turn}`,
-                    }),
-                  },
                   PostNews,
                   Notifications,
                 },
                 {
                   defaultNavigationOptions: {
                     headerStyle: {
-                      backgroundColor: 'white',
-                      borderBottomColor: 'transparent',
+                      backgroundColor: '#fafafa',
+                      borderBottomColor: '#fafafa',
                       elevation: 0,
                     },
                     headerLeftContainerStyle: {
@@ -110,6 +101,10 @@ export default (isSigned = false) =>
                 activeTintColor: colors.primary,
                 showLabel: true,
                 keyboardHidesTabBar: true,
+                style: {
+                  borderTopWidth: 0,
+                  height: 55,
+                },
               },
             },
           },

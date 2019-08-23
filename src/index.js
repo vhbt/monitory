@@ -32,7 +32,7 @@ export default class Index extends Component {
         <PersistGate persistor={persistor}>
           <App />
           <FlashMessage position="top" />
-          <StatusBar backgroundColor="#fff" barStyle="dark-content" />
+          <StatusBar backgroundColor="#fafafa" barStyle="dark-content" />
         </PersistGate>
       </Provider>
     );

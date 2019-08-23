@@ -1,6 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
-import {FlatList, ActivityIndicator} from 'react-native';
+import {
+  FlatList,
+  ActivityIndicator,
+  Modal,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import ImageViewer from 'react-native-image-zoom-viewer';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Config from 'react-native-config';
 import PropTypes from 'prop-types';
 
@@ -13,6 +21,7 @@ import {Container} from './styles';
 
 export default function SelectSchedules({navigation}) {
   const user = useSelector(state => state.profile.user);
+  const [showImage, setShowImage] = useState(null);
 
   const classes = [
     {
@@ -75,6 +84,28 @@ export default function SelectSchedules({navigation}) {
     }
     return mc;
   });
+  function renderImage() {
+    return (
+      <Modal animationType="slide" visible={Boolean(showImage)}>
+        <TouchableOpacity
+          onPress={() => setShowImage(null)}
+          style={{
+            backgroundColor: '#000',
+            alignItems: 'flex-end',
+            padding: 20,
+          }}>
+          <Icon name="ios-close" size={42} color="#fff" />
+        </TouchableOpacity>
+        <ImageViewer
+          imageUrls={[{url: showImage}]}
+          renderImage={props => (
+            <Image {...props} style={{width: '100%', aspectRatio: 1.47}} />
+          )}
+          // style={{width: '100%', aspectRatio: 1.47}}
+        />
+      </Modal>
+    );
+  }
 
   return (
     <Container>
@@ -89,17 +120,14 @@ export default function SelectSchedules({navigation}) {
         renderItem={({item}) => (
           <Button
             style={{height: 44, alignSelf: 'stretch'}}
-            onPress={() =>
-              navigation.navigate('ViewSchedules', {
-                selectedClass: item,
-              })
-            }>
+            onPress={() => setShowImage(item.path)}>
             <Text white>
               {item.name} {item.year} - {item.turn}
             </Text>
           </Button>
         )}
       />
+      {renderImage()}
     </Container>
   );
 }

@@ -7,7 +7,7 @@ import {
   Platform,
   Alert,
   Modal,
-  ActivityIndicator,
+  ScrollView,
 } from 'react-native';
 import {format, parseISO} from 'date-fns';
 import ptbr from 'date-fns/locale/pt-BR';
@@ -21,6 +21,7 @@ import Text from '../../../components/Text';
 import Button from '../../../components/Button';
 import ImportantWarning from '../../../components/ImportantWarning';
 import NewsCard from '../../../components/NewsCard';
+import LoadingNews from '../../../components/NewsCard/loading';
 
 import {api} from '../../../services/api';
 import colors from '../../../constants/theme';
@@ -143,58 +144,54 @@ export default function Home({navigation}) {
   return (
     <Container>
       <Header />
-      <View style={{paddingHorizontal: 30, paddingVertical: 20}}>
-        {user.email && user.curso_ano && user.curso_turno ? null : (
-          <ImportantWarning
-            content="Voce ainda não configurou seu perfil. Clique aqui."
-            onPress={() => navigation.navigate('Profile')}
-          />
-        )}
-      </View>
-      <View style={{paddingHorizontal: 0, paddingVertical: 10}}>
-        <Text
-          h3
-          black
-          style={{
-            paddingBottom: 10,
-            paddingHorizontal: 30,
-            fontFamily: 'SFProText-Medium',
-          }}>
-          Noticias
-        </Text>
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={news}
-          onRefresh={() => refreshNews()}
-          refreshing={refreshing}
-          ListEmptyComponent={
-            news ? (
-              <Text gray style={{fontSize: 12, paddingHorizontal: 30}}>
-                Ainda nao ha nada aqui.
-              </Text>
-            ) : (
-              <ActivityIndicator
-                size="large"
-                style={{
-                  marginHorizontal: 40,
-                  marginVertical: 20,
-                }}
-              />
-            )
-          }
-          keyExtractor={item => String(item.id)}
-          renderItem={({item}) => (
-            <NewsCard
-              title={item.title}
-              desc={item.description}
-              tags={item.tags}
-              banner={item.banner}
-              onPress={() => setShowNews(item)}
+      <ScrollView>
+        <View style={{paddingHorizontal: 30, paddingVertical: 20}}>
+          {user.email && user.curso_ano && user.curso_turno ? null : (
+            <ImportantWarning
+              content="Voce ainda não configurou seu perfil. Clique aqui."
+              onPress={() => navigation.navigate('Profile')}
             />
           )}
-        />
-      </View>
+        </View>
+        <View style={{paddingHorizontal: 0, paddingVertical: 10}}>
+          <Text
+            h3
+            black
+            style={{
+              paddingBottom: 10,
+              paddingHorizontal: 30,
+              fontFamily: 'SFProText-Medium',
+            }}>
+            Atualizações
+          </Text>
+          <FlatList
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={news}
+            onRefresh={() => refreshNews()}
+            refreshing={refreshing}
+            ListEmptyComponent={
+              news ? (
+                <Text gray style={{fontSize: 12, paddingHorizontal: 30}}>
+                  Ainda nao ha nada aqui.
+                </Text>
+              ) : (
+                <LoadingNews />
+              )
+            }
+            keyExtractor={item => String(item.id)}
+            renderItem={({item}) => (
+              <NewsCard
+                title={item.title}
+                desc={item.description}
+                tags={item.tags}
+                banner={item.banner}
+                onPress={() => setShowNews(item)}
+              />
+            )}
+          />
+        </View>
+      </ScrollView>
       {renderNews()}
     </Container>
   );

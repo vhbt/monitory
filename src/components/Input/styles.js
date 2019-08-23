@@ -13,4 +13,5 @@ export const TextComponent = styled.TextInput`
   border-width: ${props => (props.multiline ? '1px' : 0)};
   margin-top: ${props => (props.multiline ? '10px' : 0)};
   border-radius: ${props => (props.multiline ? '4px' : 0)};
+  padding-left: ${props => (props.multiline ? '10px' : 0)};
 `;

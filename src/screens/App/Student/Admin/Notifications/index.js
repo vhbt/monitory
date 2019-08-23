@@ -58,16 +58,18 @@ export default function PostNews({navigation}) {
   async function handleSubmit() {
     try {
       setLoading(true);
-      await onesignal.post('notifications', {
+      const response = await onesignal.post('notifications', {
         app_id: Config.ONESIGNAL_APP_ID,
         included_segments: selected,
         headings: {en: title},
         contents: {en: message},
       });
 
+      const {recipients} = response.data;
+
       showMessage({
         type: 'success',
-        message: 'Notificacao enviada.',
+        message: `Notificação enviada para ${recipients} usuários.`,
       });
       navigation.navigate('StudentCentral');
       setLoading(false);
@@ -78,11 +80,11 @@ export default function PostNews({navigation}) {
   }
 
   return (
-    <SafeAreaView>
-      <KeyboardAwareScrollView>
+    <SafeAreaView style={{flex: 1}}>
+      <KeyboardAwareScrollView style={{flex: 1, backgroundColor: '#fafafa'}}>
         <Container>
           <Text h1 style={{marginBottom: 20}}>
-            Enviar Notificacao
+            Enviar Notificação
           </Text>
           <SectionedMultiSelect
             items={items}
@@ -109,7 +111,7 @@ export default function PostNews({navigation}) {
             }}
           />
           <Input
-            label="Titulo"
+            label="Título"
             onChangeText={setTitle}
             value={title}
             returnKeyType="next"
