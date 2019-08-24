@@ -104,7 +104,7 @@ export default function Home({navigation}) {
       <Modal animationType="slide" visible={Boolean(showNews)}>
         <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
           <Image
-            source={{uri: showNews && showNews.banner_path}}
+            source={{uri: showNews && showNews.banner}}
             style={{height: 200, width: '100%'}}
           />
           <View style={{flex: 1, margin: 15}}>
@@ -185,7 +185,7 @@ export default function Home({navigation}) {
                 title={item.title}
                 desc={item.description}
                 tags={item.tags}
-                banner={item.banner_path}
+                banner={item.banner}
                 onPress={() => setShowNews(item)}
               />
             )}
