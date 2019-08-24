@@ -95,6 +95,7 @@ export default function PostNews({navigation}) {
             ) : (
               <Button
                 borderless
+                marginless
                 style={{
                   flex: 1,
                   justifyContent: 'center',

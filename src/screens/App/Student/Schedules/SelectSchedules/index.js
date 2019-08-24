@@ -10,6 +10,7 @@ import {
 import ImageViewer from 'react-native-image-zoom-viewer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Config from 'react-native-config';
+import PropTypes from 'prop-types';
 
 import Text from '../../../../../components/Text';
 import Button from '../../../../../components/Button';
@@ -18,7 +19,7 @@ import colors from '../../../../../constants/theme';
 
 import {Container} from './styles';
 
-export default function SelectSchedules() {
+export default function SelectSchedules({navigation}) {
   const user = useSelector(state => state.profile.user);
   const [showImage, setShowImage] = useState(null);
 
@@ -96,11 +97,17 @@ export default function SelectSchedules() {
         <ImageViewer
           imageUrls={[{url: showImage}]}
           enableSwipeDown
-          onCancel={() => setShowImage(false)}
+          onCancel={() => {
+            setShowImage(false);
+            navigation.navigate('StudentCentral');
+          }}
           renderIndicator={() => {}}
-          renderHeader={props => (
+          renderHeader={() => (
             <TouchableOpacity
-              onPress={() => setShowImage(null)}
+              onPress={() => {
+                setShowImage(false);
+                navigation.navigate('StudentCentral');
+              }}
               style={{
                 padding: 20,
               }}>
@@ -139,3 +146,9 @@ export default function SelectSchedules() {
     </Container>
   );
 }
+
+SelectSchedules.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};

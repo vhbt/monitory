@@ -41,13 +41,9 @@ export default function Welcome({navigation}) {
   return (
     <Container>
       <WelcomeText>
-        <Title>
-          <Text h1 bold>
-            Suas materias
-          </Text>
+        <Title style={{alignSelf: 'center'}}>
           <Text h1 primary bold>
-            {' '}
-            resolvidas.
+            Monitory
           </Text>
         </Title>
         <SubTitle>

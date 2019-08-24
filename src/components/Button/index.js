@@ -13,6 +13,7 @@ export default function Button({
   borderless,
   style,
   colors,
+  marginless,
   ...rest
 }) {
   return borderless ? (
@@ -24,7 +25,11 @@ export default function Button({
       {loading ? <ActivityIndicator size="small" color="#fff" /> : children}
     </BorderlessButton>
   ) : (
-    <GradientButton gradient={gradient} colors={colors} style={style}>
+    <GradientButton
+      gradient={gradient}
+      colors={colors}
+      style={style}
+      marginless={marginless}>
       <ButtonComponent {...rest} onPress={onPress} disabled={loading}>
         {loading ? <ActivityIndicator size="small" color="#fff" /> : children}
       </ButtonComponent>
@@ -40,6 +45,7 @@ Button.propTypes = {
   borderless: PropTypes.bool,
   style: PropTypes.oneOfType(PropTypes.string, PropTypes.number),
   colors: PropTypes.arrayOf(PropTypes.string),
+  marginless: PropTypes.bool,
 };
 
 Button.defaultProps = {
@@ -53,4 +59,5 @@ Button.defaultProps = {
     width: 220,
   },
   colors: [Colors.primary, Colors.secondary],
+  marginless: false,
 };
