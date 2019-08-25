@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {useSelector} from 'react-redux';
 import {FlatList, ActivityIndicator} from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -38,7 +37,11 @@ export default function SelectReport({navigation}) {
         keyExtractor={item => `${item.ano_letivo}-${item.periodo_letivo}`}
         style={{marginTop: 30}}
         ListEmptyComponent={
-          <ActivityIndicator size="large" color={colors.primary} />
+          <ActivityIndicator
+            size="large"
+            color={colors.primary}
+            style={{marginTop: 30}}
+          />
         }
         renderItem={({item}) => (
           <Button

@@ -16,13 +16,11 @@ import {Container} from './styles';
 
 export default function PostNews({navigation}) {
   const [title, setTitle] = useState('');
-  const [desc, setDesc] = useState('');
-  const [tag, setTag] = useState('');
+  const [category, setCategory] = useState('');
   const [content, setContent] = useState('');
   const [banner, setBanner] = useState('');
 
-  const descRef = useRef();
-  const tagRef = useRef();
+  const categoryRef = useRef();
   const contentRef = useRef();
 
   const [loading, setLoading] = useState(false);
@@ -44,14 +42,14 @@ export default function PostNews({navigation}) {
 
       const response = await api.post('files', data);
 
-      const {path} = response.data;
+      const {path, path_thumb} = response.data;
 
       await api.post('news', {
         title,
-        description: desc,
-        tags: tag,
+        category,
         content,
         banner: path,
+        banner_thumb: path_thumb,
       });
 
       showMessage({type: 'success', message: 'Noticia criada com sucesso.'});
@@ -111,31 +109,23 @@ export default function PostNews({navigation}) {
             onChangeText={setTitle}
             value={title}
             returnKeyType="next"
-            onSubmitEditing={() => descRef.current.focus()}
+            onSubmitEditing={() => categoryRef.current.focus()}
           />
           <Input
-            label="Descricao"
-            onChangeText={setDesc}
-            value={desc}
-            ref={descRef}
-            returnKeyType="next"
-            onSubmitEditing={() => tagRef.current.focus()}
-          />
-          <Input
-            label="Tag"
-            onChangeText={setTag}
-            value={tag}
-            ref={tagRef}
+            label="Categoria"
+            onChangeText={setCategory}
+            value={category}
+            ref={categoryRef}
             returnKeyType="next"
             onSubmitEditing={() => contentRef.current.focus()}
           />
           <Input
             label="Conteudo"
             multiline
+            autoCorrect
             onChangeText={setContent}
             value={content}
-            style={{height: 100, textAlignVertical: 'top'}}
-            returnKeyType="next"
+            style={{height: 125, textAlignVertical: 'top'}}
             ref={contentRef}
           />
           <Button

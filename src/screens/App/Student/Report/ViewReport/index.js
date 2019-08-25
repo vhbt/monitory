@@ -53,7 +53,11 @@ export default function Report({navigation}) {
         keyExtractor={item => item.codigo_diario}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={
-          <ActivityIndicator size="large" color={colors.primary} />
+          <ActivityIndicator
+            size="large"
+            color={colors.primary}
+            style={{marginTop: 30}}
+          />
         }
         renderItem={({item}) => (
           <GradesCard

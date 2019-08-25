@@ -3,18 +3,26 @@ import {View, Image} from 'react-native';
 import PropTypes from 'prop-types';
 
 import Text from '../Text';
+import LazyImage from '../LazyImage';
 
 import {Container, Tag} from './styles';
 
-export default function NewsCard({title, desc, tags, banner, onPress}) {
+export default function NewsCard({
+  title,
+  category,
+  banner,
+  bannerThumb,
+  shouldLoad,
+  onPress,
+}) {
   return (
     <Container onPress={onPress}>
       <View>
-        <Image
+        <LazyImage
+          thumb={{uri: bannerThumb}}
           source={{uri: banner}}
+          shouldLoad={shouldLoad}
           style={{
-            width: '100%',
-            height: 100,
             borderTopLeftRadius: 4,
             borderTopRightRadius: 4,
           }}
@@ -32,7 +40,7 @@ export default function NewsCard({title, desc, tags, banner, onPress}) {
             paddingBottom: 10,
           }}>
           <Tag>
-            <Text gray>{tags}</Text>
+            <Text gray>{category}</Text>
           </Tag>
         </View>
       </View>
@@ -42,10 +50,11 @@ export default function NewsCard({title, desc, tags, banner, onPress}) {
 
 NewsCard.propTypes = {
   title: PropTypes.string.isRequired,
-  desc: PropTypes.string.isRequired,
-  tags: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
   banner: PropTypes.string.isRequired,
+  bannerThumb: PropTypes.string.isRequired,
   onPress: PropTypes.func,
+  shouldLoad: PropTypes.bool.isRequired,
 };
 
 NewsCard.defaultProps = {

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {useSelector} from 'react-redux';
 import {
   View,
@@ -32,6 +32,7 @@ export default function Home({navigation}) {
   const [showNews, setShowNews] = useState(null);
   const [news, setNews] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
+  const [viewable, setViewable] = useState([]);
 
   const user = useSelector(state => state.profile.user);
   const isAdmin = user.admin;
@@ -98,6 +99,10 @@ export default function Home({navigation}) {
       {cancelable: false},
     );
   }
+
+  const handleViewableChanged = useCallback(({changed}) => {
+    setViewable(changed.map(({item}) => item.id));
+  }, []);
 
   function renderNews() {
     return (
@@ -168,6 +173,11 @@ export default function Home({navigation}) {
             horizontal
             showsHorizontalScrollIndicator={false}
             data={news}
+            onViewableItemsChanged={handleViewableChanged}
+            viewabilityConfig={{
+              viewAreaCoveragePercentThreshold: 10,
+              minimumViewTime: 500,
+            }}
             onRefresh={() => refreshNews()}
             refreshing={refreshing}
             ListEmptyComponent={
@@ -183,9 +193,10 @@ export default function Home({navigation}) {
             renderItem={({item}) => (
               <NewsCard
                 title={item.title}
-                desc={item.description}
-                tags={item.tags}
+                category={item.category}
                 banner={item.banner}
+                bannerThumb={item.banner_thumb}
+                shouldLoad={viewable.includes(item.id)}
                 onPress={() => setShowNews(item)}
               />
             )}

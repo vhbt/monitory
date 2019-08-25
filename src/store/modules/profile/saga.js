@@ -30,6 +30,17 @@ export function* login({payload}) {
 
     const user = response.data;
 
+    if (user.campus !== 'PAR' || user.tipo_vinculo !== 'Aluno') {
+      showMessage({
+        type: 'danger',
+        message:
+          'Por enquanto o Monitory so esta disponivel para alunos do IFRN Parnamirim.',
+        duration: 3000,
+      });
+      yield put(loginFailed());
+      return;
+    }
+
     suap_api.defaults.headers.authorization = `JWT ${token}`;
     api.defaults.headers.authorization = `JWT ${token}`;
 

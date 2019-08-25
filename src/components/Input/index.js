@@ -5,7 +5,10 @@ import Text from '../Text';
 
 import {Container, TextComponent} from './styles';
 
-function Input({isSecure, keyboardType, label, multiline, ...rest}, ref) {
+function Input(
+  {isSecure, keyboardType, label, multiline, autoCorrect, ...rest},
+  ref,
+) {
   return (
     <Container>
       <Text gray>{label}</Text>
@@ -13,7 +16,7 @@ function Input({isSecure, keyboardType, label, multiline, ...rest}, ref) {
         secureTextEntry={isSecure}
         autoComplete="off"
         autoCapitalize="none"
-        autoCorrect={false}
+        autoCorrect={!!autoCorrect}
         keyboardType={keyboardType}
         multiline={multiline}
         ref={ref}
@@ -28,12 +31,14 @@ Input.propTypes = {
   keyboardType: PropTypes.string,
   label: PropTypes.string.isRequired,
   multiline: PropTypes.string,
+  autoCorrect: PropTypes.bool,
 };
 
 Input.defaultProps = {
-  isSecure: false,
+  isSecure: true,
   keyboardType: 'default',
   multiline: false,
+  autoCorrect: false,
 };
 
 export default forwardRef(Input);

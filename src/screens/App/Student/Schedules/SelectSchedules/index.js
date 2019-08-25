@@ -10,6 +10,7 @@ import {
 import ImageViewer from 'react-native-image-zoom-viewer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Config from 'react-native-config';
+import {showMessage} from 'react-native-flash-message';
 import PropTypes from 'prop-types';
 
 import Text from '../../../../../components/Text';
@@ -88,6 +89,13 @@ export default function SelectSchedules({navigation}) {
   useEffect(() => {
     if (myClasses.length === 1) {
       setShowImage(myClasses[0].path);
+    } else {
+      showMessage({
+        type: 'info',
+        duration: 6000,
+        message:
+          'Configure o seu curso e ano na aba Perfil para abrir o horário de sua turma automaticamente.',
+      });
     }
   }, []);
 
@@ -102,6 +110,7 @@ export default function SelectSchedules({navigation}) {
             navigation.navigate('StudentCentral');
           }}
           renderIndicator={() => {}}
+          loadingRender={() => <ActivityIndicator size="large" color="#fff" />}
           renderHeader={() => (
             <TouchableOpacity
               onPress={() => {
@@ -130,7 +139,11 @@ export default function SelectSchedules({navigation}) {
         keyExtractor={item => item.name + item.year + item.turn}
         style={{marginTop: 30}}
         ListEmptyComponent={
-          <ActivityIndicator size="large" color={colors.primary} />
+          <ActivityIndicator
+            size="large"
+            color={colors.primary}
+            style={{marginTop: 30}}
+          />
         }
         renderItem={({item}) => (
           <Button
