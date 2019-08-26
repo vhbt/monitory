@@ -27,7 +27,7 @@ export default function LazyImage({source, thumb, shouldLoad}) {
   return (
     <Small
       source={thumb}
-      blurRadius={7}
+      blurRadius={4}
       imageStyle={{borderTopRightRadius: 4, borderTopLeftRadius: 4}}>
       {loaded && (
         <OriginalAnimated

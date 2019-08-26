@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
 import {SafeAreaView} from 'react-native';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
@@ -30,7 +30,7 @@ export default function Header() {
             visible={!loading}
             style={{height: 50, width: 50, borderRadius: 25}}>
             <Avatar
-              onLoad={() => setLoading(false)}
+              onLoadEnd={() => setLoading(false)}
               source={{
                 uri: user && `http://suap.ifrn.edu.br/${user.avatar_suap}`,
               }}
