@@ -29,6 +29,24 @@ export default function PostNews({navigation}) {
     try {
       setLoading(true);
 
+      if (!banner) {
+        showMessage({
+          type: 'danger',
+          message: 'Selecione um banner para a notícia.',
+        });
+        setLoading(false);
+        return;
+      }
+
+      if (!title || !category || !content) {
+        showMessage({
+          type: 'danger',
+          message: 'Preencha todos os campos.',
+        });
+        setLoading(false);
+        return;
+      }
+
       const data = new FormData();
 
       data.append('file', {
@@ -53,7 +71,7 @@ export default function PostNews({navigation}) {
       });
 
       showMessage({type: 'success', message: 'Noticia criada com sucesso.'});
-      navigation.navigate('StudentCentral');
+      navigation.navigate('StudentHome');
       setLoading(false);
     } catch (err) {
       showMessage({type: 'danger', message: err.response.data.detail});
@@ -76,7 +94,7 @@ export default function PostNews({navigation}) {
       <KeyboardAwareScrollView>
         <Container>
           <Text h1 style={{marginBottom: 20}}>
-            Postar Noticia
+            Postar Notícia
           </Text>
           <View
             style={{

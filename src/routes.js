@@ -15,14 +15,16 @@ import SignUp from './screens/Auth/SignUp';
 import Home from './screens/App/Home';
 import Profile from './screens/App/Profile';
 
-import StudentCentral from './screens/App/Student/Central';
+import StudentHome from './screens/App/Student/Home';
 import SelectReport from './screens/App/Student/Report/SelectReport';
 import ViewReport from './screens/App/Student/Report/ViewReport';
 
 import SelectSchedules from './screens/App/Student/Schedules/SelectSchedules';
 
 import PostNews from './screens/App/Student/Admin/News/PostNews';
-import Notifications from './screens/App/Student/Admin/Notifications';
+
+import NotificationsHome from './screens/App/Student/Admin/Notifications/Home';
+import SendToClasses from './screens/App/Student/Admin/Notifications/SendToClasses';
 
 export default (isSigned = false) =>
   createAppContainer(
@@ -56,7 +58,7 @@ export default (isSigned = false) =>
             Student: {
               screen: createStackNavigator(
                 {
-                  StudentCentral,
+                  StudentHome,
                   SelectReport,
                   ViewReport: {
                     screen: ViewReport,
@@ -68,7 +70,19 @@ export default (isSigned = false) =>
                   },
                   SelectSchedules,
                   PostNews,
-                  Notifications,
+                  Notifications: {
+                    screen: createStackNavigator(
+                      {
+                        NotificationsHome,
+                        SendToClasses,
+                      },
+                      {
+                        defaultNavigationOptions: {
+                          header: null,
+                        },
+                      },
+                    ),
+                  },
                 },
                 {
                   defaultNavigationOptions: {

@@ -6,13 +6,13 @@ import Config from 'react-native-config';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import PropTypes from 'prop-types';
 
-import Text from '../../../../../components/Text';
-import Input from '../../../../../components/Input';
-import Button from '../../../../../components/Button';
+import Text from '../../../../../../components/Text';
+import Input from '../../../../../../components/Input';
+import Button from '../../../../../../components/Button';
 
-import {onesignal} from '../../../../../services/api';
+import {onesignal} from '../../../../../../services/api';
 
-import colors from '../../../../../constants/theme';
+import colors from '../../../../../../constants/theme';
 import {Container} from './styles';
 
 export default function PostNews({navigation}) {
@@ -71,7 +71,7 @@ export default function PostNews({navigation}) {
         type: 'success',
         message: `Notificação enviada para ${recipients} usuários.`,
       });
-      navigation.navigate('StudentCentral');
+      navigation.navigate('StudentHome');
       setLoading(false);
     } catch (err) {
       showMessage({type: 'danger', message: err.response.data.errors[0]});

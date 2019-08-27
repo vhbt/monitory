@@ -8,7 +8,7 @@ import Button from '../../../../components/Button';
 
 import {Container} from './styles';
 
-export default function Central({navigation}) {
+export default function Home({navigation}) {
   const user = useSelector(state => state.profile.user);
   const isAdmin = user.admin;
 
@@ -39,7 +39,7 @@ export default function Central({navigation}) {
               <Button
                 style={{height: 44, alignSelf: 'stretch', marginTop: 5}}
                 onPress={() => navigation.navigate('Notifications')}>
-                <Text white>Enviar Notificação</Text>
+                <Text white>Notificações</Text>
               </Button>
             </>
           ) : null}
@@ -49,7 +49,7 @@ export default function Central({navigation}) {
   );
 }
 
-Central.propTypes = {
+Home.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }).isRequired,

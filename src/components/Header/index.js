@@ -32,7 +32,7 @@ export default function Header() {
             <Avatar
               onLoadEnd={() => setLoading(false)}
               source={{
-                uri: user && `http://suap.ifrn.edu.br/${user.avatar_suap}`,
+                uri: user && `https://suap.ifrn.edu.br/${user.avatar_suap}`,
               }}
             />
           </ShimmerPlaceholder>

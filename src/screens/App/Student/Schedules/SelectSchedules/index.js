@@ -107,7 +107,7 @@ export default function SelectSchedules({navigation}) {
           enableSwipeDown
           onCancel={() => {
             setShowImage(false);
-            navigation.navigate('StudentCentral');
+            navigation.navigate('StudentHome');
           }}
           renderIndicator={() => {}}
           loadingRender={() => <ActivityIndicator size="large" color="#fff" />}
@@ -115,7 +115,7 @@ export default function SelectSchedules({navigation}) {
             <TouchableOpacity
               onPress={() => {
                 setShowImage(false);
-                navigation.navigate('StudentCentral');
+                navigation.navigate('StudentHome');
               }}
               style={{
                 padding: 20,
