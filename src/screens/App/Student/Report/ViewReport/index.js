@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {FlatList, ActivityIndicator} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
+import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import PropTypes from 'prop-types';
 
 import GradesCard from '../../../../../components/GradesCard';
@@ -46,19 +47,34 @@ export default function Report({navigation}) {
     getGrades();
   }, []);
 
+  function renderGradesShimmerRows(numberOfRows) {
+    const shimmerRows = [];
+
+    for (let i = 0; i < numberOfRows; i += 1) {
+      shimmerRows.push(
+        <ShimmerPlaceholder
+          key={i}
+          autoRun
+          style={{
+            marginBottom: 10,
+            height: 120,
+            width: '100%',
+            borderRadius: 4,
+          }}
+        />,
+      );
+    }
+
+    return <>{shimmerRows}</>;
+  }
+
   return (
     <Container>
       <FlatList
         data={grades}
         keyExtractor={item => item.codigo_diario}
         showsVerticalScrollIndicator={false}
-        ListEmptyComponent={
-          <ActivityIndicator
-            size="large"
-            color={colors.primary}
-            style={{marginTop: 30}}
-          />
-        }
+        ListEmptyComponent={renderGradesShimmerRows(5)}
         renderItem={({item}) => (
           <GradesCard
             key={item.codigo_diario}

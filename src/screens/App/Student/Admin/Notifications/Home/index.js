@@ -98,9 +98,9 @@ export default function Home({navigation}) {
     ) : null;
   }
 
-  function renderNotificationShimmerRows(number_rows) {
+  function renderNotificationShimmerRows(numberOfrows) {
     const shimmerRows = [];
-    for (let i = 0; i < number_rows; i++) {
+    for (let i = 0; i < numberOfrows; i += 1) {
       shimmerRows.push(
         <ShimmerPlaceholder
           key={i}
