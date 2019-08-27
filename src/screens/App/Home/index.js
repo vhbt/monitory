@@ -44,7 +44,7 @@ export default function Home({navigation}) {
       ...newsDataRaw,
       formattedDate: format(
         parseISO(newsDataRaw.createdAt),
-        "d 'de' MMMM 'as' HH:MM",
+        "d 'de' MMMM 'às' HH:MM",
         {
           locale: ptbr,
         },

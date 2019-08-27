@@ -1,5 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {View, FlatList, ActivityIndicator} from 'react-native';
+import {
+  View,
+  FlatList,
+  ActivityIndicator,
+  Modal,
+  SafeAreaView,
+} from 'react-native';
+import {parseISO, format} from 'date-fns';
+import ptbr from 'date-fns/locale/pt-BR';
+import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import Config from 'react-native-config';
 import PropTypes from 'prop-types';
 
@@ -9,7 +18,7 @@ import Button from '../../../../../../components/Button';
 import {onesignal} from '../../../../../../services/api';
 
 import colors from '../../../../../../constants/theme';
-import {Container} from './styles';
+import {Container, NotificationCard} from './styles';
 
 export default function Home({navigation}) {
   const [loading, setLoading] = useState(true);
@@ -17,6 +26,7 @@ export default function Home({navigation}) {
   const [currentOffset, setCurrentOffset] = useState(0);
   const [maxiumOffset, setMaxiumOffset] = useState(0);
   const [fetching, setFetching] = useState(false);
+  const [showNotificationDetails, setShowNotificationDetails] = useState(null);
 
   const limit = 7;
 
@@ -60,6 +70,55 @@ export default function Home({navigation}) {
     }
   }
 
+  function renderNotificationDetailsModal() {
+    return showNotificationDetails ? (
+      <Modal animationType="slide" visible={!!showNotificationDetails}>
+        <SafeAreaView style={{marginTop: 20, marginHorizontal: 20}}>
+          <Text h2 black medium>
+            {showNotificationDetails.headings.en}
+          </Text>
+          <Text black>{showNotificationDetails.contents.en}</Text>
+          <Text gray style={{marginTop: 5}}>
+            Enviado para {showNotificationDetails.successful}{' '}
+            {showNotificationDetails.successful > 1 ? 'alunos' : 'aluno'}.
+          </Text>
+          <Text gray style={{marginBottom: 5}}>
+            Enviado em{' '}
+            {format(
+              new Date(showNotificationDetails.send_after * 1000),
+              "d 'de' MMMM 'às' HH:MM",
+              {locale: ptbr},
+            )}
+          </Text>
+          <Button onPress={() => setShowNotificationDetails(null)}>
+            <Text white>Fechar</Text>
+          </Button>
+        </SafeAreaView>
+      </Modal>
+    ) : null;
+  }
+
+  function renderNotificationShimmerRows(number_rows) {
+    const shimmerRows = [];
+    for (let i = 0; i < number_rows; i++) {
+      shimmerRows.push(
+        <ShimmerPlaceholder
+          key={i}
+          autoRun
+          hasBorder
+          style={{
+            width: '100%',
+            height: 52,
+            borderRadius: 4,
+            marginVertical: 5,
+          }}
+        />,
+      );
+    }
+
+    return <>{shimmerRows}</>;
+  }
+
   return (
     <Container>
       <View style={{marginHorizontal: 30}}>
@@ -74,13 +133,14 @@ export default function Home({navigation}) {
           data={notifications}
           style={{height: '75%'}}
           renderItem={({item}) => (
-            <View
+            <NotificationCard
               style={{
                 backgroundColor: '#fff',
                 borderRadius: 4,
                 padding: 10,
-                marginVertical: 10,
-              }}>
+                marginVertical: 5,
+              }}
+              onPress={() => setShowNotificationDetails(item)}>
               <Text medium>{item.headings.en}</Text>
               <Text>{item.shortContent}</Text>
               {item.included_segments.map(segment => (
@@ -88,15 +148,16 @@ export default function Home({navigation}) {
                   {segment}
                 </Text>
               ))}
-            </View>
+            </NotificationCard>
           )}
           ListEmptyComponent={
             loading ? (
-              <ActivityIndicator
-                size="large"
-                color={colors.primary}
-                style={{marginTop: 30}}
-              />
+              // <ActivityIndicator
+              //   size="large"
+              //   color={colors.primary}
+              //   style={{marginTop: 30}}
+              // />
+              renderNotificationShimmerRows(7)
             ) : (
               <Text black style={{marginTop: 30}}>
                 Aguardando a primeira notificação.
@@ -124,6 +185,7 @@ export default function Home({navigation}) {
           <Text white>Nova Notificação</Text>
         </Button>
       </View>
+      {renderNotificationDetailsModal()}
     </Container>
   );
 }

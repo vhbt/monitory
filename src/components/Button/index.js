@@ -9,7 +9,6 @@ export default function Button({
   children,
   loading,
   onPress,
-  gradient,
   borderless,
   style,
   colors,
@@ -25,11 +24,7 @@ export default function Button({
       {loading ? <ActivityIndicator size="small" color="#fff" /> : children}
     </BorderlessButton>
   ) : (
-    <GradientButton
-      gradient={gradient}
-      colors={colors}
-      style={style}
-      marginless={marginless}>
+    <GradientButton colors={colors} style={style} marginless={marginless}>
       <ButtonComponent {...rest} onPress={onPress} disabled={loading}>
         {loading ? <ActivityIndicator size="small" color="#fff" /> : children}
       </ButtonComponent>
@@ -41,7 +36,6 @@ Button.propTypes = {
   children: PropTypes.oneOfType([PropTypes.array, PropTypes.element]),
   onPress: PropTypes.func,
   loading: PropTypes.bool,
-  gradient: PropTypes.bool,
   borderless: PropTypes.bool,
   style: PropTypes.oneOfType(PropTypes.string, PropTypes.number),
   colors: PropTypes.arrayOf(PropTypes.string),
@@ -52,7 +46,6 @@ Button.defaultProps = {
   children: null,
   onPress: null,
   loading: false,
-  gradient: false,
   borderless: false,
   style: {
     height: 44,

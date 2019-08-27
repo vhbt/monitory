@@ -1,8 +1,6 @@
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
 
-import colors from '../../constants/theme';
-
 export const ButtonComponent = styled.TouchableOpacity`
   height: 100%;
   width: 100%;
