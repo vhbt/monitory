@@ -6,7 +6,15 @@ import Text from '../Text';
 
 import {Container, Tag} from './styles';
 
-export default function GradesCard({title, colors, style, white, grades}) {
+export default function GradesCard({
+  title,
+  colors,
+  style,
+  white,
+  grades,
+  attendance,
+  status,
+}) {
   return (
     <Container colors={colors} style={style}>
       <Text
@@ -36,6 +44,9 @@ export default function GradesCard({title, colors, style, white, grades}) {
           </Tag>
         ))}
       </View>
+      <Text gray style={{marginTop: 20, marginBottom: 10}}>
+        Presença: {attendance}% | Situação: {status}
+      </Text>
     </Container>
   );
 }
@@ -48,6 +59,8 @@ GradesCard.propTypes = {
   grades: PropTypes.arrayOf(
     PropTypes.oneOfType(PropTypes.number, PropTypes.string),
   ).isRequired,
+  attendance: PropTypes.number.isRequired,
+  status: PropTypes.string.isRequired,
 };
 
 GradesCard.defaultProps = {

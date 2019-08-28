@@ -57,7 +57,7 @@ export default function Report({navigation}) {
           autoRun
           style={{
             marginBottom: 10,
-            height: 120,
+            height: 130,
             width: '100%',
             borderRadius: 4,
           }}
@@ -90,7 +90,9 @@ export default function Report({navigation}) {
               [item.nota_avaliacao_final.nota, 'F'],
               [item.media_final_disciplina, 'Media Final'],
             ]}
-            style={{marginBottom: 10, height: 120, borderRadius: 4}}
+            attendance={item.percentual_carga_horaria_frequentada}
+            status={item.situacao}
+            style={{marginBottom: 10, height: 130, borderRadius: 4}}
           />
         )}
       />
