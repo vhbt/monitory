@@ -48,10 +48,10 @@ export default function Profile() {
   }, []);
 
   return (
-    <SafeAreaView>
-      <KeyboardAwareScrollView>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#f5f7fb'}}>
+      <KeyboardAwareScrollView style={{flex: 1}}>
         <Container>
-          <Text h1 bold style={{marginVertical: 10}}>
+          <Text h1 bold style={{marginTop: 10, marginBottom: 20}}>
             Perfil
           </Text>
           <Text gray style={{marginBottom: 5}}>

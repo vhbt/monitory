@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
-import {SafeAreaView} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 
 import Text from '../Text';
@@ -19,16 +19,20 @@ export default function Header() {
             autoRun
             visible={!loading}
             style={{height: 25, width: 220}}>
-            <Text h2 black medium>
-              Olá, {user && user.nome_usual}!
-            </Text>
-            <Text gray>Seu dashboard de hoje</Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text h2 black medium>
+                Olá,{' '}
+              </Text>
+              <Text h2 black semibold>
+                {user && user.nome_usual.split(' ')[0]}!
+              </Text>
+            </View>
           </ShimmerPlaceholder>
           <ShimmerPlaceholder
             autoRun
             hasBorder
             visible={!loading}
-            style={{height: 50, width: 50, borderRadius: 25}}>
+            style={{height: 40, width: 40, borderRadius: 20}}>
             <Avatar
               onLoadEnd={() => setLoading(false)}
               source={{

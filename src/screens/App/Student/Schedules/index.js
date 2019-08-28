@@ -13,10 +13,10 @@ import Config from 'react-native-config';
 import {showMessage} from 'react-native-flash-message';
 import PropTypes from 'prop-types';
 
-import Text from '../../../../../components/Text';
-import Button from '../../../../../components/Button';
+import Text from '../../../../components/Text';
+import Button from '../../../../components/Button';
 
-import colors from '../../../../../constants/theme';
+import colors from '../../../../constants/theme';
 
 import {Container} from './styles';
 

@@ -26,7 +26,7 @@ import LoadingNews from '../../../components/NewsCard/loading';
 import {api} from '../../../services/api';
 import colors from '../../../constants/theme';
 
-import {Container} from './styles';
+import {Container, QuickItems, Item} from './styles';
 
 export default function Home({navigation}) {
   const [showNews, setShowNews] = useState(null);
@@ -150,12 +150,24 @@ export default function Home({navigation}) {
     <Container>
       <Header />
       <ScrollView>
-        <View style={{paddingHorizontal: 30, paddingVertical: 20}}>
+        <View style={{paddingHorizontal: 30, paddingVertical: 10}}>
           {user.email && user.curso_ano && user.curso_turno ? null : (
             <ImportantWarning
               content="Voce ainda não configurou seu perfil. Clique aqui."
               onPress={() => navigation.navigate('Profile')}
             />
+          )}
+        </View>
+        <View style={{paddingHorizontal: 30}}>
+          {!(user.email && user.curso_ano && user.curso_turno) ? null : (
+            <QuickItems>
+              <Item onPress={() => navigation.navigate('Schedules')}>
+                <Icon name="md-time" size={24} color="#acacb8" />
+              </Item>
+              <Item onPress={() => navigation.navigate('SelectReport')}>
+                <Icon name="md-bookmarks" size={24} color="#acacb8" />
+              </Item>
+            </QuickItems>
           )}
         </View>
         <View style={{paddingHorizontal: 0, paddingVertical: 10}}>

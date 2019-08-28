@@ -19,7 +19,7 @@ import StudentHome from './screens/App/Student/Home';
 import SelectReport from './screens/App/Student/Report/SelectReport';
 import ViewReport from './screens/App/Student/Report/ViewReport';
 
-import SelectSchedules from './screens/App/Student/Schedules/SelectSchedules';
+import Schedules from './screens/App/Student/Schedules';
 
 import PostNews from './screens/App/Student/Admin/News/PostNews';
 
@@ -68,7 +68,7 @@ export default (isSigned = false) =>
                       }`,
                     }),
                   },
-                  SelectSchedules,
+                  Schedules,
                   PostNews,
                   Notifications,
                   SendToClasses,
@@ -76,8 +76,8 @@ export default (isSigned = false) =>
                 {
                   defaultNavigationOptions: {
                     headerStyle: {
-                      backgroundColor: '#fafafa',
-                      borderBottomColor: '#fafafa',
+                      backgroundColor: '#f5f7fb',
+                      borderBottomColor: '#f5f7fb',
                       elevation: 0,
                     },
                     headerLeftContainerStyle: {

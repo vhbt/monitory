@@ -2,6 +2,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   padding-top: 20px;
+  padding-bottom: 5px;
 `;
 
 export const TopContainer = styled.View`
@@ -12,8 +13,8 @@ export const TopContainer = styled.View`
 `;
 
 export const Avatar = styled.Image`
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
   background: #ddd;
 `;

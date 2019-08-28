@@ -26,7 +26,7 @@ export default function Home({navigation}) {
           </Button>
           <Button
             style={{height: 44, alignSelf: 'stretch', marginTop: 5}}
-            onPress={() => navigation.navigate('SelectSchedules')}>
+            onPress={() => navigation.navigate('Schedules')}>
             <Text white>Meus Horários</Text>
           </Button>
           {isAdmin ? (

@@ -17,7 +17,18 @@ export default function NewsCard({
 }) {
   return (
     <Container onPress={onPress}>
-      <View>
+      <View
+        style={{
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 4,
+          },
+          shadowOpacity: 0.3,
+          shadowRadius: 4,
+
+          elevation: 8,
+        }}>
         <LazyImage
           thumb={{uri: bannerThumb}}
           source={{uri: banner}}
@@ -28,7 +39,21 @@ export default function NewsCard({
           }}
         />
       </View>
-      <View style={{flex: 1, paddingHorizontal: 7, paddingTop: 5}}>
+      <View
+        style={{
+          flex: 1,
+          paddingHorizontal: 7,
+          paddingTop: 5,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 4,
+          },
+          shadowOpacity: 0.3,
+          shadowRadius: 4,
+
+          elevation: 8,
+        }}>
         <Text medium black>
           {title}
         </Text>
