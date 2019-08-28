@@ -23,7 +23,7 @@ import SelectSchedules from './screens/App/Student/Schedules/SelectSchedules';
 
 import PostNews from './screens/App/Student/Admin/News/PostNews';
 
-import NotificationsHome from './screens/App/Student/Admin/Notifications/Home';
+import Notifications from './screens/App/Student/Admin/Notifications/Home';
 import SendToClasses from './screens/App/Student/Admin/Notifications/SendToClasses';
 
 export default (isSigned = false) =>
@@ -70,19 +70,8 @@ export default (isSigned = false) =>
                   },
                   SelectSchedules,
                   PostNews,
-                  Notifications: {
-                    screen: createStackNavigator(
-                      {
-                        NotificationsHome,
-                        SendToClasses,
-                      },
-                      {
-                        defaultNavigationOptions: {
-                          header: null,
-                        },
-                      },
-                    ),
-                  },
+                  Notifications,
+                  SendToClasses,
                 },
                 {
                   defaultNavigationOptions: {
