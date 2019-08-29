@@ -151,7 +151,7 @@ export default function Home({navigation}) {
       <Header />
       <ScrollView>
         <View style={{paddingHorizontal: 30, paddingVertical: 10}}>
-          {user.email && user.curso_ano && user.curso_turno ? null : (
+          {user.curso_ano && user.curso_turno ? null : (
             <ImportantWarning
               content="Voce ainda não configurou seu perfil. Clique aqui."
               onPress={() => navigation.navigate('Profile')}
@@ -159,7 +159,7 @@ export default function Home({navigation}) {
           )}
         </View>
         <View style={{paddingHorizontal: 30}}>
-          {!(user.email && user.curso_ano && user.curso_turno) ? null : (
+          {!(user.curso_ano && user.curso_turno) ? null : (
             <QuickItems>
               <Item onPress={() => navigation.navigate('Schedules')}>
                 <Icon name="md-time" size={24} color="#acacb8" />
@@ -195,7 +195,7 @@ export default function Home({navigation}) {
             ListEmptyComponent={
               news ? (
                 <Text gray style={{fontSize: 12, paddingHorizontal: 30}}>
-                  Ainda nao ha nada aqui.
+                  Ainda não há nada aqui.
                 </Text>
               ) : (
                 <LoadingNews />

@@ -11,6 +11,7 @@ import {
   updateUserSuccess,
   updateUserFailed,
   logout,
+  resetLoading,
 } from './actions';
 
 export function* login({payload}) {
@@ -34,7 +35,7 @@ export function* login({payload}) {
       showMessage({
         type: 'danger',
         message:
-          'Por enquanto o Monitory so esta disponivel para alunos do IFRN Parnamirim.',
+          'Por enquanto o Monitory só está disponivel para alunos do IFRN Parnamirim.',
         duration: 3000,
       });
       yield put(loginFailed());
@@ -57,7 +58,11 @@ export function* login({payload}) {
     if (err.response) {
       showMessage({type: 'danger', message: err.response.data.detail});
     } else {
-      showMessage({type: 'danger', message: 'Erro de conexão.'});
+      showMessage({
+        type: 'danger',
+        message: 'Erro de conexão',
+        description: 'Verifique sua conexão com a internet.',
+      });
     }
 
     yield put(loginFailed());
@@ -73,12 +78,17 @@ export function* updateUser({payload}) {
       selectedClassTurn: curso_turno,
     } = payload;
 
-    const response = yield call(api.put, '/users', {
+    const data = {
       id,
-      email,
       curso_ano,
       curso_turno,
-    });
+    };
+
+    if (email && email !== '') {
+      data.email = email;
+    }
+
+    const response = yield call(api.put, '/users', data);
 
     const user = response.data;
 
@@ -97,7 +107,11 @@ export function* updateUser({payload}) {
     if (err.response) {
       showMessage({type: 'danger', message: err.response.data.detail});
     } else {
-      showMessage({type: 'danger', message: 'Erro de conexão.'});
+      showMessage({
+        type: 'danger',
+        message: 'Erro de conexão',
+        description: 'Verifique sua conexão com a internet.',
+      });
     }
 
     yield put(updateUserFailed());
@@ -106,12 +120,13 @@ export function* updateUser({payload}) {
 }
 
 export function* refresh() {
-  // unset loading
-  yield put(loginFailed());
+  yield put(resetLoading());
+
+  api.defaults.timeout = 15000;
+  suap_api.defaults.timeout = 15000;
 
   const state = yield select();
-  const {token} = state.profile;
-  const {user} = state.profile;
+  const {token, user} = state.profile;
 
   if (!token) return;
 
@@ -135,7 +150,15 @@ export function* refresh() {
       curso_turno: user.curso_turno,
     });
   } catch (err) {
-    yield put(logout());
+    if (err.response) {
+      yield put(logout());
+    } else {
+      showMessage({
+        type: 'danger',
+        message: 'Erro de conexão',
+        description: 'Verifique sua conexão com a internet.',
+      });
+    }
   }
 }
 

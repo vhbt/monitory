@@ -43,6 +43,10 @@ export default function profile(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case '@profile/RESET_LOADING': {
+        draft.loading = false;
+        break;
+      }
       default:
     }
   });

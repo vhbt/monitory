@@ -43,3 +43,9 @@ export function updateUserFailed() {
     type: '@profile/UPDATE_USER_FAILED',
   };
 }
+
+export function resetLoading() {
+  return {
+    type: '@profile/RESET_LOADING',
+  };
+}

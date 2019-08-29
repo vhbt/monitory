@@ -36,7 +36,7 @@ export default function Profile() {
   const {id} = user;
 
   useEffect(() => {
-    if (!(user.email && user.curso_ano && user.curso_turno)) {
+    if (!(user.curso_ano && user.curso_turno)) {
       showMessage({
         type: 'info',
         message: 'Complete seu perfil',

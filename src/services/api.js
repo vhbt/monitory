@@ -7,7 +7,6 @@ export const suap_api = axios.create({
 
 export const api = axios.create({
   baseURL: Config.API_URL,
-  timeout: 15000,
 });
 
 export const onesignal = axios.create({
