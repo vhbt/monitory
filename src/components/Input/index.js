@@ -30,7 +30,7 @@ function Input(
       {isSecure ? (
         <Icon
           name={secureToggle ? 'ios-eye-off' : 'ios-eye'}
-          style={{position: 'absolute', top: 33, right: 0}}
+          style={{position: 'absolute', top: 30, right: 10}}
           size={24}
           color={colors.gray}
           onPress={() => setSecureToggle(!secureToggle)}
