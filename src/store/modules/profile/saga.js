@@ -137,6 +137,10 @@ export function* refresh() {
 
     if (!(response.status === 200)) {
       yield put(logout());
+      showMessage({
+        type: 'info',
+        message: 'Sua sessão do SUAP expirou. Por favor, faça login novamente.',
+      });
     }
 
     suap_api.defaults.headers.authorization = `JWT ${token}`;

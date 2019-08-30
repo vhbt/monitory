@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import Text from '../Text';
 
-import {Container, Tag} from './styles';
+import {ButtonContainer, Container, Tag} from './styles';
 
 export default function GradesCard({
   title,
@@ -14,39 +14,47 @@ export default function GradesCard({
   grades,
   attendance,
   status,
+  onPress,
 }) {
   return (
     <Container colors={colors} style={style}>
-      <Text
-        white={white}
-        semibold
-        style={{alignSelf: 'center', textAlign: 'center', width: 300}}>
-        {title}
-      </Text>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginTop: 25,
-          marginLeft: 5,
-        }}>
-        {grades.map(grade => (
-          <Tag key={grade[1]}>
-            <View>
-              <Text white bold style={{textAlign: 'center'}}>
-                {grade[1]}
-              </Text>
-              <Text white style={{textAlign: 'center'}}>
-                {grade[0] || '-'}
-              </Text>
-            </View>
-          </Tag>
-        ))}
-      </View>
-      <Text gray style={{marginTop: 20, marginBottom: 10}}>
-        Presença: {attendance}% | Situação: {status}
-      </Text>
+      <ButtonContainer onPress={onPress}>
+        <Text
+          white={white}
+          semibold
+          style={{
+            alignSelf: 'center',
+            textAlign: 'center',
+            width: 300,
+            marginTop: 5,
+          }}>
+          {title}
+        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginTop: 20,
+            marginLeft: 5,
+          }}>
+          {grades.map(grade => (
+            <Tag key={grade[1]}>
+              <View>
+                <Text white bold style={{textAlign: 'center'}}>
+                  {grade[1]}
+                </Text>
+                <Text white style={{textAlign: 'center'}}>
+                  {grade[0] || '-'}
+                </Text>
+              </View>
+            </Tag>
+          ))}
+        </View>
+        <Text gray style={{marginTop: 20, marginBottom: 10}}>
+          Presença: {attendance}% | Situação: {status}
+        </Text>
+      </ButtonContainer>
     </Container>
   );
 }
@@ -61,6 +69,7 @@ GradesCard.propTypes = {
   ).isRequired,
   attendance: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
+  onPress: PropTypes.func.isRequired,
 };
 
 GradesCard.defaultProps = {

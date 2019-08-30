@@ -18,6 +18,7 @@ import Profile from './screens/App/Profile';
 import StudentHome from './screens/App/Student/Home';
 import SelectReport from './screens/App/Student/Report/SelectReport';
 import ViewReport from './screens/App/Student/Report/ViewReport';
+import ViewFullReport from './screens/App/Student/Report/ViewFullReport';
 
 import Schedules from './screens/App/Student/Schedules';
 
@@ -60,14 +61,8 @@ export default (isSigned = false) =>
                 {
                   StudentHome,
                   SelectReport,
-                  ViewReport: {
-                    screen: ViewReport,
-                    navigationOptions: ({navigation}) => ({
-                      title: `Boletim ${
-                        navigation.getParam('period').split('/')[0]
-                      }`,
-                    }),
-                  },
+                  ViewReport,
+                  ViewFullReport,
                   Schedules,
                   PostNews,
                   Notifications,

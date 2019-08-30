@@ -3,18 +3,17 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import colors from '../../constants/theme';
 
+export const ButtonContainer = styled.TouchableOpacity`
+  justify-content: center;
+  align-items: center;
+`;
+
 export const Container = styled(LinearGradient).attrs({
   start: {x: 0, y: 0},
   end: {x: 1, y: 1},
-  shadowColor: colors.black,
-  shadowOffset: {width: 0, height: 2},
-  shadowOpacity: 0.1,
-  shadowRadius: 10,
-  elevation: 5,
 })`
   height: 20px;
-  justify-content: center;
-  align-items: center;
+  padding-top: 5px;
 `;
 
 export const Tag = styled.View.attrs({

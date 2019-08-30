@@ -31,15 +31,22 @@ export default function Report({navigation}) {
         setGrades(data);
       } catch (err) {
         if (err.response.status === 404) {
-          navigation.navigate('SelectReport');
           showMessage({
             type: 'warning',
             message: 'Não encontrado',
             description: 'Ainda não há registros para o período selecionado.',
           });
-        } else {
+          navigation.navigate('SelectReport');
+        } else if (err.response) {
           navigation.navigate('SelectReport');
           showMessage({type: 'danger', message: err.response.data.detail});
+        } else {
+          showMessage({
+            type: 'danger',
+            message: 'Erro de conexão',
+            description: 'Verifique sua conexão com a internet.',
+          });
+          navigation.navigate('SelectReport');
         }
       }
     }
@@ -93,12 +100,17 @@ export default function Report({navigation}) {
             attendance={item.percentual_carga_horaria_frequentada}
             status={item.situacao}
             style={{marginBottom: 10, height: 130, borderRadius: 4}}
+            onPress={() => navigation.navigate('ViewFullReport', {item})}
           />
         )}
       />
     </Container>
   );
 }
+
+Report.navigationOptions = ({navigation}) => ({
+  title: `Boletim ${navigation.getParam('period').split('/')[0]}`,
+});
 
 Report.propTypes = {
   navigation: PropTypes.shape({
