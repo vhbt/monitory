@@ -16,7 +16,7 @@ export default function Home({navigation}) {
     <SafeAreaView style={{flex: 1}}>
       <Container style={{flex: 1}}>
         <ScrollView showsHorizontalScrollIndicator={false}>
-          <Text h1 semibold>
+          <Text h1 black semibold>
             Central do Aluno
           </Text>
           <Button
@@ -28,6 +28,11 @@ export default function Home({navigation}) {
             style={{height: 44, alignSelf: 'stretch', marginTop: 5}}
             onPress={() => navigation.navigate('Schedules')}>
             <Text white>Meus Horários</Text>
+          </Button>
+          <Button
+            style={{height: 44, alignSelf: 'stretch', marginTop: 5}}
+            onPress={() => navigation.navigate('SelectClass')}>
+            <Text white>Minhas Matérias</Text>
           </Button>
           {isAdmin ? (
             <>

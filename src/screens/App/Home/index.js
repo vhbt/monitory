@@ -167,6 +167,9 @@ export default function Home({navigation}) {
               <Item onPress={() => navigation.navigate('SelectReport')}>
                 <Icon name="md-bookmarks" size={24} color="#acacb8" />
               </Item>
+              <Item onPress={() => navigation.navigate('SelectClass')}>
+                <Icon name="md-school" size={24} color="#acacb8" />
+              </Item>
             </QuickItems>
           )}
         </View>
