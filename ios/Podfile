@@ -37,6 +37,8 @@ target 'monitory' do
 
   pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
 
+  pod 'ReactNativeExceptionHandler', :path => '../node_modules/react-native-exception-handler'
+
   target 'monitoryTests' do
     inherit! :search_paths
     # Pods for testing
