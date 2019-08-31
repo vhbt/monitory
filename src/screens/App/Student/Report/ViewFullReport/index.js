@@ -23,8 +23,6 @@ export default function ViewFullReport({navigation}) {
     media_final_disciplina,
   } = navigation.getParam('item');
 
-  console.tron.log(navigation.getParam('item'));
-
   const labels_notas_semestre = segundo_semestre ? ['3', '4'] : ['1', '2'];
 
   const labels_notas =
