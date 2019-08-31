@@ -16,7 +16,7 @@ export default function SelectClass({navigation}) {
   async function getClasses() {
     try {
       const responsePeriods = await suap_api.get(
-        'minhas-informacoes/meus-periodos-letivos',
+        'minhas-informacoes/meus-periodos-letivos/',
       );
 
       const periods = responsePeriods.data.filter(
@@ -64,7 +64,7 @@ export default function SelectClass({navigation}) {
           key={i}
           autoRun
           style={{
-            marginTop: 10,
+            marginVertical: 5,
             height: 58,
             width: '100%',
             borderRadius: 4,

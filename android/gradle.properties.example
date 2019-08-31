@@ -19,3 +19,9 @@
 
 android.useAndroidX=true
 android.enableJetifier=true
+VERSION_CODE=
+
+RELEASE_STORE_FILE=
+RELEASE_STORE_PASSWORD=
+RELEASE_KEY_ALIAS=
+RELEASE_KEY_PASSWORD=

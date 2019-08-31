@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {View, FlatList} from 'react-native';
+import {View, FlatList, Linking} from 'react-native';
 import {parseISO, isAfter, subDays} from 'date-fns';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import {showMessage} from 'react-native-flash-message';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import Text from '../../../../../components/Text';
 
@@ -16,12 +17,13 @@ export default function ViewClassOverview({navigation}) {
 
   const [myClassData, setMyClassData] = useState(null);
   const [classes, setClasses] = useState(null);
+  const [materiais, setMateriais] = useState(null);
   const [loading, setLoading] = useState(true);
 
   async function getClassData() {
     try {
       const response = await suap_api.get(
-        `/minhas-informacoes/turma-virtual/${myClass.id}`,
+        `/minhas-informacoes/turma-virtual/${myClass.id}/`,
       );
 
       const last30daysClasses = response.data.aulas.filter(aula =>
@@ -30,6 +32,7 @@ export default function ViewClassOverview({navigation}) {
 
       setMyClassData(response.data);
       setClasses(last30daysClasses);
+      setMateriais(response.data.materiais_de_aula);
       setLoading(false);
     } catch (err) {
       if (err.response) {
@@ -50,7 +53,12 @@ export default function ViewClassOverview({navigation}) {
     getClassData();
   }, []);
 
-  function renderGradesShimmerRows(numberOfRows) {
+  function renderGradesShimmerRows(
+    numberOfRows,
+    height,
+    width,
+    direction = 'column',
+  ) {
     const shimmerRows = [];
 
     for (let i = 0; i < numberOfRows; i += 1) {
@@ -59,21 +67,22 @@ export default function ViewClassOverview({navigation}) {
           key={i}
           autoRun
           style={{
-            marginTop: 10,
-            height: 100,
-            width: '100%',
+            marginRight: direction === 'row' ? 10 : 0,
+            marginBottom: direction === 'column' ? 5 : 0,
             borderRadius: 4,
+            height,
+            width,
           }}
         />,
       );
     }
 
-    return <>{shimmerRows}</>;
+    return <View style={{flexDirection: direction}}>{shimmerRows}</View>;
   }
 
   return (
     <Container>
-      <View style={{marginBottom: 10}}>
+      <View style={{marginBottom: 15, paddingHorizontal: 30}}>
         <Text h3 black medium>
           Professor(a):
         </Text>
@@ -91,30 +100,39 @@ export default function ViewClassOverview({navigation}) {
         </ShimmerPlaceholder>
       </View>
       <View>
-        <Text h3 black medium>
+        <Text h3 black medium style={{paddingHorizontal: 30}}>
           Aulas dos ultimos 30 dias
         </Text>
         <FlatList
-          showsVerticalScrollIndicator={false}
-          style={{marginBottom: 110, marginTop: 10}}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={{marginTop: 10}}
           data={classes}
           keyExtractor={item => String(item.data)}
           ListEmptyComponent={
             loading ? (
-              renderGradesShimmerRows(4)
+              renderGradesShimmerRows(2, 140, 240, 'row')
             ) : (
-              <Text gray>Ainda não há nada aqui.</Text>
+              <Text gray>Nenhuma aula publicada nos ultimos 30 dias. :(</Text>
             )
           }
+          ListHeaderComponent={<View style={{marginLeft: 30}} />}
           renderItem={({item}) => (
             <View
               style={{
                 backgroundColor: colors.black,
                 padding: 10,
-                marginBottom: 10,
+                marginRight: 10,
                 borderRadius: 4,
+                height: 140,
+                width: 240,
               }}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View
+                style={{
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                  marginRight: 10,
+                }}>
                 <View style={{alignItems: 'center', marginRight: 10}}>
                   <Text white semibold>
                     Aulas:
@@ -138,10 +156,49 @@ export default function ViewClassOverview({navigation}) {
                 <Text white semibold>
                   Conteúdo:
                 </Text>
-                <Text white>{item.conteudo}</Text>
+                <Text white style={{flexWrap: 'wrap'}}>
+                  {item.conteudo}
+                </Text>
               </View>
             </View>
           )}
+        />
+      </View>
+      <View style={{marginTop: 15, height: '50%', marginHorizontal: 30}}>
+        <Text h3 black medium style={{marginBottom: 10}}>
+          Materiais Postados
+        </Text>
+        <FlatList
+          data={materiais}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={item => String(item.descricao)}
+          renderItem={({item}) => (
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <View style={{marginBottom: 5}}>
+                <Text black>{item.descricao}</Text>
+                <Text gray>{item.data_vinculacao}</Text>
+              </View>
+              <Icon
+                name="md-download"
+                size={22}
+                onPress={() =>
+                  Linking.openURL(`https://suap.ifrn.edu.br${item.url}`)
+                }
+              />
+            </View>
+          )}
+          ListEmptyComponent={
+            loading ? (
+              renderGradesShimmerRows(8, 32, 230)
+            ) : (
+              <Text gray>Ainda não há nada aqui.</Text>
+            )
+          }
         />
       </View>
     </Container>

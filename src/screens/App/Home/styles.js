@@ -20,11 +20,11 @@ export const QuickItems = styled.View`
 
 export const Item = styled.TouchableOpacity`
   padding: 5px;
-  width: 36px;
-  height: 36px;
+  width: 42px;
+  height: 42px;
   justify-content: center;
   align-items: center;
   border: 1px solid #e6e9f1;
-  border-radius: 18px;
+  border-radius: 22px;
   margin-right: 10px;
 `;

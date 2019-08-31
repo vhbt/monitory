@@ -162,13 +162,13 @@ export default function Home({navigation}) {
           {!(user.curso_ano && user.curso_turno) ? null : (
             <QuickItems>
               <Item onPress={() => navigation.navigate('Schedules')}>
-                <Icon name="md-time" size={24} color="#acacb8" />
+                <Icon name="md-time" size={30} color="#acacb8" />
               </Item>
               <Item onPress={() => navigation.navigate('SelectReport')}>
-                <Icon name="md-bookmarks" size={24} color="#acacb8" />
+                <Icon name="md-list-box" size={30} color="#acacb8" />
               </Item>
               <Item onPress={() => navigation.navigate('SelectClass')}>
-                <Icon name="md-school" size={24} color="#acacb8" />
+                <Icon name="md-school" size={30} color="#acacb8" />
               </Item>
             </QuickItems>
           )}
