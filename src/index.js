@@ -8,7 +8,7 @@ import OneSignal from 'react-native-onesignal';
 import Config from 'react-native-config';
 import {
   setJSExceptionHandler,
-  getJSExceptionHandler,
+  setNativeExceptionHandler,
 } from 'react-native-exception-handler';
 
 import './config/ReactotronConfig';
@@ -23,20 +23,20 @@ export default class Index extends Component {
     OneSignal.addEventListener('received', this.onReceived);
     OneSignal.addEventListener('opened', this.onOpened);
     OneSignal.addEventListener('ids', this.onIds);
+
+    setJSExceptionHandler(error => {
+      Alert.alert('Erro!', error);
+    });
+
+    setNativeExceptionHandler(exceptionString => {
+      Alert.alert('Erro!', exceptionString);
+    });
   }
 
   componentWillUnmount() {
     OneSignal.removeEventListener('received', this.onReceived);
     OneSignal.removeEventListener('opened', this.onOpened);
     OneSignal.removeEventListener('ids', this.onIds);
-  }
-
-  setJSExceptionHandler(error) {
-    Alert.alert('Erro!', error);
-  }
-
-  setNativeExceptionHandler(exceptionString) {
-    Alert.alert('Erro!', exceptionString);
   }
 
   render() {
