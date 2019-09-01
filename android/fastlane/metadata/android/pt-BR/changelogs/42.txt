@@ -1,0 +1,4 @@
+- Mais detalhes nas notas
+- Adicionado "Minhas Materiais"
+- Adicionado materiais postados pelos professores
+- Melhorias gerais

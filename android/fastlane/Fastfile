@@ -15,11 +15,11 @@
 
 default_platform(:android)
 
-before_all do
-  ensure_git_branch
-  ensure_git_status_clean
-  git_pull
-end
+# before_all do
+#   ensure_git_branch
+#   ensure_git_status_clean
+#   git_pull
+# end
 
 platform :android do
   desc "Runs all the tests"
@@ -36,11 +36,26 @@ platform :android do
   #   # You can also use other beta testing services here
   # end
 
-  desc "Deploy a new internal test version to the Google Play"
-  lane :internal do
-    gradle(task: "clean assembleRelease")
+  desc "Deploy a new internal test version to the Google Play - use version:[major|minor|fix] for versioning"
+  lane :internal do |options|
+
+    if (options[:version]=='major')
+      gradle(task: "doMajorVersionIncrement")
+    elsif (options[:version]=='minor')
+      gradle(task: "doMinorVersionIncrement")
+    elsif (options[:version]=='fix')
+      gradle(task: "doFixVersionIncrement")
+    end
+
+    gradle(task: "doBuildNumberIncrement")
+
+    gradle(
+      task: 'bundle',
+      build_type: 'Release'
+    )
     upload_to_play_store(
-      track: 'internal'
+      track: 'internal',
+      skip_upload_apk: 'true'
     )
   end
 end

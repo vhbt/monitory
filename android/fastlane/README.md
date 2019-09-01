@@ -25,7 +25,7 @@ Runs all the tests
 ```
 fastlane android internal
 ```
-Deploy a new internal test version to the Google Play
+Deploy a new internal test version to the Google Play - use version:[major|minor|fix] for versioning
 
 ----
 

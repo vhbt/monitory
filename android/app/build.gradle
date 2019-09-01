@@ -7,7 +7,6 @@ buildscript {
     }
 }
 
-apply from: './versionCode.gradle'
 apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 apply plugin: "com.android.application"
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
@@ -131,6 +130,106 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  */
 def enableHermes = project.ext.react.get("enableHermes", false);
 
+def readVersion() {
+    def versionFile = new File(project.rootDir, 'version.properties')
+    def version = new Properties()
+    def stream
+    try {
+        stream = new FileInputStream(versionFile)
+        version.load(stream)
+    } catch (FileNotFoundException ignore) {
+    } finally {
+        if (stream != null) stream.close()
+    }
+    if (!version['major']) version['major'] = "1"
+    if (!version['minor']) version['minor'] = "0"
+    if (!version['fix']) version['fix'] = "0"
+    if (!version['build']) version['build'] = "1"
+    return version
+}
+
+def readVersionName() {
+    def version = readVersion()
+    return "${version['major']}.${version['minor']}.${version['fix']}"
+}
+
+def readVersionBuild() {
+    def version = readVersion()
+    def build = version['build'] as int
+    return build
+}
+
+def incrementVersionNumber(def type = "build") {
+    def versionFile = new File(project.rootDir, 'version.properties')
+
+    def version = readVersion()
+
+    def major = version['major'] as int
+    def minor = version['minor'] as int
+    def fix = version['fix'] as int
+    def build = version['build'] as int
+
+    if (type == 'major') {
+        major++
+        minor = 0
+        fix = 0
+    } else if (type == 'minor') {
+        minor++
+        fix = 0
+    }else if (type == 'fix') {
+        fix++
+    }
+
+    build++
+
+    version['major'] = major.toString()
+    version['minor'] = minor.toString()
+    version['fix'] = fix.toString()
+    version['build'] = build.toString()
+
+    def stream = new FileOutputStream(versionFile)
+    try {
+        version.store(stream, null)
+    } finally {
+        stream.close()
+    }
+
+    def versionName = major + "." + minor + "." + fix
+
+    println "Build number is now: " + build
+    println "Build version is now: " + versionName
+
+    return versionName
+}
+
+task doMajorVersionIncrement {
+    doLast {
+        println "Incrementing major version..."
+        incrementVersionNumber('major')
+    }
+}
+
+task doMinorVersionIncrement {
+    doLast {
+        println "Incrementing minor version..."
+        incrementVersionNumber('minor')
+    }
+}
+
+task doFixVersionIncrement {
+    doLast {
+        println "Incrementing fix version..."
+        incrementVersionNumber('fix')
+    }
+}
+
+task doBuildNumberIncrement {
+    doLast {
+        println "Incrementing build number..."
+        incrementVersionNumber('Build')
+    }
+}
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
@@ -143,8 +242,8 @@ android {
         applicationId "com.monitory"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode Integer.parseInt(VERSION_CODE)
-        versionName project.VERSION_NAME
+        versionCode readVersionBuild()
+        versionName readVersionName()
     }
     splits {
         abi {
