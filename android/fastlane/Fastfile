@@ -58,4 +58,27 @@ platform :android do
       skip_upload_apk: 'true'
     )
   end
+
+desc "Deploy a new production version to the Google Play - use version:[major|minor|fix] for versioning"
+  lane :production do |options|
+
+    if (options[:version]=='major')
+      gradle(task: "doMajorVersionIncrement")
+    elsif (options[:version]=='minor')
+      gradle(task: "doMinorVersionIncrement")
+    elsif (options[:version]=='fix')
+      gradle(task: "doFixVersionIncrement")
+    end
+
+    gradle(task: "doBuildNumberIncrement")
+
+    gradle(
+      task: 'bundle',
+      build_type: 'Release'
+    )
+    upload_to_play_store(
+      track: 'production',
+      skip_upload_apk: 'true'
+    )
+  end
 end
