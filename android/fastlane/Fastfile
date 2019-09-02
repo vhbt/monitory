@@ -45,6 +45,8 @@ platform :android do
       gradle(task: "doMinorVersionIncrement")
     elsif (options[:version]=='fix')
       gradle(task: "doFixVersionIncrement")
+    else
+      gradle(task: "doBuildNumberIncrement")
     end
 
     gradle(
@@ -66,7 +68,7 @@ platform :android do
     )
 
     changeLogFile = File.new("./metadata/android/pt-BR/changelogs/" + versionCode + ".txt","w")
-    changeLogFile.puts(versionName + "\n" + changelog)
+    changeLogFile.puts(changelog)
     changeLogFile.close
 
     upload_to_play_store(
@@ -84,6 +86,8 @@ desc "Deploy production to Google Play - version:[major|minor|fix]"
       gradle(task: "doMinorVersionIncrement")
     elsif (options[:version]=='fix')
       gradle(task: "doFixVersionIncrement")
+    else
+      gradle(task: "doBuildNumberIncrement")
     end
 
     gradle(
@@ -105,7 +109,7 @@ desc "Deploy production to Google Play - version:[major|minor|fix]"
     )
 
     changeLogFile = File.new("./metadata/android/pt-BR/changelogs/" + versionCode + ".txt","w")
-    changeLogFile.puts(versionName + "\n" + changelog)
+    changeLogFile.puts(changelog)
     changeLogFile.close
 
     upload_to_play_store(

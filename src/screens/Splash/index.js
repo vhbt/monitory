@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
-import {Image, Dimensions} from 'react-native';
+import {Image, Dimensions, SafeAreaView} from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import PropTypes from 'prop-types';
 
@@ -16,7 +16,7 @@ import {unsetFirstTime} from '../../store/modules/app/actions';
 
 import {Container} from './styles';
 
-export default function Splash({navigation}) {
+export default function Splash() {
   const dispatch = useDispatch();
   const [done, setDone] = useState(false);
 
@@ -27,8 +27,7 @@ export default function Splash({navigation}) {
       text:
         'Criamos esse app especialmente para você, estudante do IFRN.\n\nVeja um pouco sobre o que você pode fazer e aproveite!',
       image: phoneIlustration,
-      width: Dimensions.get('window').width - 70,
-      height: Dimensions.get('window').height - 375,
+      width: '85%',
     },
     {
       key: 'grades',
@@ -36,9 +35,8 @@ export default function Splash({navigation}) {
       text: 'Presenças e faltas.',
       image: grades,
       backgroundColor: '#febe29',
-      width: Dimensions.get('window').width - 130,
-      height: Dimensions.get('window').height - 260,
-      resizeMode: 'stretch',
+      width: '85%',
+      height: '50%',
     },
     {
       key: 'classes',
@@ -75,27 +73,30 @@ export default function Splash({navigation}) {
 
   function renderItem({item}) {
     return (
-      <Container>
-        <Text h2 white semibold style={{textAlign: 'center', width: 250}}>
-          {item.title}
-        </Text>
-        <Image
-          source={item.image}
-          style={{
-            width: item.width,
-            height: item.height,
-            resizeMode: item.resizeMode,
-            marginVertical: 30,
-            backgroundColor: 'transparent',
-          }}
-        />
-        <Text
-          white
-          medium
-          style={{paddingHorizontal: 30, textAlign: 'center', width: 320}}>
-          {item.text}
-        </Text>
-      </Container>
+      <SafeAreaView style={{flex: 1}}>
+        <Container>
+          <Text h2 white semibold style={{textAlign: 'center', width: 250}}>
+            {item.title}
+          </Text>
+          <Image
+            source={item.image}
+            style={{
+              flex: 0.8,
+              width: item.width,
+              height: item.height,
+              resizeMode: 'contain',
+              marginVertical: 30,
+              backgroundColor: 'transparent',
+            }}
+          />
+          <Text
+            white
+            medium
+            style={{paddingHorizontal: 30, textAlign: 'center', width: 320}}>
+            {item.text}
+          </Text>
+        </Container>
+      </SafeAreaView>
     );
   }
 
@@ -115,7 +116,13 @@ Splash.propTypes = {
     title: PropTypes.string,
     image: PropTypes.string,
     text: PropTypes.string,
+    width: PropTypes.number,
+    height: PropTypes.number,
+    resizeMode: PropTypes.string,
   }),
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
 };
 
 Splash.defaultProps = {

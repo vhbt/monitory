@@ -19,7 +19,7 @@ export default function App() {
       <Routes />
       <StatusBar
         backgroundColor={firstTime ? colors.primary : postSplashStatusBarColor}
-        barStyle="dark-content"
+        barStyle={firstTime ? 'light-content' : 'dark-content'}
       />
     </>
   );
