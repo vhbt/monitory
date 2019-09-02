@@ -25,7 +25,12 @@ Runs all the tests
 ```
 fastlane android internal
 ```
-Deploy a new internal test version to the Google Play - use version:[major|minor|fix] for versioning
+Deploy internal testto Google Play - version:[major|minor|fix]
+### android production
+```
+fastlane android production
+```
+Deploy production to Google Play - version:[major|minor|fix]
 
 ----
 

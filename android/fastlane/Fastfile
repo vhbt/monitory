@@ -36,7 +36,7 @@ platform :android do
   #   # You can also use other beta testing services here
   # end
 
-  desc "Deploy a new internal test version to the Google Play - use version:[major|minor|fix] for versioning"
+  desc "Deploy internal testto Google Play - version:[major|minor|fix]"
   lane :internal do |options|
 
     if (options[:version]=='major')
@@ -47,19 +47,35 @@ platform :android do
       gradle(task: "doFixVersionIncrement")
     end
 
-    gradle(task: "doBuildNumberIncrement")
-
     gradle(
       task: 'bundle',
       build_type: 'Release'
     )
+
+    versionName = prompt(
+      text: "Version name: "
+    )
+
+    versionCode = prompt(
+      text: "Build number: "
+    )
+
+    changelog = prompt(
+      text: "Changelog: ",
+      multi_line_end_keyword: "END"
+    )
+
+    changeLogFile = File.new("./metadata/android/pt-BR/changelogs/" + versionCode + ".txt","w")
+    changeLogFile.puts(versionName + "\n" + changelog)
+    changeLogFile.close
+
     upload_to_play_store(
       track: 'internal',
       skip_upload_apk: 'true'
     )
   end
 
-desc "Deploy a new production version to the Google Play - use version:[major|minor|fix] for versioning"
+desc "Deploy production to Google Play - version:[major|minor|fix]"
   lane :production do |options|
 
     if (options[:version]=='major')
@@ -70,12 +86,28 @@ desc "Deploy a new production version to the Google Play - use version:[major|mi
       gradle(task: "doFixVersionIncrement")
     end
 
-    gradle(task: "doBuildNumberIncrement")
-
     gradle(
       task: 'bundle',
       build_type: 'Release'
     )
+
+    versionName = prompt(
+      text: "Version name: "
+    )
+
+    versionCode = prompt(
+      text: "Build number: "
+    )
+
+    changelog = prompt(
+      text: "Changelog: ",
+      multi_line_end_keyword: "END"
+    )
+
+    changeLogFile = File.new("./metadata/android/pt-BR/changelogs/" + versionCode + ".txt","w")
+    changeLogFile.puts(versionName + "\n" + changelog)
+    changeLogFile.close
+
     upload_to_play_store(
       track: 'production',
       skip_upload_apk: 'true'
