@@ -15,7 +15,7 @@ import {
   TermsButton,
 } from './styles';
 
-import welcome from '../../../assets/welcome.png';
+import welcome from '../../../assets/images/welcome.png';
 
 export default function Welcome({navigation}) {
   const [showTerms, setShowTerms] = useState(false);

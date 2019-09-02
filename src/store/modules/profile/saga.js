@@ -135,7 +135,7 @@ export function* refresh() {
       token,
     });
 
-    if (!(response.status === 200)) {
+    if (response.status === 401) {
       yield put(logout());
       showMessage({
         type: 'info',

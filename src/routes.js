@@ -6,8 +6,11 @@ import {
   createBottomTabNavigator,
 } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
+import PropTypes from 'prop-types';
 
 import colors from './constants/theme';
+
+import Splash from './screens/Splash';
 
 import Welcome from './screens/Auth/Welcome';
 import Login from './screens/Auth/Login';
@@ -30,10 +33,24 @@ import SendToClasses from './screens/App/Student/Admin/Notifications/SendToClass
 import SelectClass from './screens/App/Student/VirtualClasses/SelectClass';
 import ViewClassOverview from './screens/App/Student/VirtualClasses/ViewClassOverview';
 
-export default (isSigned = false) =>
+function StudentIcon({tintColor}) {
+  return <Icon name="ios-school" size={32} color={tintColor} />;
+}
+
+export default (initialRoute = 'splash') =>
   createAppContainer(
     createSwitchNavigator(
       {
+        splash: createStackNavigator(
+          {
+            Splash,
+          },
+          {
+            defaultNavigationOptions: {
+              header: null,
+            },
+          },
+        ),
         auth: createStackNavigator(
           {
             Welcome,
@@ -91,9 +108,7 @@ export default (isSigned = false) =>
               ),
               navigationOptions: {
                 tabBarLabel: 'Aluno',
-                tabBarIcon: ({tintColor}) => (
-                  <Icon name="ios-school" size={32} color={tintColor} />
-                ),
+                tabBarIcon: StudentIcon,
               },
             },
             Profile,
@@ -114,7 +129,11 @@ export default (isSigned = false) =>
         ),
       },
       {
-        initialRouteName: isSigned ? 'app' : 'auth',
+        initialRouteName: initialRoute,
       },
     ),
   );
+
+StudentIcon.propTypes = {
+  tintColor: PropTypes.string.isRequired,
+};

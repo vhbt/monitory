@@ -80,7 +80,14 @@ export default function PostNews({navigation}) {
   }
 
   function handleChoosePhoto() {
-    const options = {noData: true};
+    const options = {
+      noData: true,
+      mediaType: 'photo',
+      title: 'Selecione um banner',
+      takePhotoButtonTitle: 'Tirar uma foto',
+      chooseFromLibraryButtonTitle: 'Escolher da biblioteca',
+      cancelButtonTitle: 'Cancelar',
+    };
 
     ImagePicker.showImagePicker(options, response => {
       if (response.uri) {

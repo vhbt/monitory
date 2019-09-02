@@ -45,13 +45,12 @@ export default function Home({navigation}) {
       formattedDate: format(
         parseISO(newsDataRaw.createdAt),
         "d 'de' MMMM 'às' HH:MM",
-        {
-          locale: ptbr,
-        },
+        {locale: ptbr},
       ),
     }));
 
     setNews(newsData);
+    setRefreshing(false);
   }
 
   useEffect(() => {
@@ -60,10 +59,7 @@ export default function Home({navigation}) {
 
   function refreshNews() {
     setRefreshing(true);
-
     getNews();
-
-    setRefreshing(false);
   }
 
   async function handleDelete(id) {
@@ -136,8 +132,7 @@ export default function Home({navigation}) {
           style={{
             height: 44,
             alignSelf: 'stretch',
-            marginLeft: Platform.OS === 'ios' ? 15 : 10,
-            marginRight: Platform.OS === 'ios' ? 15 : 10,
+            marginHorizontal: Platform.OS === 'ios' ? 15 : 10,
             marginBottom: Platform.OS === 'ios' ? 20 : 5,
           }}>
           <Text white>Fechar</Text>
@@ -223,11 +218,17 @@ export default function Home({navigation}) {
   );
 }
 
+function HomeIcon({tintColor}) {
+  return <Icon name="ios-home" size={32} color={tintColor} />;
+}
+
 Home.navigationOptions = {
   tabBarLabel: 'Home',
-  tabBarIcon: ({tintColor}) => (
-    <Icon name="ios-home" size={32} color={tintColor} />
-  ),
+  tabBarIcon: HomeIcon,
+};
+
+HomeIcon.propTypes = {
+  tintColor: PropTypes.string.isRequired,
 };
 
 Home.propTypes = {

@@ -113,7 +113,7 @@ export default function ViewClassOverview({navigation}) {
             loading ? (
               renderGradesShimmerRows(2, 140, 240, 'row')
             ) : (
-              <Text gray>Nenhuma aula publicada nos ultimos 30 dias. :(</Text>
+              <Text gray>Ainda não há nada aqui.</Text>
             )
           }
           ListHeaderComponent={<View style={{marginLeft: 30}} />}
@@ -164,7 +164,7 @@ export default function ViewClassOverview({navigation}) {
           )}
         />
       </View>
-      <View style={{marginTop: 15, height: '50%', marginHorizontal: 30}}>
+      <View style={{marginTop: 15, flex: 1, marginHorizontal: 30}}>
         <Text h3 black medium style={{marginBottom: 10}}>
           Materiais Postados
         </Text>
@@ -180,7 +180,7 @@ export default function ViewClassOverview({navigation}) {
                 alignItems: 'center',
               }}>
               <View style={{marginBottom: 5}}>
-                <Text black>{item.descricao}</Text>
+                <Text black>{item.descricao || 'Arquivo sem nome'}</Text>
                 <Text gray>{item.data_vinculacao}</Text>
               </View>
               <Icon
@@ -194,7 +194,7 @@ export default function ViewClassOverview({navigation}) {
           )}
           ListEmptyComponent={
             loading ? (
-              renderGradesShimmerRows(8, 32, 230)
+              renderGradesShimmerRows(5, 32, 230)
             ) : (
               <Text gray>Ainda não há nada aqui.</Text>
             )

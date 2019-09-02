@@ -6,7 +6,7 @@ export default reducers => {
     {
       key: 'monitory',
       storage,
-      whitelist: ['profile'],
+      whitelist: ['profile', 'app'],
     },
     reducers,
   );

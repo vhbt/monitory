@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {showMessage} from 'react-native-flash-message';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/Ionicons';
+import PropTypes from 'prop-types';
 
 import Button from '../../../components/Button';
 import Input from '../../../components/Input';
@@ -32,7 +33,7 @@ export default function Profile() {
   );
 
   const classYear = ['1', '2', '3', '4'];
-  const classTurn = ['Matutino', 'Vespertino'];
+  const classTurn = ['Matutino', 'Vespertino', 'Noturno'];
   const {id} = user;
 
   useEffect(() => {
@@ -121,9 +122,15 @@ export default function Profile() {
   );
 }
 
+function ProfileIcon({tintColor}) {
+  return <Icon name="ios-person" size={32} color={tintColor} />;
+}
+
 Profile.navigationOptions = {
   tabBarLabel: 'Perfil',
-  tabBarIcon: ({tintColor}) => (
-    <Icon name="ios-person" size={32} color={tintColor} />
-  ),
+  tabBarIcon: ProfileIcon,
+};
+
+ProfileIcon.propTypes = {
+  tintColor: PropTypes.string.isRequired,
 };
