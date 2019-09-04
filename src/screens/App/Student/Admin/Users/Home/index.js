@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, FlatList, ActivityIndicator} from 'react-native';
+import PropTypes from 'prop-types';
 
 import Text from '../../../../../../components/Text';
 
@@ -8,15 +9,16 @@ import colors from '../../../../../../constants/theme';
 
 import {Container, UserCard} from './styles';
 
-export default function Home() {
+export default function Home({navigation}) {
   const [page, setPage] = useState(1);
   const [users, setUsers] = useState([]);
   const [totalCount, setTotalCount] = useState('...');
 
   const [loading, setLoading] = useState(true);
   const [fetching, setFetching] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
-  async function getUsers() {
+  async function getUsers(shouldRefresh = false) {
     setLoading(true);
     const response = await api.get(`/users?limit=${5}&page=${page}`);
 
@@ -25,12 +27,18 @@ export default function Home() {
       smallCurso: user.curso.replace('Técnico de Nível Médio em ', ''),
     }));
 
-    setUsers(
-      users.length === 0 ? filteredResponse : [...users, ...filteredResponse],
-    );
+    if (refreshing || shouldRefresh) {
+      setUsers(filteredResponse);
+    } else {
+      setUsers(
+        users.length === 0 ? filteredResponse : [...users, ...filteredResponse],
+      );
+    }
+
     setTotalCount(response.data.totalCount);
     setLoading(false);
     setFetching(false);
+    setRefreshing(false);
   }
 
   useEffect(() => {
@@ -41,6 +49,16 @@ export default function Home() {
     if (totalCount > users.length && !fetching) {
       setFetching(true);
       setPage(page + 1);
+    }
+  }
+
+  async function handleRefresh() {
+    setRefreshing(true);
+
+    if (page === 1) {
+      getUsers(true);
+    } else {
+      setPage(1);
     }
   }
 
@@ -62,7 +80,8 @@ export default function Home() {
         data={users}
         keyExtractor={item => String(item.id)}
         renderItem={({item}) => (
-          <UserCard>
+          <UserCard
+            onPress={() => navigation.navigate('ViewStudent', {student: item})}>
             <Text black medium>
               {item.nome_usual} ({item.matricula})
             </Text>
@@ -75,6 +94,19 @@ export default function Home() {
         )}
         onEndReached={loadMore}
         onEndReachedThreshold={0.1}
+        onRefresh={handleRefresh}
+        refreshing={refreshing}
+        ListEmptyComponent={
+          loading ? (
+            <ActivityIndicator
+              size="large"
+              color={colors.primary}
+              style={{marginTop: 10}}
+            />
+          ) : (
+            <Text>Algo deu errado...</Text>
+          )
+        }
         ListFooterComponent={
           <View style={{paddingTop: 5}}>
             {loading && users.length > 0 ? (
@@ -90,3 +122,9 @@ export default function Home() {
     </Container>
   );
 }
+
+Home.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};

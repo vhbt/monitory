@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {FlatList, ActivityIndicator} from 'react-native';
+import {FlatList} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import PropTypes from 'prop-types';
@@ -82,6 +82,7 @@ export default function Report({navigation}) {
         keyExtractor={item => item.codigo_diario}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={renderGradesShimmerRows(5)}
+        ListTop
         renderItem={({item}) => (
           <GradesCard
             key={item.codigo_diario}
