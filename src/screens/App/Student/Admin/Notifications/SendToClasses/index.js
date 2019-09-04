@@ -74,7 +74,15 @@ export default function PostNews({navigation}) {
       navigation.navigate('StudentHome');
       setLoading(false);
     } catch (err) {
-      showMessage({type: 'danger', message: err.response.data.errors[0]});
+      if (err.response.detail) {
+        showMessage({type: 'danger', message: err.response.data.errors[0]});
+      } else {
+        showMessage({
+          type: 'danger',
+          message: 'Erro de conexão',
+          description: 'Verifique sua conexão com a internet.',
+        });
+      }
       setLoading(false);
     }
   }

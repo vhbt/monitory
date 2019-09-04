@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, FlatList, ActivityIndicator} from 'react-native';
+import {showMessage} from 'react-native-flash-message';
 import PropTypes from 'prop-types';
 
 import Text from '../../../../../../components/Text';
@@ -19,26 +20,41 @@ export default function Home({navigation}) {
   const [refreshing, setRefreshing] = useState(false);
 
   async function getUsers(shouldRefresh = false) {
-    setLoading(true);
-    const response = await api.get(`/users?limit=${5}&page=${page}`);
+    try {
+      setLoading(true);
+      const response = await api.get(`/users?limit=${5}&page=${page}`);
 
-    const filteredResponse = response.data.users.map(user => ({
-      ...user,
-      smallCurso: user.curso.replace('Técnico de Nível Médio em ', ''),
-    }));
+      const filteredResponse = response.data.users.map(user => ({
+        ...user,
+        smallCurso: user.curso.replace('Técnico de Nível Médio em ', ''),
+      }));
 
-    if (refreshing || shouldRefresh) {
-      setUsers(filteredResponse);
-    } else {
-      setUsers(
-        users.length === 0 ? filteredResponse : [...users, ...filteredResponse],
-      );
+      if (refreshing || shouldRefresh) {
+        setUsers(filteredResponse);
+      } else {
+        setUsers(
+          users.length === 0
+            ? filteredResponse
+            : [...users, ...filteredResponse],
+        );
+      }
+
+      setTotalCount(response.data.totalCount);
+      setLoading(false);
+      setFetching(false);
+      setRefreshing(false);
+    } catch (err) {
+      if (err.response.detail) {
+        showMessage({type: 'danger', message: err.response.data.errors[0]});
+      } else {
+        showMessage({
+          type: 'danger',
+          message: 'Erro de conexão',
+          description: 'Verifique sua conexão com a internet.',
+        });
+        navigation.goBack();
+      }
     }
-
-    setTotalCount(response.data.totalCount);
-    setLoading(false);
-    setFetching(false);
-    setRefreshing(false);
   }
 
   useEffect(() => {
@@ -126,5 +142,6 @@ export default function Home({navigation}) {
 Home.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
+    goBack: PropTypes.func,
   }).isRequired,
 };
