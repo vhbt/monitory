@@ -37,6 +37,7 @@ export default function profile(state = INITIAL_STATE, action) {
         draft.user.email = action.payload.email;
         draft.user.curso_ano = action.payload.curso_ano;
         draft.user.curso_turno = action.payload.curso_turno;
+        draft.user.subsequente = action.payload.subsequente;
         break;
       }
       case '@profile/UPDATE_USER_FAILED': {

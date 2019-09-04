@@ -30,6 +30,8 @@ import PostNews from './screens/App/Student/Admin/News/PostNews';
 import Notifications from './screens/App/Student/Admin/Notifications/Home';
 import SendToClasses from './screens/App/Student/Admin/Notifications/SendToClasses';
 
+import Users from './screens/App/Student/Admin/Users/Home';
+
 import SelectClass from './screens/App/Student/VirtualClasses/SelectClass';
 import ViewClassOverview from './screens/App/Student/VirtualClasses/ViewClassOverview';
 
@@ -84,11 +86,12 @@ export default (initialRoute = 'splash') =>
                   ViewReport,
                   ViewFullReport,
                   Schedules,
-                  PostNews,
-                  Notifications,
                   SendToClasses,
                   SelectClass,
                   ViewClassOverview,
+                  PostNews,
+                  Notifications,
+                  Users,
                 },
                 {
                   defaultNavigationOptions: {

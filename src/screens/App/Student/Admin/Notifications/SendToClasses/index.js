@@ -83,7 +83,7 @@ export default function PostNews({navigation}) {
     <SafeAreaView style={{flex: 1}}>
       <KeyboardAwareScrollView style={{flex: 1, backgroundColor: '#fafafa'}}>
         <Container>
-          <Text h1 style={{marginBottom: 20}}>
+          <Text h1 medium style={{marginBottom: 20}}>
             Enviar Notificação
           </Text>
           <SectionedMultiSelect

@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import Text from '../../../../components/Text';
 import Button from '../../../../components/Button';
 
+import colors from '../../../../constants/theme';
+
 import {Container} from './styles';
 
 export default function Home({navigation}) {
@@ -37,14 +39,22 @@ export default function Home({navigation}) {
           {isAdmin ? (
             <>
               <Button
+                colors={[colors.accent, colors.accent]}
                 style={{height: 44, alignSelf: 'stretch', marginTop: 30}}
                 onPress={() => navigation.navigate('PostNews')}>
                 <Text white>Postar Notícia</Text>
               </Button>
               <Button
+                colors={[colors.accent, colors.accent]}
                 style={{height: 44, alignSelf: 'stretch', marginTop: 5}}
                 onPress={() => navigation.navigate('Notifications')}>
                 <Text white>Notificações</Text>
+              </Button>
+              <Button
+                colors={[colors.accent, colors.accent]}
+                style={{height: 44, alignSelf: 'stretch', marginTop: 5}}
+                onPress={() => navigation.navigate('Users')}>
+                <Text white>Alunos</Text>
               </Button>
             </>
           ) : null}

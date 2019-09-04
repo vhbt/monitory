@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {View, FlatList} from 'react-native';
+import {useSelector} from 'react-redux';
+import {FlatList} from 'react-native';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import {showMessage} from 'react-native-flash-message';
+import PropTypes from 'prop-types';
 
 import Text from '../../../../../components/Text';
 import Button from '../../../../../components/Button';
@@ -12,6 +14,7 @@ import {Container} from './styles';
 
 export default function SelectClass({navigation}) {
   const [myClasses, setMyClasses] = useState([]);
+  const user = useSelector(state => state.profile.user);
 
   async function getClasses() {
     try {
@@ -19,9 +22,15 @@ export default function SelectClass({navigation}) {
         'minhas-informacoes/meus-periodos-letivos/',
       );
 
-      const periods = responsePeriods.data.filter(
-        period => period.periodo_letivo !== 2,
-      );
+      let periods = [];
+
+      if (user.subsequente) {
+        periods = responsePeriods.data;
+      } else {
+        periods = responsePeriods.data.filter(
+          period => period.periodo_letivo !== 2,
+        );
+      }
 
       const currentPeriod = periods[periods.length - 1];
       const formattedCurrentPeriod = `${currentPeriod.ano_letivo}/${currentPeriod.periodo_letivo}`;
@@ -102,3 +111,10 @@ export default function SelectClass({navigation}) {
     </Container>
   );
 }
+
+SelectClass.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+    goBack: PropTypes.func,
+  }).isRequired,
+};

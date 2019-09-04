@@ -146,7 +146,7 @@ export default function Home({navigation}) {
       <Header />
       <ScrollView>
         <View style={{paddingHorizontal: 30, paddingVertical: 10}}>
-          {user.curso_ano && user.curso_turno ? null : (
+          {user.curso_ano || user.curso_turno ? null : (
             <ImportantWarning
               content="Voce ainda não configurou seu perfil. Clique aqui."
               onPress={() => navigation.navigate('Profile')}

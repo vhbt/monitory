@@ -37,16 +37,18 @@ export default function Profile() {
   const {id} = user;
 
   useEffect(() => {
-    if (!(user.curso_ano && user.curso_turno)) {
+    if (!(user.curso_ano || user.curso_turno)) {
       showMessage({
         type: 'info',
         message: 'Complete seu perfil',
-        description:
-          'Por favor, preencha seu e-mail pessoal, ano de curso e turno.',
+        description: 'Por favor, preencha seu ano de curso e turno.',
         duration: 3000,
       });
     }
   }, []);
+
+  const cursoAnoStringCondition =
+    user.curso_turno === 'Noturno' ? 'Período' : 'Ano';
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#f5f7fb'}}>
@@ -69,15 +71,14 @@ export default function Profile() {
           <Text style={{marginBottom: 15}}>{user.curso}</Text>
           <View>
             <Input
-              label="E-mail pessoal"
+              label="E-mail pessoal (opcional)"
               keyboardType="email-address"
               onChangeText={setEmail}
               value={email}
               style={{marginBottom: 10}}
             />
-
             <Picker
-              label="Ano"
+              label={user.curso_ano ? cursoAnoStringCondition : 'Ano/Período'}
               items={classYear}
               selectedValue={String(selectedClassYear)}
               onValueChange={value => setSelectedClassYear(value)}

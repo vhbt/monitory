@@ -6,7 +6,7 @@ import {
   Modal,
   SafeAreaView,
 } from 'react-native';
-import {parseISO, format} from 'date-fns';
+import {format} from 'date-fns';
 import ptbr from 'date-fns/locale/pt-BR';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import Config from 'react-native-config';
@@ -135,13 +135,13 @@ export default function Home({navigation}) {
           renderItem={({item}) => (
             <NotificationCard
               style={{
-                backgroundColor: '#fff',
+                backgroundColor: '#f5f7fb',
                 borderRadius: 4,
                 padding: 10,
                 marginVertical: 5,
               }}
               onPress={() => setShowNotificationDetails(item)}>
-              <Text medium>{item.headings.en}</Text>
+              <Text medium>{item.headings.en || 'Sem título'}</Text>
               <Text>{item.shortContent}</Text>
               {item.included_segments.map(segment => (
                 <Text key={segment} gray style={{marginTop: 5}}>
@@ -152,14 +152,9 @@ export default function Home({navigation}) {
           )}
           ListEmptyComponent={
             loading ? (
-              // <ActivityIndicator
-              //   size="large"
-              //   color={colors.primary}
-              //   style={{marginTop: 30}}
-              // />
               renderNotificationShimmerRows(7)
             ) : (
-              <Text black style={{marginTop: 30}}>
+              <Text gray style={{marginTop: 30}}>
                 Aguardando a primeira notificação.
               </Text>
             )

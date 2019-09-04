@@ -18,78 +18,34 @@ import Button from '../../../../components/Button';
 
 import colors from '../../../../constants/theme';
 
+import {api} from '../../../../services/api';
+
 import {Container} from './styles';
 
 export default function SelectSchedules({navigation}) {
   const user = useSelector(state => state.profile.user);
   const [showImage, setShowImage] = useState(null);
+  const [myClasses, setMyClasses] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const classes = [
-    {
-      name: 'Informática',
-      year: 1,
-      turn: 'Matutino',
-      path: `${Config.STATIC_FILES_URL}/info1m.png`,
-    },
-    {
-      name: 'Informática',
-      year: 2,
-      turn: 'Matutino',
-      path: `${Config.STATIC_FILES_URL}/info2m.png`,
-    },
-    {
-      name: 'Informática',
-      year: 3,
-      turn: 'Matutino',
-      path: `${Config.STATIC_FILES_URL}/info3m.png`,
-    },
-    {
-      name: 'Informática',
-      year: 4,
-      turn: 'Matutino',
-      path: `${Config.STATIC_FILES_URL}/info4m.png`,
-    },
-    {
-      name: 'Mecatrônica',
-      year: 1,
-      turn: 'Matutino',
-      path: `${Config.STATIC_FILES_URL}/meca1m.png`,
-    },
-    {
-      name: 'Mecatrônica',
-      year: 2,
-      turn: 'Matutino',
-      path: `${Config.STATIC_FILES_URL}/meca2m.png`,
-    },
-    {
-      name: 'Mecatrônica',
-      year: 3,
-      turn: 'Matutino',
-      path: `${Config.STATIC_FILES_URL}/meca3m.png`,
-    },
-    {
-      name: 'Mecatrônica',
-      year: 4,
-      turn: 'Matutino',
-      path: `${Config.STATIC_FILES_URL}/meca4m.png`,
-    },
-  ];
+  async function getClasses() {
+    const classesResponse = await api.get('/schedules');
+    const classes = classesResponse.data;
 
-  const myClasses = classes.filter(mc => {
-    if (user.curso_ano && user.curso_turno) {
-      return (
-        user.curso.includes(mc.name) &&
-        Number(user.curso_ano) === mc.year &&
-        user.curso_turno === mc.turn
-      );
-    }
-    return mc;
-  });
+    const filteredClasses = classes.filter(mc => {
+      if (user.curso_ano && user.curso_turno) {
+        return (
+          user.curso === mc.course.description &&
+          user.curso_ano === Number(mc.year) &&
+          user.curso_turno === mc.turn
+        );
+      }
+      return mc;
+    });
 
-  useEffect(() => {
-    if (myClasses.length === 1) {
-      setShowImage(myClasses[0].path);
-    } else {
+    if (filteredClasses.length === 1) {
+      setShowImage(`${Config.STATIC_FILES_URL}/${filteredClasses[0].name}.png`);
+    } else if (!user.curso_ano || !user.curso_turno) {
       showMessage({
         type: 'info',
         duration: 6000,
@@ -97,6 +53,13 @@ export default function SelectSchedules({navigation}) {
           'Configure o seu curso e ano na aba Perfil para abrir o horário de sua turma automaticamente.',
       });
     }
+
+    setMyClasses(filteredClasses);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    getClasses();
   }, []);
 
   function renderImage() {
@@ -135,22 +98,30 @@ export default function SelectSchedules({navigation}) {
     <Container>
       <Text h1>De qual turma e turno?</Text>
       <FlatList
+        showsVerticalScrollIndicator={false}
         data={myClasses}
         keyExtractor={item => item.name + item.year + item.turn}
         style={{marginTop: 30}}
         ListEmptyComponent={
-          <ActivityIndicator
-            size="large"
-            color={colors.primary}
-            style={{marginTop: 30}}
-          />
+          loading ? (
+            <ActivityIndicator
+              size="large"
+              color={colors.primary}
+              style={{marginTop: 30}}
+            />
+          ) : (
+            <Text gray style={{textAlign: 'center'}}>
+              Nenhum horário encontrado para sua turma... Tem certeza que
+              escolheu o ano/período e turno certo?
+            </Text>
+          )
         }
         renderItem={({item}) => (
           <Button
             style={{height: 44, alignSelf: 'stretch'}}
             onPress={() => setShowImage(item.path)}>
             <Text white>
-              {item.name} {item.year} - {item.turn}
+              {item.name} ({item.turn})
             </Text>
           </Button>
         )}
