@@ -34,11 +34,23 @@ export function* login({payload}) {
 
     const user = response.data;
 
-    if (user.campus !== 'PAR' || user.tipo_vinculo !== 'Aluno') {
+    if (
+      user.matricula &&
+      (user.campus !== 'PAR' || user.tipo_vinculo !== 'Aluno')
+    ) {
       showMessage({
         type: 'danger',
         message:
           'Por enquanto o Monitory só está disponivel para alunos do IFRN Parnamirim.',
+        duration: 3000,
+      });
+      yield put(loginFailed());
+      return;
+    }
+    if (!user.matricula && user.name === 'Error') {
+      showMessage({
+        type: 'danger',
+        message: user,
         duration: 3000,
       });
       yield put(loginFailed());
@@ -171,8 +183,17 @@ export function* refresh() {
   }
 }
 
-export function logOut() {
-  OneSignal.removeExternalUserId();
+export function* logOut() {
+  try {
+    OneSignal.removeExternalUserId();
+
+    const state = yield select();
+    const {oneSignalPlayerId} = state.app;
+
+    return yield call(api.delete, '/playerid', {data: {oneSignalPlayerId}});
+  } catch (err) {
+    return err;
+  }
 }
 
 export default all([
