@@ -3,3 +3,10 @@ export function unsetFirstTime() {
     type: '@app/UNSET_FIRST_TIME',
   };
 }
+
+export function setOneSignalPlayerId({userId}) {
+  return {
+    type: '@app/SET_ONE_SIGNAL_PLAYER_ID',
+    payload: {userId},
+  };
+}

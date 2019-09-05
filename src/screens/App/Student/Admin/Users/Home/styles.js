@@ -11,4 +11,5 @@ export const UserCard = styled.TouchableOpacity`
   background: #fff;
   border-radius: 4px;
   margin-bottom: 10px;
+  border: 1px solid #f3f2f3;
 `;

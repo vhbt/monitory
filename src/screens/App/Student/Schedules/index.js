@@ -100,7 +100,7 @@ export default function SelectSchedules({navigation}) {
       <FlatList
         showsVerticalScrollIndicator={false}
         data={myClasses}
-        keyExtractor={item => item.name + item.year + item.turn}
+        keyExtractor={item => `${item.name}${item.year}${item.turn}`}
         style={{marginTop: 30}}
         ListEmptyComponent={
           loading ? (

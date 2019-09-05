@@ -22,6 +22,7 @@ import {
 export default function Profile() {
   const dispatch = useDispatch();
   const user = useSelector(state => state.profile.user);
+  const app = useSelector(state => state.app);
   const loading = useSelector(state => state.profile.loading);
 
   const [email, setEmail] = useState(user.email);
@@ -31,6 +32,7 @@ export default function Profile() {
   const [selectedClassTurn, setSelectedClassTurn] = useState(
     user.curso_turno || 'Matutino',
   );
+  const playerId = app.oneSignalPlayerId;
 
   const classYear = ['1', '2', '3', '4'];
   const classTurn = ['Matutino', 'Vespertino', 'Noturno'];
@@ -100,6 +102,7 @@ export default function Profile() {
                     email,
                     selectedClassYear,
                     selectedClassTurn,
+                    playerId,
                   }),
                 )
               }>

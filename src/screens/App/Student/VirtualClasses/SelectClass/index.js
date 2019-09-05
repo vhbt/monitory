@@ -24,7 +24,7 @@ export default function SelectClass({navigation}) {
 
       let periods = [];
 
-      if (user.subsequente) {
+      if (user.curso_turno === 'Noturno') {
         periods = responsePeriods.data;
       } else {
         periods = responsePeriods.data.filter(

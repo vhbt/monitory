@@ -23,10 +23,13 @@ export function* login({payload}) {
       password,
     });
 
+    const state = yield select();
+    const {oneSignalPlayerId} = state.app;
     const {token} = suap_response.data;
 
     const response = yield call(api.post, '/users', {
       token,
+      oneSignalPlayerId,
     });
 
     const user = response.data;
@@ -76,12 +79,14 @@ export function* updateUser({payload}) {
       email,
       selectedClassYear: curso_ano,
       selectedClassTurn: curso_turno,
+      playerId,
     } = payload;
 
     const data = {
       id,
       curso_ano,
       curso_turno,
+      playerId,
     };
 
     if (email && email !== '') {
