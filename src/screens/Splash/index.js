@@ -73,8 +73,14 @@ export default function Splash() {
 
   function renderItem({item}) {
     return (
-      <SafeAreaView style={{flex: 1}}>
-        <Container>
+      <Container>
+        <SafeAreaView
+          style={{
+            flex: 1,
+            paddingHorizontal: 30,
+            background: '#f5f7fb',
+            alignItems: 'center',
+          }}>
           <Text h2 white semibold style={{textAlign: 'center', width: 250}}>
             {item.title}
           </Text>
@@ -95,8 +101,8 @@ export default function Splash() {
             style={{paddingHorizontal: 30, textAlign: 'center', width: 320}}>
             {item.text}
           </Text>
-        </Container>
-      </SafeAreaView>
+        </SafeAreaView>
+      </Container>
     );
   }
 

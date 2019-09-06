@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import 'react-native-gesture-handler';
-import {Provider} from 'react-redux';
+import {Provider useDispatch} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {Alert} from 'react-native';
 import FlashMessage from 'react-native-flash-message';
@@ -11,16 +11,22 @@ import {
 
 import './config/ReactotronConfig';
 
+import { resetLoading } from './store/modules/profile/actions'
+
 import {store, persistor} from './store';
 import App from './App';
 
 export default function Index() {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     setJSExceptionHandler(error => {
+      dispatch(resetLoading());
       Alert.alert('Erro!', error);
     });
 
     setNativeExceptionHandler(exceptionString => {
+      dispatch(resetLoading());
       Alert.alert('Erro!', exceptionString);
     });
   }, []);
