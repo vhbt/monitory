@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, FlatList, ActivityIndicator} from 'react-native';
+import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import {showMessage} from 'react-native-flash-message';
 import PropTypes from 'prop-types';
 
@@ -13,7 +14,7 @@ import {Container, UserCard} from './styles';
 export default function Home({navigation}) {
   const [page, setPage] = useState(1);
   const [users, setUsers] = useState([]);
-  const [totalCount, setTotalCount] = useState('...');
+  const [totalCount, setTotalCount] = useState(null);
 
   const [loading, setLoading] = useState(true);
   const [fetching, setFetching] = useState(false);
@@ -22,7 +23,7 @@ export default function Home({navigation}) {
   async function getUsers(shouldRefresh = false) {
     try {
       setLoading(true);
-      const response = await api.get(`/users?limit=${5}&page=${page}`);
+      const response = await api.get(`/users?limit=${12}&page=${page}`);
 
       const filteredResponse = response.data.users.map(user => ({
         ...user,
@@ -78,18 +79,44 @@ export default function Home({navigation}) {
     }
   }
 
+  function renderNotificationShimmerRows(numberOfrows) {
+    const shimmerRows = [];
+    for (let i = 0; i < numberOfrows; i += 1) {
+      shimmerRows.push(
+        <ShimmerPlaceholder
+          key={i}
+          autoRun
+          hasBorder
+          style={{
+            width: '100%',
+            height: 100,
+            borderRadius: 4,
+            marginBottom: 10,
+          }}
+        />,
+      );
+    }
+
+    return <>{shimmerRows}</>;
+  }
+
   return (
     <Container>
       <Text h1 black medium style={{marginBottom: 15}}>
         Alunos
       </Text>
 
-      <View style={{flexDirection: 'row'}}>
-        <Text>Total: </Text>
-        <Text black bold>
-          {totalCount}
-        </Text>
-      </View>
+      <ShimmerPlaceholder
+        autoRun
+        visible={totalCount !== null}
+        style={{height: 20, width: 80}}>
+        <View style={{flexDirection: 'row'}}>
+          <Text>Total: </Text>
+          <Text black bold>
+            {totalCount}
+          </Text>
+        </View>
+      </ShimmerPlaceholder>
       <FlatList
         showsVerticalScrollIndicator={false}
         style={{marginTop: 15}}
@@ -114,11 +141,7 @@ export default function Home({navigation}) {
         refreshing={refreshing}
         ListEmptyComponent={
           loading ? (
-            <ActivityIndicator
-              size="large"
-              color={colors.primary}
-              style={{marginTop: 10}}
-            />
+            renderNotificationShimmerRows(7)
           ) : (
             <Text>Algo deu errado...</Text>
           )

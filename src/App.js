@@ -1,11 +1,16 @@
 import React, {useEffect} from 'react';
-import {StatusBar} from 'react-native';
+import {StatusBar, Alert} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import OneSignal from 'react-native-onesignal';
 import Config from 'react-native-config';
+import {
+  setJSExceptionHandler,
+  setNativeExceptionHandler,
+} from 'react-native-exception-handler';
 
 import colors from './constants/theme';
 
+import {resetLoading} from './store/modules/profile/actions';
 import {setOneSignalPlayerId} from './store/modules/app/actions';
 
 import createRouter from './routes';
@@ -19,6 +24,18 @@ export default function App() {
   const postSplashRoute = signed ? 'app' : 'auth';
   const postSplashStatusBarColor = signed ? '#f5f7fb' : '#fff';
   const Routes = createRouter(firstTime ? 'splash' : postSplashRoute);
+
+  useEffect(() => {
+    setJSExceptionHandler(error => {
+      dispatch(resetLoading());
+      Alert.alert('Erro!', error);
+    });
+
+    setNativeExceptionHandler(exceptionString => {
+      dispatch(resetLoading());
+      Alert.alert('Erro!', exceptionString);
+    });
+  }, []);
 
   function onIds(id) {
     dispatch(setOneSignalPlayerId(id));

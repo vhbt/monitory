@@ -10,31 +10,31 @@ export default function ViewStudent({navigation}) {
 
   return (
     <Container>
-      <Text black semibold style={{marginTop: 10}}>
+      <Text gray style={{marginTop: 10}}>
         Matrícula
       </Text>
       <Text>{student.matricula}</Text>
-      <Text black semibold style={{marginTop: 5}}>
+      <Text gray style={{marginTop: 10}}>
         Nome Completo
       </Text>
       <Text>{student.nome_completo}</Text>
-      <Text black semibold style={{marginTop: 5}}>
+      <Text gray style={{marginTop: 10}}>
         Email SUAP
       </Text>
-      <Text>{student.email_suap}</Text>
-      <Text black semibold style={{marginTop: 5}}>
+      <Text>{student.email_suap || 'não tem'}</Text>
+      <Text gray style={{marginTop: 10}}>
         Email pessoal
       </Text>
       <Text>{student.email_suap || 'não configurou'}</Text>
-      <Text black semibold style={{marginTop: 5}}>
+      <Text gray style={{marginTop: 10}}>
         Curso
       </Text>
       <Text>{student.curso}</Text>
-      <Text black semibold style={{marginTop: 5}}>
+      <Text gray style={{marginTop: 10}}>
         Ano
       </Text>
       <Text>{student.curso_ano || 'não configurou'}</Text>
-      <Text black semibold style={{marginTop: 5}}>
+      <Text gray style={{marginTop: 10}}>
         Turno
       </Text>
       <Text>{student.curso_turno || 'não configurou'}</Text>
