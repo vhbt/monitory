@@ -66,7 +66,7 @@
 		00E356F21AD99517003FC87E /* monitoryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = monitoryTests.m; sourceTree = "<group>"; };
 		0826D6B7A8E4031FAC6BE343 /* Pods-monitoryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-monitoryTests.release.xcconfig"; path = "Target Support Files/Pods-monitoryTests/Pods-monitoryTests.release.xcconfig"; sourceTree = "<group>"; };
 		109FF74C77B0E09C3F2A9DE0 /* libPods-monitory-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-monitory-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07F961A680F5B00A75B9A /* monitory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = monitory.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* Monitory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Monitory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = monitory/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = monitory/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -76,6 +76,7 @@
 		14F2BA9E92EBC6D9B469C932 /* libPods-monitory-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-monitory-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AAC6F643E354A20920809A2 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		212C1641BC9B4CC598C101EA /* SFProText-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SFProText-Medium.ttf"; path = "../src/assets/fonts/SFProText-Medium.ttf"; sourceTree = "<group>"; };
+		229CECE62B83ED4A452AC90B /* Pods-monitory-tvOSTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-monitory-tvOSTests.staging.xcconfig"; path = "Target Support Files/Pods-monitory-tvOSTests/Pods-monitory-tvOSTests.staging.xcconfig"; sourceTree = "<group>"; };
 		25BB76DDB82341678E271FFF /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* monitory-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "monitory-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* monitory-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "monitory-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,11 +90,14 @@
 		5B669ACB82D34FC4B515EFB7 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		62772DBE5D764C4F87278549 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		6378BEC77FD998072F5D7169 /* Pods-monitory-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-monitory-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-monitory-tvOS/Pods-monitory-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		67215CC2315168E6C5D72E6B /* Pods-monitoryTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-monitoryTests.staging.xcconfig"; path = "Target Support Files/Pods-monitoryTests/Pods-monitoryTests.staging.xcconfig"; sourceTree = "<group>"; };
 		71B6E5AE81DA69E66C52A73F /* Pods-monitory-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-monitory-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-monitory-tvOSTests/Pods-monitory-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		73ECBA3311894C4D98594C96 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		83799A485A6E7A5C4A4076EE /* Pods-monitory.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-monitory.debug.xcconfig"; path = "Target Support Files/Pods-monitory/Pods-monitory.debug.xcconfig"; sourceTree = "<group>"; };
+		9BF8DB720E52B163EA0938E0 /* Pods-monitory.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-monitory.staging.xcconfig"; path = "Target Support Files/Pods-monitory/Pods-monitory.staging.xcconfig"; sourceTree = "<group>"; };
 		A3BD337E1DF60E2DA2253506 /* Pods-monitoryTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-monitoryTests.debug.xcconfig"; path = "Target Support Files/Pods-monitoryTests/Pods-monitoryTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A7E7DF78C6A84D74A7C2750E /* SFProText-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SFProText-Bold.ttf"; path = "../src/assets/fonts/SFProText-Bold.ttf"; sourceTree = "<group>"; };
+		AFF8B46E36442D7979CFD0AD /* Pods-monitory-tvOS.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-monitory-tvOS.staging.xcconfig"; path = "Target Support Files/Pods-monitory-tvOS/Pods-monitory-tvOS.staging.xcconfig"; sourceTree = "<group>"; };
 		BE02876EFE36495C8237224E /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		C765FE4F13E237060693BC08 /* Pods-monitory-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-monitory-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-monitory-tvOSTests/Pods-monitory-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		C7749838F0E84D64BB97A3C0 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
@@ -217,7 +221,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* monitory.app */,
+				13B07F961A680F5B00A75B9A /* Monitory.app */,
 				00E356EE1AD99517003FC87E /* monitoryTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* monitory-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* monitory-tvOSTests.xctest */,
@@ -236,6 +240,10 @@
 				C765FE4F13E237060693BC08 /* Pods-monitory-tvOSTests.release.xcconfig */,
 				A3BD337E1DF60E2DA2253506 /* Pods-monitoryTests.debug.xcconfig */,
 				0826D6B7A8E4031FAC6BE343 /* Pods-monitoryTests.release.xcconfig */,
+				9BF8DB720E52B163EA0938E0 /* Pods-monitory.staging.xcconfig */,
+				AFF8B46E36442D7979CFD0AD /* Pods-monitory-tvOS.staging.xcconfig */,
+				229CECE62B83ED4A452AC90B /* Pods-monitory-tvOSTests.staging.xcconfig */,
+				67215CC2315168E6C5D72E6B /* Pods-monitoryTests.staging.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -307,7 +315,7 @@
 			);
 			name = monitory;
 			productName = monitory;
-			productReference = 13B07F961A680F5B00A75B9A /* monitory.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Monitory.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* monitory-tvOS */ = {
@@ -779,7 +787,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 83799A485A6E7A5C4A4076EE /* Pods-monitory.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				APP_DISPLAY_NAME = Monitory;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
+				BUNDLE_ID_SUFFIX = "";
 				CODE_SIGN_ENTITLEMENTS = monitory/monitory.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
@@ -793,8 +803,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.monitory;
-				PRODUCT_NAME = monitory;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vitorhariel.monitory;
+				PRODUCT_NAME = Monitory;
 				PROVISIONING_PROFILE_SPECIFIER = Development;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -804,7 +814,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA712AC02465C6633F9AB5A2 /* Pods-monitory.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				APP_DISPLAY_NAME = Monitory;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
+				BUNDLE_ID_SUFFIX = "";
 				CODE_SIGN_ENTITLEMENTS = monitory/monitory.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
@@ -817,8 +829,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.monitory;
-				PRODUCT_NAME = monitory;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vitorhariel.monitory;
+				PRODUCT_NAME = Monitory;
 				PROVISIONING_PROFILE_SPECIFIER = Production;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -983,12 +995,15 @@
 		};
 		582915F52322A6D500EB64F3 /* Staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FA712AC02465C6633F9AB5A2 /* Pods-monitory.release.xcconfig */;
+			baseConfigurationReference = 9BF8DB720E52B163EA0938E0 /* Pods-monitory.staging.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				APP_DISPLAY_NAME = "Monitory Stg";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
+				BUNDLE_ID_SUFFIX = .stg;
 				CODE_SIGN_ENTITLEMENTS = monitory/monitory.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2M39J86YJU;
 				INFOPLIST_FILE = monitory/Info.plist;
@@ -998,16 +1013,17 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.monitory;
-				PRODUCT_NAME = monitory;
-				PROVISIONING_PROFILE_SPECIFIER = AdHoc;
+				PODS_CONFIGURATION_BUILD_DIR = "${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.vitorhariel.monitory;
+				PRODUCT_NAME = "Monitory Stg";
+				PROVISIONING_PROFILE_SPECIFIER = AdHocNEW;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Staging;
 		};
 		582915F62322A6D500EB64F3 /* Staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0826D6B7A8E4031FAC6BE343 /* Pods-monitoryTests.release.xcconfig */;
+			baseConfigurationReference = 67215CC2315168E6C5D72E6B /* Pods-monitoryTests.staging.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -1028,7 +1044,7 @@
 		};
 		582915F72322A6D500EB64F3 /* Staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F8EC8CF5A1DF76F00AC0E99E /* Pods-monitory-tvOS.release.xcconfig */;
+			baseConfigurationReference = AFF8B46E36442D7979CFD0AD /* Pods-monitory-tvOS.staging.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1056,7 +1072,7 @@
 		};
 		582915F82322A6D500EB64F3 /* Staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C765FE4F13E237060693BC08 /* Pods-monitory-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = 229CECE62B83ED4A452AC90B /* Pods-monitory-tvOSTests.staging.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;

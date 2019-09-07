@@ -5,11 +5,11 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Monitory</string>
+	<string>${APP_DISPLAY_NAME}</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)${BUNDLE_ID_SUFFIX}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -40,17 +40,17 @@
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) gostaria de acessar sua câmera.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>$(PRODUCT_NAME) utiliza bibliotecas que requerem acesso a sua localização sempre e durante o uso do app. Porém elas não são utilizadas</string>
+	<string>$(PRODUCT_NAME) utiliza bibliotecas que requerem acesso a sua localização sempre e durante o uso do app. Porém elas não são utilizadas.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>$(PRODUCT_NAME) utiliza bibliotecas que sempre requerem acesso a sua localização. Porém elas não são utilizadas</string>
+	<string>$(PRODUCT_NAME) utiliza bibliotecas que sempre requerem acesso a sua localização. Porém elas não são utilizadas.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>$(PRODUCT_NAME) utiliza bibliotecas que requerem acesso a sua localização durante o uso do app. Porém elas não são utilizadas</string>
+	<string>$(PRODUCT_NAME) utiliza bibliotecas que requerem acesso a sua localização durante o uso do app. Porém elas não são utilizadas.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>$(PRODUCT_NAME) gostaria de acessar seu microfone (para videos)</string>
+	<string>$(PRODUCT_NAME) gostaria de acessar seu microfone (para videos).</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>$(PRODUCT_NAME) gostaria de salvar fotos na sua galeria</string>
+	<string>$(PRODUCT_NAME) gostaria de salvar fotos na sua galeria.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) gostaria de acessar a sua galeria</string>
+	<string>$(PRODUCT_NAME) gostaria de acessar a sua galeria.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

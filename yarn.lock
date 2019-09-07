@@ -2182,6 +2182,20 @@ concat-stream@^1.6.0:
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
 
+configcat-common@1.1.20:
+  version "1.1.20"
+  resolved "https://registry.yarnpkg.com/configcat-common/-/configcat-common-1.1.20.tgz#2ea76736a2793c2998802e41b2e99f416695a024"
+  integrity sha512-JWcxKbBzpAKMut7rXN1XUB/mblHFBNUYDX9JAq0tIv3DCiBHNak6gfzIiVXdNetXD+HwJNBKPBAO2Gk9ZQ/JDw==
+  dependencies:
+    js-sha1 "^0.6.0"
+
+configcat-js@^1.1.19:
+  version "1.1.19"
+  resolved "https://registry.yarnpkg.com/configcat-js/-/configcat-js-1.1.19.tgz#2d5633ee2e8124fc982f39f5ff5ade7cc48724fe"
+  integrity sha512-PmLpIxRT8SmCWNCxEZuEg8WyfQcwpIZcflL0RzAkhkCZOWg+iuTz9m8RHVnx91IUqdw7UYuz+duKtBRviPLCYA==
+  dependencies:
+    configcat-common "1.1.20"
+
 configstore@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/configstore/-/configstore-4.0.0.tgz#5933311e95d3687efb592c528b922d9262d227e7"
@@ -4593,6 +4607,11 @@ jetifier@^1.6.2, jetifier@^1.6.4:
   resolved "https://registry.yarnpkg.com/jetifier/-/jetifier-1.6.4.tgz#6159db8e275d97980d26162897a0648b6d4a3222"
   integrity sha512-+f/4OLeqY8RAmXnonI1ffeY1DR8kMNJPhv5WMFehchf7U71cjMQVKkOz1n6asz6kfVoAqKNWJz1A/18i18AcXA==
 
+js-sha1@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/js-sha1/-/js-sha1-0.6.0.tgz#adbee10f0e8e18aa07cdea807cf08e9183dbc7f9"
+  integrity sha512-01gwBFreYydzmU9BmZxpVk6svJJHrVxEN3IOiGl6VO93bVKYETJ0sIth6DASI6mIFdt7NmfX9UiByRzsYHGU9w==
+
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
@@ -6516,6 +6535,11 @@ react-native-config@^0.11.7:
   version "0.11.7"
   resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-0.11.7.tgz#a2b323f2ecd76a4df88cbb6bc86eaa2ef9febee7"
   integrity sha512-dn5s+zhwLyE25vRT/vaEtLk/j8ZL1UZKvejORNDWakSwpOnLmFurFeaZV83IqkPlfWHXHFdsYe2IRYG1WN4WkQ==
+
+react-native-device-info@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-2.3.2.tgz#db2b8f135aaf2515583e367ab791dcc7d2f0d14c"
+  integrity sha512-ccpPuUbwhw5uYdVwN1UJp6ykMZz6U/u82HNM3oJ7O6MP8RIMlMDkHbqR4O0sDtUSuRMGiqqRzFtmOLFYeQ0ODw==
 
 react-native-exception-handler@^2.10.8:
   version "2.10.8"

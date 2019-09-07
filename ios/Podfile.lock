@@ -91,6 +91,8 @@ PODS:
     - React-Core (= 0.60.5)
   - ReactNativeExceptionHandler (2.10.8):
     - React
+  - RNDeviceInfo (2.3.2):
+    - React
   - RNGestureHandler (1.4.1):
     - React
   - RNSVG (9.8.4):
@@ -125,6 +127,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-RCTWebSocket (from `../node_modules/react-native/Libraries/WebSocket`)
   - ReactNativeExceptionHandler (from `../node_modules/react-native-exception-handler`)
+  - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
@@ -186,6 +189,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/WebSocket"
   ReactNativeExceptionHandler:
     :path: "../node_modules/react-native-exception-handler"
+  RNDeviceInfo:
+    :path: "../node_modules/react-native-device-info"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNSVG:
@@ -223,6 +228,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: 2105b2e0e2b66a6408fc69a46c8a7fb5b2fdade0
   React-RCTWebSocket: cd932a16b7214898b6b7f788c8bddb3637246ac4
   ReactNativeExceptionHandler: 8025d98049c25f186835a3af732dd7c9974d6dce
+  RNDeviceInfo: bdc3e922b2ed0f086e9d9ab534e61bc316f08576
   RNGestureHandler: 4cb47a93019c1a201df2644413a0a1569a51c8aa
   RNSVG: a78b4c581e33a1bb72968997d167afabf72b05dc
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4

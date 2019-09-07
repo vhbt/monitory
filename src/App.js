@@ -1,12 +1,16 @@
 import React, {useEffect} from 'react';
-import {StatusBar, Alert} from 'react-native';
+import {StatusBar, Alert, Platform} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import OneSignal from 'react-native-onesignal';
 import Config from 'react-native-config';
+import DeviceInfo from 'react-native-device-info';
+import {showMessage} from 'react-native-flash-message';
 import {
   setJSExceptionHandler,
   setNativeExceptionHandler,
 } from 'react-native-exception-handler';
+
+import configCat from './services/configcat';
 
 import colors from './constants/theme';
 
@@ -40,12 +44,25 @@ export default function App() {
   function onIds(id) {
     dispatch(setOneSignalPlayerId(id));
   }
-
   useEffect(() => {
     OneSignal.init(Config.ONESIGNAL_APP_ID);
     OneSignal.addEventListener('received', () => {});
     OneSignal.addEventListener('opened', () => {});
     OneSignal.addEventListener('ids', onIds);
+
+    if (!__DEV__ && Platform.OS === 'android') {
+      configCat.getValue('androidVersion', 'Default', storeVersion => {
+        const currentVersion = DeviceInfo.getVersion();
+        if (currentVersion < storeVersion) {
+          showMessage({
+            type: 'info',
+            message: 'Novo update disponível!',
+            description: `Você está rodando a versão ${currentVersion}, porém a versão ${storeVersion} já está disponível na Google Play.`,
+            duration: 5000,
+          });
+        }
+      });
+    }
   }, []);
 
   return (
