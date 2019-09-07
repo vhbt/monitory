@@ -6,4 +6,10 @@ export const Container = styled.View`
   border: 1px solid #f3f2f3;
 `;
 
-export const NotificationCard = styled.TouchableOpacity``;
+export const NotificationCard = styled.TouchableOpacity`
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #f3f2f3;
+`;

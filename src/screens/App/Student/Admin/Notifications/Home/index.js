@@ -28,7 +28,7 @@ export default function Home({navigation}) {
   const [fetching, setFetching] = useState(false);
   const [showNotificationDetails, setShowNotificationDetails] = useState(null);
 
-  const limit = 7;
+  const limit = 10;
 
   async function loadNotifications(offset = 0) {
     if (offset > maxiumOffset) return;
@@ -80,7 +80,10 @@ export default function Home({navigation}) {
           <Text black>{showNotificationDetails.contents.en}</Text>
           <Text gray style={{marginTop: 5}}>
             Enviado para {showNotificationDetails.successful}{' '}
-            {showNotificationDetails.successful > 1 ? 'alunos' : 'aluno'}.
+            {showNotificationDetails.successful > 1
+              ? 'dispositivos'
+              : 'dispositivo'}
+            .
           </Text>
           <Text gray style={{marginBottom: 5}}>
             Enviado em{' '}
@@ -108,7 +111,7 @@ export default function Home({navigation}) {
           hasBorder
           style={{
             width: '100%',
-            height: 52,
+            height: 75,
             borderRadius: 4,
             marginVertical: 5,
           }}
@@ -133,14 +136,7 @@ export default function Home({navigation}) {
           data={notifications}
           style={{height: '75%'}}
           renderItem={({item}) => (
-            <NotificationCard
-              style={{
-                backgroundColor: '#f5f7fb',
-                borderRadius: 4,
-                padding: 10,
-                marginVertical: 5,
-              }}
-              onPress={() => setShowNotificationDetails(item)}>
+            <NotificationCard onPress={() => setShowNotificationDetails(item)}>
               <Text medium>{item.headings.en || 'Sem título'}</Text>
               <Text>{item.shortContent}</Text>
               {item.included_segments.map(segment => (
@@ -176,7 +172,7 @@ export default function Home({navigation}) {
         <Button
           gradient
           style={{height: 44, lignSelf: 'stretch', marginTop: 15}}
-          onPress={() => navigation.navigate('SendToClasses')}>
+          onPress={() => navigation.navigate('SendNotification')}>
           <Text white>Nova Notificação</Text>
         </Button>
       </View>

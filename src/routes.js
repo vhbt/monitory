@@ -28,7 +28,7 @@ import Schedules from './screens/App/Student/Schedules';
 import PostNews from './screens/App/Student/Admin/News/PostNews';
 
 import Notifications from './screens/App/Student/Admin/Notifications/Home';
-import SendToClasses from './screens/App/Student/Admin/Notifications/SendToClasses';
+import SendNotification from './screens/App/Student/Admin/Notifications/SendNotification';
 
 import Users from './screens/App/Student/Admin/Users/Home';
 import ViewStudent from './screens/App/Student/Admin/Users/ViewStudent';
@@ -87,11 +87,11 @@ export default (initialRoute = 'splash') =>
                   ViewReport,
                   ViewFullReport,
                   Schedules,
-                  SendToClasses,
                   SelectClass,
                   ViewClassOverview,
                   PostNews,
                   Notifications,
+                  SendNotification,
                   Users,
                   ViewStudent,
                 },
