@@ -788,8 +788,7 @@
 			baseConfigurationReference = 83799A485A6E7A5C4A4076EE /* Pods-monitory.debug.xcconfig */;
 			buildSettings = {
 				APP_DISPLAY_NAME = Monitory;
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
-				BUNDLE_ID_SUFFIX = "";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = monitory/monitory.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
@@ -803,7 +802,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.vitorhariel.monitory;
+				PRODUCT_BUNDLE_IDENTIFIER = com.monitory;
 				PRODUCT_NAME = Monitory;
 				PROVISIONING_PROFILE_SPECIFIER = Development;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -815,8 +814,7 @@
 			baseConfigurationReference = FA712AC02465C6633F9AB5A2 /* Pods-monitory.release.xcconfig */;
 			buildSettings = {
 				APP_DISPLAY_NAME = Monitory;
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
-				BUNDLE_ID_SUFFIX = "";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = monitory/monitory.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
@@ -829,7 +827,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.vitorhariel.monitory;
+				PRODUCT_BUNDLE_IDENTIFIER = com.monitory;
 				PRODUCT_NAME = Monitory;
 				PROVISIONING_PROFILE_SPECIFIER = Production;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -998,8 +996,7 @@
 			baseConfigurationReference = 9BF8DB720E52B163EA0938E0 /* Pods-monitory.staging.xcconfig */;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Monitory Stg";
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
-				BUNDLE_ID_SUFFIX = .stg;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon.stg;
 				CODE_SIGN_ENTITLEMENTS = monitory/monitory.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
@@ -1014,9 +1011,9 @@
 					"-lc++",
 				);
 				PODS_CONFIGURATION_BUILD_DIR = "${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.vitorhariel.monitory;
+				PRODUCT_BUNDLE_IDENTIFIER = com.monitory;
 				PRODUCT_NAME = "Monitory Stg";
-				PROVISIONING_PROFILE_SPECIFIER = AdHocNEW;
+				PROVISIONING_PROFILE_SPECIFIER = AdHoc;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Staging;
