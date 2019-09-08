@@ -148,17 +148,9 @@ export function* refresh() {
   if (!token) return;
 
   try {
-    const response = yield call(suap_api.post, '/autenticacao/token/refresh/', {
+    yield call(suap_api.post, '/autenticacao/token/refresh/', {
       token,
     });
-
-    if (response.status === 401) {
-      yield put(logout());
-      showMessage({
-        type: 'info',
-        message: 'Sua sessão do SUAP expirou. Por favor, faça login novamente.',
-      });
-    }
 
     suap_api.defaults.headers.authorization = `JWT ${token}`;
     api.defaults.headers.authorization = `JWT ${token}`;
@@ -172,7 +164,15 @@ export function* refresh() {
     });
   } catch (err) {
     if (err.response) {
-      yield put(logout());
+      if (err.response.status === 400) {
+        yield put(logout());
+        showMessage({
+          type: 'info',
+          duration: 3000,
+          message:
+            'Sua sessão do SUAP expirou. Por favor, faça login novamente.',
+        });
+      }
     } else {
       showMessage({
         type: 'danger',

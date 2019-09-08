@@ -45,9 +45,6 @@ export default function ViewStudent({navigation}) {
           Dispositivos
         </Text>
         <Text>{student.devices.length}</Text>
-        <Button style={{height: 44, lignSelf: 'stretch', marginTop: 15}}>
-          <Text white>Enviar Notificação</Text>
-        </Button>
       </ScrollView>
     </Container>
   );

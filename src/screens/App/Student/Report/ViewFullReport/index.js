@@ -1,6 +1,7 @@
 import React from 'react';
 import {Dimensions, ScrollView, View} from 'react-native';
 import {LineChart, BarChart} from 'react-native-chart-kit';
+import PropTypes from 'prop-types';
 
 import Text from '../../../../../components/Text';
 
@@ -28,13 +29,9 @@ export default function ViewFullReport({navigation}) {
   const labels_notas =
     quantidade_avaliacoes === 2 ? labels_notas_semestre : ['1', '2', '3', '4'];
 
-  const data_notas_semestre = segundo_semestre
-    ? [nota_etapa_3.nota || 0, nota_etapa_4.nota || 0]
-    : [nota_etapa_1.nota || 0, nota_etapa_2.nota || 0];
-
   const data_notas =
     quantidade_avaliacoes === 2
-      ? data_notas_semestre
+      ? [nota_etapa_1.nota || 0, nota_etapa_2.nota || 0]
       : [
           nota_etapa_1.nota || 0,
           nota_etapa_2.nota || 0,
@@ -47,19 +44,64 @@ export default function ViewFullReport({navigation}) {
   const labels_faltas =
     quantidade_avaliacoes === 2 ? labels_faltas_semestre : ['1', '2', '3', '4'];
 
-  const data_faltas_semestre = segundo_semestre
-    ? [nota_etapa_3.faltas, nota_etapa_4.faltas]
-    : [nota_etapa_1.faltas, nota_etapa_2.faltas];
-
   const data_faltas =
     quantidade_avaliacoes === 2
-      ? data_faltas_semestre
+      ? [nota_etapa_1.faltas, nota_etapa_2.faltas]
       : [
           nota_etapa_1.faltas,
           nota_etapa_2.faltas,
           nota_etapa_3.faltas,
           nota_etapa_4.faltas,
         ];
+
+  function calcFinal() {
+    if (quantidade_avaliacoes === 2) {
+      const notaFinal = (nota_etapa_1.nota * 2 + nota_etapa_2.nota * 3) / 5;
+
+      if (nota_etapa_1.nota && nota_etapa_2.nota) {
+        if (notaFinal > 62) return 'Aprovado';
+        if (notaFinal >= 20) {
+          const nM1 = 100 - (2 * nota_etapa_1) / 3;
+          const nM2 = 150 - (3 * nota_etapa_2) / 2;
+
+          const needed = Math.floor(Math.min(nM1, nM2));
+          return `Prova Final precisando tirar ${needed}`;
+        }
+        return 'Reprovado';
+      }
+      return 'Cursando';
+    }
+    const notaFinal =
+      (nota_etapa_1.nota * 2 +
+        nota_etapa_2.nota * 2 +
+        nota_etapa_3.nota * 3 +
+        nota_etapa_4.nota * 3) /
+      10;
+
+    if (
+      nota_etapa_1.nota &&
+      nota_etapa_2.nota &&
+      nota_etapa_3.nota &&
+      nota_etapa_4.nota
+    ) {
+      if (notaFinal > 62) return 'Aprovado';
+      if (notaFinal >= 20) {
+        const nM1 =
+          300 - nota_etapa_1 - (3 * nota_etapa_3) / 2 - (3 * nota_etapa_4) / 2;
+        const nM2 =
+          300 - nota_etapa_2 - (3 * nota_etapa_3) / 2 - (3 * nota_etapa_4) / 2;
+        const nM3 =
+          200 - nota_etapa_3 - (2 * nota_etapa_1) / 3 - (2 * nota_etapa_4) / 3;
+        const nM4 =
+          200 - nota_etapa_1 - (2 * nota_etapa_1) / 3 - (2 * nota_etapa_4) / 3;
+
+        const needed = Math.floor(Math.min(nM1, nM2, nM3, nM4));
+        return `Prova Final precisando tirar ${needed}`;
+      }
+      return 'Reprovado';
+    }
+    return 'Cursando';
+  }
 
   return (
     <Container>
@@ -70,12 +112,17 @@ export default function ViewFullReport({navigation}) {
         <Text h4 medium black style={{textAlign: 'center', marginBottom: 15}}>
           {segundo_semestre ? '2°' : '1°'} semestre
         </Text>
-        <View style={{width: '60%', alignSelf: 'center'}}>
+        <View style={{width: '80%', textAlign: 'center'}}>
           <Text black>
             Carga horária: {carga_horaria_cumprida} / {carga_horaria}
           </Text>
           <Text black>Presença: {percentual_carga_horaria_frequentada}%</Text>
           <Text black>Média: {media_final_disciplina}</Text>
+          <Text medium style={{marginTop: 15}}>
+            Situação atual
+          </Text>
+          <Text>{calcFinal()}</Text>
+          <Text />
         </View>
         <Text medium style={{marginTop: 15}}>
           Desempenho (Bimestre)
@@ -186,3 +233,10 @@ export default function ViewFullReport({navigation}) {
     </Container>
   );
 }
+
+ViewFullReport.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+    getParam: PropTypes.func,
+  }).isRequired,
+};
