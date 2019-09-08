@@ -62,6 +62,18 @@ export default function App() {
           });
         }
       });
+    } else if (!__DEV__ && Platform.OS === 'ios') {
+      configCat.getValue('iosVersion', 'Default', storeVersion => {
+        const currentVersion = DeviceInfo.getVersion();
+        if (currentVersion < storeVersion) {
+          showMessage({
+            type: 'info',
+            message: 'Novo update disponível!',
+            description: `Você está rodando a versão ${currentVersion}, porém a versão ${storeVersion} já está disponível na App Store.`,
+            duration: 5000,
+          });
+        }
+      });
     }
   }, []);
 
