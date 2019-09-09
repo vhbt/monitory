@@ -1,0 +1,2 @@
+- Alerta quando há uma nova versão disponível na App Store.
+- Visualize quanto você precisa na prova final.

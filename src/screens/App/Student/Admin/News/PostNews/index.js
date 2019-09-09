@@ -147,7 +147,7 @@ export default function PostNews({navigation}) {
             )}
           </View>
           <Input
-            label="Titulo"
+            label="Título"
             onChangeText={setTitle}
             value={title}
             returnKeyType="next"
@@ -162,7 +162,7 @@ export default function PostNews({navigation}) {
             onSubmitEditing={() => contentRef.current.focus()}
           />
           <Input
-            label="Conteudo"
+            label="Conteúdo"
             multiline
             autoCorrect
             onChangeText={setContent}

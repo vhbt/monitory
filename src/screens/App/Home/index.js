@@ -144,9 +144,11 @@ export default function Home({navigation}) {
           onPress={() => setShowNews('')}
           style={{
             height: 44,
+            width: '90%',
             borderRadius: 0,
-            alignSelf: 'stretch',
-            marginHorizontal: Platform.OS === 'ios' ? 15 : 10,
+            alignSelf: 'center',
+            marginHorizontal: Platform.OS === 'ios' ? 20 : 10,
+            marginBottom: Platform.OS === 'ios' ? 25 : 10,
           }}>
           <Text white>Fechar</Text>
         </Button>
@@ -209,8 +211,8 @@ export default function Home({navigation}) {
               }}
               style={{
                 padding: 5,
-                height: 38,
-                width: 38,
+                height: Platform.OS === 'ios' ? 48 : 38,
+                width: Platform.OS === 'ios' ? 48 : 38,
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>

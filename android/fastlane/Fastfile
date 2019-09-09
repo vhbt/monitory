@@ -36,7 +36,7 @@ platform :android do
   #   # You can also use other beta testing services here
   # end
 
-  desc "Deploy internal testto Google Play - version:[major|minor|fix]"
+  desc "Deploy internal test to Google Play - version:[major|minor|fix]"
   lane :internal do |options|
 
     if (options[:version]=='major')
@@ -51,7 +51,7 @@ platform :android do
 
     gradle(
       task: 'bundle',
-      build_type: 'Release'
+      build_type: 'releaseStaging'
     )
 
     versionName = prompt(

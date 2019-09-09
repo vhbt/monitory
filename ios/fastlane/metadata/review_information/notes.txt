@@ -1,0 +1,8 @@
+Faça login com as credenciais. Clique em algum dos cards de noticia para lê-la por completo. Vá para a aba "Aluno" para ver seu boletim, horários ou materias clicando no respectivo botão da teladesejada.
+
+Clicando em "Meu Boletim", é possivel selecionar o ano desejado e logo em seguida clicar na matéria desejada para ver mais informações.
+Clicando em "Meus Horários", aparece na tela a imagem do horário da turma configurada do usuário (curso e turno na aba perfil).
+Clicando em "Minhas Matérias , é possivel selecionar a matéria desejada e ver as últimas aulas e materiais (caso haja).
+
+Em uma conta de admin, há mais 3 botões vermelhos para postar noticia, ver as ultimas notificações enviadas e enviar uma nova, e ver a lista de alunos cadastrados.
+Na aba perfil, é possivel ver as informações de perfil, assim como atualizar o email pessoal, ano e turno do curso.

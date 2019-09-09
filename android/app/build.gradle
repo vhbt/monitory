@@ -271,14 +271,17 @@ android {
     }
     buildTypes {
         debug {
+            manifestPlaceholders = [ CODEPUSH_KEY:""]
             signingConfig signingConfigs.debug
         }
 
         releaseStaging {
+            resValue "string", "reactNativeCodePush_androidDeploymentKey", "QAT8VFhIfOXoANT6jV3xV87kkLSR-o3Ps41BH"
             matchingFallbacks = ['debug', 'release']
         }
 
         release {
+            resValue "string", "reactNativeCodePush_androidDeploymentKey", "jf9i2Deb_S1stodhc2Se6Ofbam_hCzqq__CTl"
             signingConfig signingConfigs.release
 
             minifyEnabled enableProguardInReleaseBuilds

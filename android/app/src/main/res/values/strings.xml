@@ -1,4 +1,4 @@
 <resources>
-	<string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">jf9i2Deb_S1stodhc2Se6Ofbam_hCzqq__CTl</string>
+	<string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey"></string>
     <string name="app_name">Monitory</string>
 </resources>
