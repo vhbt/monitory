@@ -56,6 +56,12 @@ export default function Home({navigation}) {
                 onPress={() => navigation.navigate('Users')}>
                 <Text white>Alunos</Text>
               </Button>
+              <Button
+                colors={[colors.accent, colors.accent]}
+                style={{height: 44, alignSelf: 'stretch', marginTop: 5}}
+                onPress={() => navigation.navigate('Questions')}>
+                <Text white>Feedbacks</Text>
+              </Button>
             </>
           ) : null}
         </ScrollView>

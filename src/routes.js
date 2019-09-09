@@ -36,6 +36,8 @@ import ViewStudent from './screens/App/Student/Admin/Users/ViewStudent';
 import SelectClass from './screens/App/Student/VirtualClasses/SelectClass';
 import ViewClassOverview from './screens/App/Student/VirtualClasses/ViewClassOverview';
 
+import Questions from './screens/App/Student/Admin/Questions/Home';
+
 function StudentIcon({tintColor}) {
   return <Icon name="ios-school" size={32} color={tintColor} />;
 }
@@ -95,6 +97,7 @@ export default (initialRoute = 'splash') =>
                   SendNotification,
                   Users,
                   ViewStudent,
+                  Questions,
                 },
                 {
                   defaultNavigationOptions: {

@@ -271,7 +271,7 @@ android {
     }
     buildTypes {
         debug {
-            manifestPlaceholders = [ CODEPUSH_KEY:""]
+            resValue "string", "reactNativeCodePush_androidDeploymentKey", ""
             signingConfig signingConfigs.debug
         }
 

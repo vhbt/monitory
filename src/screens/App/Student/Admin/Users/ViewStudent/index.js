@@ -1,5 +1,7 @@
 import React from 'react';
 import {ScrollView} from 'react-native';
+import {format, parseISO} from 'date-fns';
+import ptbr from 'date-fns/locale/pt-BR';
 import PropTypes from 'prop-types';
 
 import Text from '../../../../../../components/Text';
@@ -45,6 +47,14 @@ export default function ViewStudent({navigation}) {
           Dispositivos
         </Text>
         <Text>{student.devices.length}</Text>
+        <Text gray style={{marginTop: 10}}>
+          Registrado em
+        </Text>
+        <Text>
+          {format(parseISO(student.createdAt), "d 'de' MMMM 'às' HH:MM", {
+            locale: ptbr,
+          })}
+        </Text>
       </ScrollView>
     </Container>
   );
