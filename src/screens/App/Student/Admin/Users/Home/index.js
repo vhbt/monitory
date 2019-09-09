@@ -23,7 +23,7 @@ export default function Home({navigation}) {
   async function getUsers(shouldRefresh = false) {
     try {
       setLoading(true);
-      const response = await api.get(`/users?limit=${12}&page=${page}`);
+      const response = await api.get(`/users?limit=${15}&page=${page}`);
 
       const filteredResponse = response.data.users.map(user => ({
         ...user,

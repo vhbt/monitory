@@ -28,7 +28,7 @@ export default function Home({navigation}) {
   const [fetching, setFetching] = useState(false);
   const [showNotificationDetails, setShowNotificationDetails] = useState(null);
 
-  const limit = 10;
+  const limit = 15;
 
   async function loadNotifications(offset = 0) {
     if (offset > maxiumOffset) return;

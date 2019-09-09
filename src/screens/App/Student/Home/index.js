@@ -34,7 +34,7 @@ export default function Home({navigation}) {
           <Button
             style={{height: 44, alignSelf: 'stretch', marginTop: 5}}
             onPress={() => navigation.navigate('SelectClass')}>
-            <Text white>Minhas Matérias</Text>
+            <Text white>Turmas Virtuais</Text>
           </Button>
           {isAdmin ? (
             <>

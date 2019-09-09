@@ -16,92 +16,87 @@ export default function ViewFullReport({navigation}) {
     carga_horaria,
     carga_horaria_cumprida,
     percentual_carga_horaria_frequentada,
-    quantidade_avaliacoes,
-    nota_etapa_1,
-    nota_etapa_2,
-    nota_etapa_3,
-    nota_etapa_4,
+    quantidade_avaliacoes: qnt_avaliacoes,
+    nota_etapa_1: bi1,
+    nota_etapa_2: bi2,
+    nota_etapa_3: bi3,
+    nota_etapa_4: bi4,
     media_final_disciplina,
+    nota_avaliacao_final,
   } = navigation.getParam('item');
 
   const labels_notas_semestre = segundo_semestre ? ['3', '4'] : ['1', '2'];
 
   const labels_notas =
-    quantidade_avaliacoes === 2 ? labels_notas_semestre : ['1', '2', '3', '4'];
+    qnt_avaliacoes === 2 ? labels_notas_semestre : ['1', '2', '3', '4'];
 
   const data_notas =
-    quantidade_avaliacoes === 2
-      ? [nota_etapa_1.nota || 0, nota_etapa_2.nota || 0]
-      : [
-          nota_etapa_1.nota || 0,
-          nota_etapa_2.nota || 0,
-          nota_etapa_3.nota || 0,
-          nota_etapa_4.nota || 0,
-        ];
+    qnt_avaliacoes === 2
+      ? [bi1.nota || 0, bi2.nota || 0]
+      : [bi1.nota || 0, bi2.nota || 0, bi3.nota || 0, bi4.nota || 0];
 
   const labels_faltas_semestre = segundo_semestre ? ['3', '4'] : ['1', '2'];
 
   const labels_faltas =
-    quantidade_avaliacoes === 2 ? labels_faltas_semestre : ['1', '2', '3', '4'];
+    qnt_avaliacoes === 2 ? labels_faltas_semestre : ['1', '2', '3', '4'];
 
   const data_faltas =
-    quantidade_avaliacoes === 2
-      ? [nota_etapa_1.faltas, nota_etapa_2.faltas]
-      : [
-          nota_etapa_1.faltas,
-          nota_etapa_2.faltas,
-          nota_etapa_3.faltas,
-          nota_etapa_4.faltas,
-        ];
+    qnt_avaliacoes === 2
+      ? [bi1.faltas, bi2.faltas]
+      : [bi1.faltas, bi2.faltas, bi3.faltas, bi4.faltas];
 
   function calcFinal() {
-    if (quantidade_avaliacoes === 2) {
-      const notaFinal = (nota_etapa_1.nota * 2 + nota_etapa_2.nota * 3) / 5;
+    if (qnt_avaliacoes === 2) {
+      const notaFinal = (bi1.nota * 2 + bi2.nota * 3) / 5;
 
-      if (nota_etapa_1.nota && nota_etapa_2.nota) {
+      if (bi1.nota && bi2.nota) {
         if (notaFinal > 62) return 'Aprovado';
+
         if (notaFinal >= 20) {
-          const nM1 = 100 - (2 * nota_etapa_1) / 3;
-          const nM2 = 150 - (3 * nota_etapa_2) / 2;
+          const nM1 = 100 - (2 * bi1.nota) / 3;
+          const nM2 = 150 - (3 * bi2.nota) / 2;
 
           const needed = Math.floor(Math.min(nM1, nM2));
+          if (nota_avaliacao_final.nota) {
+            if (nota_avaliacao_final.nota >= needed) {
+              return `Aprovado na final`;
+            }
+            return 'Reprovado';
+          }
           return `Prova Final precisando tirar ${needed}`;
         }
+
         return 'Reprovado';
       }
       return 'Cursando';
     }
+
     const notaFinal =
-      (nota_etapa_1.nota * 2 +
-        nota_etapa_2.nota * 2 +
-        nota_etapa_3.nota * 3 +
-        nota_etapa_4.nota * 3) /
-      10;
+      (bi1.nota * 2 + bi2.nota * 2 + bi3.nota * 3 + bi4.nota * 3) / 10;
 
-    if (
-      nota_etapa_1.nota &&
-      nota_etapa_2.nota &&
-      nota_etapa_3.nota &&
-      nota_etapa_4.nota
-    ) {
-      if (notaFinal > 62) return 'Aprovado';
+    if (bi1.nota && bi2.nota && bi3.nota && bi4.nota) {
+      if (notaFinal > 150) return 'Aprovado';
       if (notaFinal >= 20) {
-        const nM1 =
-          300 - nota_etapa_1 - (3 * nota_etapa_3) / 2 - (3 * nota_etapa_4) / 2;
-        const nM2 =
-          300 - nota_etapa_2 - (3 * nota_etapa_3) / 2 - (3 * nota_etapa_4) / 2;
-        const nM3 =
-          200 - nota_etapa_3 - (2 * nota_etapa_1) / 3 - (2 * nota_etapa_4) / 3;
-        const nM4 =
-          200 - nota_etapa_1 - (2 * nota_etapa_1) / 3 - (2 * nota_etapa_4) / 3;
+        const nM1 = 300 - bi1.nota - (3 * bi3.nota) / 2 - (3 * bi4.nota) / 2;
+        const nM2 = 300 - bi1.nota - (3 * bi3.nota) / 2 - (3 * bi4.nota) / 2;
+        const nM3 = 200 - bi4.nota - (2 * bi1.nota) / 3 - (2 * bi2.nota) / 3;
+        const nM4 = 200 - bi3.nota - (2 * bi1.nota) / 3 - (2 * bi2.nota) / 3;
 
-        const needed = Math.floor(Math.min(nM1, nM2, nM3, nM4));
+        const needed = Math.ceil(Math.min(nM1, nM2, nM3, nM4));
+        if (nota_avaliacao_final.nota) {
+          if (nota_avaliacao_final.nota >= needed) {
+            return 'Aprovado na final';
+          }
+          return 'Reprovado';
+        }
         return `Prova Final precisando tirar ${needed}`;
       }
       return 'Reprovado';
     }
     return 'Cursando';
   }
+
+  function calcIfCanPass() {}
 
   return (
     <Container>
@@ -114,10 +109,10 @@ export default function ViewFullReport({navigation}) {
         </Text>
         <View style={{width: '80%', textAlign: 'center'}}>
           <Text black>
-            Carga horária: {carga_horaria_cumprida} / {carga_horaria}
+            Carga horária: {carga_horaria_cumprida}h / {carga_horaria}h
           </Text>
           <Text black>Presença: {percentual_carga_horaria_frequentada}%</Text>
-          <Text black>Média: {media_final_disciplina}</Text>
+          <Text black>Média Final: {media_final_disciplina}</Text>
           <Text medium style={{marginTop: 15}}>
             Situação atual
           </Text>
@@ -128,28 +123,28 @@ export default function ViewFullReport({navigation}) {
           Desempenho (Bimestre)
         </Text>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          {segundo_semestre && quantidade_avaliacoes === 2 ? (
+          {segundo_semestre && qnt_avaliacoes === 2 ? (
             <>
-              <Text gray>3 BI: {nota_etapa_3.nota || 'X'}</Text>
-              <Text gray>4 BI: {nota_etapa_4.nota || 'X'}</Text>
+              <Text gray>3 BI: {bi3.nota || 'X'}</Text>
+              <Text gray>4 BI: {bi4.nota || 'X'}</Text>
               <Text />
               <Text />
             </>
           ) : null}
-          {!segundo_semestre && quantidade_avaliacoes === 2 ? (
+          {!segundo_semestre && qnt_avaliacoes === 2 ? (
             <>
-              <Text gray>1 BI: {nota_etapa_1.nota || 'X'}</Text>
-              <Text gray>2 BI: {nota_etapa_2.nota || 'X'}</Text>
+              <Text gray>1 BI: {bi1.nota || 'X'}</Text>
+              <Text gray>2 BI: {bi2.nota || 'X'}</Text>
               <Text />
               <Text />
             </>
           ) : null}
-          {!segundo_semestre && quantidade_avaliacoes === 4 ? (
+          {!segundo_semestre && qnt_avaliacoes === 4 ? (
             <>
-              <Text gray>1 BI: {nota_etapa_1.nota || 'X'}</Text>
-              <Text gray>2 BI: {nota_etapa_2.nota || 'X'}</Text>
-              <Text gray>3 BI: {nota_etapa_3.nota || 'X'}</Text>
-              <Text gray>4 BI: {nota_etapa_4.nota || 'X'}</Text>
+              <Text gray>1 BI: {bi1.nota || 'X'}</Text>
+              <Text gray>2 BI: {bi2.nota || 'X'}</Text>
+              <Text gray>3 BI: {bi3.nota || 'X'}</Text>
+              <Text gray>4 BI: {bi4.nota || 'X'}</Text>
             </>
           ) : null}
         </View>
@@ -180,28 +175,28 @@ export default function ViewFullReport({navigation}) {
           Faltas (Bimestre)
         </Text>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          {segundo_semestre && quantidade_avaliacoes === 2 ? (
+          {segundo_semestre && qnt_avaliacoes === 2 ? (
             <>
-              <Text gray>3 BI: {nota_etapa_3.faltas || 0}</Text>
-              <Text gray>4 BI: {nota_etapa_4.faltas || 0}</Text>
+              <Text gray>3 BI: {bi3.faltas || 0}</Text>
+              <Text gray>4 BI: {bi4.faltas || 0}</Text>
               <Text />
               <Text />
             </>
           ) : null}
-          {!segundo_semestre && quantidade_avaliacoes === 2 ? (
+          {!segundo_semestre && qnt_avaliacoes === 2 ? (
             <>
-              <Text gray>1 BI: {nota_etapa_1.faltas || 0}</Text>
-              <Text gray>2 BI: {nota_etapa_2.faltas || 0}</Text>
+              <Text gray>1 BI: {bi1.faltas || 0}</Text>
+              <Text gray>2 BI: {bi2.faltas || 0}</Text>
               <Text />
               <Text />
             </>
           ) : null}
-          {!segundo_semestre && quantidade_avaliacoes === 4 ? (
+          {!segundo_semestre && qnt_avaliacoes === 4 ? (
             <>
-              <Text gray>1 BI: {nota_etapa_1.faltas || 0}</Text>
-              <Text gray>2 BI: {nota_etapa_2.faltas || 0}</Text>
-              <Text gray>3 BI: {nota_etapa_3.faltas || 0}</Text>
-              <Text gray>4 BI: {nota_etapa_4.faltas || 0}</Text>
+              <Text gray>1 BI: {bi1.faltas || 0}</Text>
+              <Text gray>2 BI: {bi2.faltas || 0}</Text>
+              <Text gray>3 BI: {bi3.faltas || 0}</Text>
+              <Text gray>4 BI: {bi4.faltas || 0}</Text>
             </>
           ) : null}
         </View>

@@ -9,14 +9,16 @@ import colors from '../../constants/theme';
 import {Container, TextComponent} from './styles';
 
 function Input(
-  {isSecure, keyboardType, label, multiline, autoCorrect, ...rest},
+  {isSecure, keyboardType, label, multiline, autoCorrect, labelStyle, ...rest},
   ref,
 ) {
   const [secureToggle, setSecureToggle] = useState(true);
 
   return (
     <Container>
-      <Text gray>{label}</Text>
+      <Text gray style={labelStyle}>
+        {label}
+      </Text>
       <TextComponent
         secureTextEntry={isSecure && secureToggle}
         autoComplete="off"
@@ -44,6 +46,7 @@ Input.propTypes = {
   isSecure: PropTypes.bool,
   keyboardType: PropTypes.string,
   label: PropTypes.string.isRequired,
+  labelStyle: PropTypes.oneOfType(PropTypes.string, PropTypes.number),
   multiline: PropTypes.string,
   autoCorrect: PropTypes.bool,
 };
@@ -53,6 +56,7 @@ Input.defaultProps = {
   keyboardType: 'default',
   multiline: false,
   autoCorrect: false,
+  labelStyle: {},
 };
 
 export default forwardRef(Input);

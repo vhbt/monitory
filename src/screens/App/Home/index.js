@@ -8,16 +8,19 @@ import {
   Alert,
   Modal,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {format, parseISO} from 'date-fns';
 import ptbr from 'date-fns/locale/pt-BR';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {showMessage} from 'react-native-flash-message';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import PropTypes from 'prop-types';
 
+import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
 import Header from '../../../components/Header';
 import Text from '../../../components/Text';
+import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 import ImportantWarning from '../../../components/ImportantWarning';
 import NewsCard from '../../../components/NewsCard';
@@ -30,15 +33,19 @@ import {Container, QuickItems, Item} from './styles';
 
 export default function Home({navigation}) {
   const [showNews, setShowNews] = useState(null);
+  const [showHomeQuestionModal, setShowHomeQuestionModal] = useState(null);
   const [news, setNews] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [viewable, setViewable] = useState([]);
+  const [homeQuestion, setHomeQuestion] = useState();
+  const [content, setContent] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const user = useSelector(state => state.profile.user);
   const isAdmin = user.admin;
 
   async function getNews() {
-    const response = await api.get('/news');
+    const response = await api.get('/news?limit=10');
 
     const newsData = response.data.map(newsDataRaw => ({
       ...newsDataRaw,
@@ -53,8 +60,14 @@ export default function Home({navigation}) {
     setRefreshing(false);
   }
 
+  async function getQuestion() {
+    const response = await api.get('/questions?limit=1');
+    setHomeQuestion(response.data[0]);
+  }
+
   useEffect(() => {
     getNews();
+    getQuestion();
   }, []);
 
   function refreshNews() {
@@ -131,12 +144,97 @@ export default function Home({navigation}) {
           onPress={() => setShowNews('')}
           style={{
             height: 44,
+            borderRadius: 0,
             alignSelf: 'stretch',
             marginHorizontal: Platform.OS === 'ios' ? 15 : 10,
-            marginBottom: Platform.OS === 'ios' ? 20 : 5,
           }}>
           <Text white>Fechar</Text>
         </Button>
+      </Modal>
+    );
+  }
+
+  async function handleSendQuestionAnswers() {
+    setLoading(true);
+
+    try {
+      await api.post('/answers', {
+        user_id: user.id,
+        question_id: homeQuestion.id,
+        content,
+      });
+
+      setShowHomeQuestionModal(false);
+      showMessage({
+        type: 'success',
+        message: 'Sugestão enviada com sucesso. Obrigado!',
+      });
+    } catch (err) {
+      showMessage({
+        type: 'danger',
+        message: err.response.data.detail,
+      });
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function renderHomeQuestion() {
+    return (
+      <Modal animationType="slide" visible={showHomeQuestionModal} transparent>
+        <View
+          style={{
+            padding: 20,
+            height: '100%',
+            width: '100%',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <View
+            style={{
+              width: '90%',
+              height: 240,
+              borderColor: '#f3f2f3',
+              borderWidth: 1,
+              backgroundColor: '#fff',
+              elevation: 2,
+              padding: 10,
+              borderRadius: 4,
+            }}>
+            <TouchableOpacity
+              onPress={() => {
+                setShowHomeQuestionModal(false);
+                setLoading(false);
+              }}
+              style={{
+                padding: 5,
+                height: 38,
+                width: 38,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Icon name="ios-close" size={48} />
+            </TouchableOpacity>
+            <Input
+              label={homeQuestion && homeQuestion.content}
+              multiline
+              onChangeText={setContent}
+              value={content}
+              style={{height: 70, textAlignVertical: 'top'}}
+            />
+            <Button
+              loading={loading}
+              style={{
+                height: 44,
+                alignSelf: 'stretch',
+                width: '100%',
+              }}
+              onPress={() => handleSendQuestionAnswers()}>
+              <Text white>Enviar</Text>
+            </Button>
+          </View>
+        </View>
       </Modal>
     );
   }
@@ -172,10 +270,10 @@ export default function Home({navigation}) {
           <Text
             h3
             black
+            medium
             style={{
               paddingBottom: 10,
               paddingHorizontal: 30,
-              fontFamily: 'SFProText-Medium',
             }}>
             Atualizações
           </Text>
@@ -212,8 +310,65 @@ export default function Home({navigation}) {
             )}
           />
         </View>
+        <Text h3 black medium style={{marginLeft: 30, marginTop: 10}}>
+          Dashboard
+        </Text>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={{marginTop: 10}}>
+          <ShimmerPlaceHolder
+            autoRun
+            visible={Boolean(homeQuestion)}
+            style={{
+              textAlign: 'center',
+              alignSelf: 'center',
+              paddingVertical: 10,
+              marginLeft: 30,
+              width: 300,
+              height: 100,
+            }}>
+            <View>
+              <View
+                style={{
+                  marginLeft: 30,
+                  backgroundColor: '#fff',
+                  borderWidth: 1,
+                  borderColor: '#f3f2f3',
+                  borderBottomWidth: 0,
+                  width: 300,
+                }}>
+                <Text
+                  gray
+                  medium
+                  style={{
+                    textAlign: 'center',
+                    alignSelf: 'center',
+                    flexWrap: 'wrap',
+                    paddingVertical: 10,
+                  }}>
+                  Pergunta: {homeQuestion && homeQuestion.content}
+                </Text>
+              </View>
+              <View style={{marginLeft: 30}}>
+                <Button
+                  marginless
+                  style={{
+                    width: '100%',
+                    borderRadius: 0,
+                    borderColor: '#f3f2f3',
+                    height: 36,
+                  }}
+                  onPress={() => setShowHomeQuestionModal(true)}>
+                  <Text white>Responder</Text>
+                </Button>
+              </View>
+            </View>
+          </ShimmerPlaceHolder>
+        </ScrollView>
       </ScrollView>
       {renderNews()}
+      {renderHomeQuestion()}
     </Container>
   );
 }

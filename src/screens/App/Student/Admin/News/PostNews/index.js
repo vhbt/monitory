@@ -97,8 +97,8 @@ export default function PostNews({navigation}) {
   }
 
   return (
-    <SafeAreaView>
-      <KeyboardAwareScrollView>
+    <SafeAreaView style={{flex: 1}}>
+      <KeyboardAwareScrollView style={{flex: 1}}>
         <Container>
           <Text h1 style={{marginBottom: 20}}>
             Postar Notícia
@@ -111,10 +111,27 @@ export default function PostNews({navigation}) {
               borderRadius: 4,
             }}>
             {banner ? (
-              <Image
-                source={{uri: banner.uri}}
-                style={{flex: 1, borderRadius: 4}}
-              />
+              <>
+                <Image
+                  source={{uri: banner.uri}}
+                  style={{flex: 1, borderRadius: 4}}
+                />
+                <Button
+                  borderless
+                  style={{
+                    position: 'absolute',
+                    flex: 1,
+                    width: '100%',
+                    height: '100%',
+                    alignSelf: 'center',
+                    textAlign: 'center',
+                  }}
+                  onPress={() => setBanner('')}>
+                  <Text white style={{alignSelf: 'center'}}>
+                    Limpar banner
+                  </Text>
+                </Button>
+              </>
             ) : (
               <Button
                 borderless
@@ -150,7 +167,7 @@ export default function PostNews({navigation}) {
             autoCorrect
             onChangeText={setContent}
             value={content}
-            style={{height: 125, textAlignVertical: 'top'}}
+            style={{height: 130, textAlignVertical: 'top'}}
             ref={contentRef}
           />
           <Button

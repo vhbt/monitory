@@ -88,7 +88,7 @@ export default function SelectClass({navigation}) {
   return (
     <Container>
       <Text h1 black semibold>
-        Minhas Matérias
+        Turmas Virtuais
       </Text>
       <FlatList
         style={{marginTop: 10}}
