@@ -54,23 +54,6 @@ platform :android do
       build_type: 'releaseStaging'
     )
 
-    versionName = prompt(
-      text: "Version name: "
-    )
-
-    versionCode = prompt(
-      text: "Build number: "
-    )
-
-    changelog = prompt(
-      text: "Changelog: ",
-      multi_line_end_keyword: "END"
-    )
-
-    changeLogFile = File.new("./metadata/android/pt-BR/changelogs/" + versionCode + ".txt","w")
-    changeLogFile.puts(changelog)
-    changeLogFile.close
-
     upload_to_play_store(
       track: 'internal',
       skip_upload_apk: 'true'
@@ -94,24 +77,7 @@ desc "Deploy production to Google Play - version:[major|minor|fix]"
       task: 'bundle',
       build_type: 'Release'
     )
-
-    versionName = prompt(
-      text: "Version name: "
-    )
-
-    versionCode = prompt(
-      text: "Build number: "
-    )
-
-    changelog = prompt(
-      text: "Changelog: ",
-      multi_line_end_keyword: "END"
-    )
-
-    changeLogFile = File.new("./metadata/android/pt-BR/changelogs/" + versionCode + ".txt","w")
-    changeLogFile.puts(changelog)
-    changeLogFile.close
-
+    
     upload_to_play_store(
       track: 'production',
       skip_upload_apk: 'true'

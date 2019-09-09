@@ -101,7 +101,7 @@ export default function ViewClassOverview({navigation}) {
       </View>
       <View>
         <Text h3 black medium style={{paddingHorizontal: 30}}>
-          Aulas dos ultimos 30 dias
+          Aulas dos últimos 30 dias
         </Text>
         <FlatList
           horizontal

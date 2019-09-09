@@ -277,6 +277,7 @@ android {
 
         releaseStaging {
             resValue "string", "reactNativeCodePush_androidDeploymentKey", "QAT8VFhIfOXoANT6jV3xV87kkLSR-o3Ps41BH"
+            signingConfig signingConfigs.release
             matchingFallbacks = ['debug', 'release']
         }
 
