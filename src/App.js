@@ -5,6 +5,7 @@ import OneSignal from 'react-native-onesignal';
 import Config from 'react-native-config';
 import DeviceInfo from 'react-native-device-info';
 import {showMessage} from 'react-native-flash-message';
+import CodePush from 'react-native-code-push';
 import {
   setJSExceptionHandler,
   setNativeExceptionHandler,
@@ -19,7 +20,7 @@ import {setOneSignalPlayerId} from './store/modules/app/actions';
 
 import createRouter from './routes';
 
-export default function App() {
+function App() {
   const dispatch = useDispatch();
 
   const signed = useSelector(state => state.profile.token !== null);
@@ -87,3 +88,7 @@ export default function App() {
     </>
   );
 }
+
+export default CodePush({
+  checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME,
+})(App);

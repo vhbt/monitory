@@ -39,6 +39,8 @@ target 'monitory' do
 
   pod 'ReactNativeExceptionHandler', :path => '../node_modules/react-native-exception-handler'
 
+  pod 'CodePush', :path => '../node_modules/react-native-code-push'
+
   target 'monitoryTests' do
     inherit! :search_paths
     # Pods for testing
