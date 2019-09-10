@@ -1,6 +1,12 @@
 import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
-import {SafeAreaView, View} from 'react-native';
+import {
+  Alert,
+  SafeAreaView,
+  View,
+  TouchableWithoutFeedback,
+} from 'react-native';
+import CodePush from 'react-native-code-push';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 
 import Text from '../Text';
@@ -10,6 +16,25 @@ import {Container, TopContainer, Avatar} from './styles';
 export default function Header() {
   const user = useSelector(state => state.profile.user);
   const [loading, setLoading] = useState(true);
+  const [infoClicks, setInfoClicks] = useState(0);
+
+  function handleShowInfo() {
+    if (infoClicks === 6) {
+      CodePush.getUpdateMetadata()
+        .then(metadata => {
+          Alert.alert(
+            'Psiu!',
+            `label: ${metadata.label}, version: ${metadata.appVersion}`,
+          );
+        })
+        .catch(() =>
+          Alert.alert('Erro!', 'Não foi possível se conectar ao Code Push.'),
+        );
+      setInfoClicks(0);
+      return;
+    }
+    setInfoClicks(infoClicks + 1);
+  }
 
   return (
     <SafeAreaView>
@@ -33,12 +58,14 @@ export default function Header() {
             hasBorder
             visible={!loading}
             style={{height: 40, width: 40, borderRadius: 20}}>
-            <Avatar
-              onLoadEnd={() => setLoading(false)}
-              source={{
-                uri: user && `https://suap.ifrn.edu.br/${user.avatar_suap}`,
-              }}
-            />
+            <TouchableWithoutFeedback onPress={handleShowInfo}>
+              <Avatar
+                onLoadEnd={() => setLoading(false)}
+                source={{
+                  uri: user && `https://suap.ifrn.edu.br/${user.avatar_suap}`,
+                }}
+              />
+            </TouchableWithoutFeedback>
           </ShimmerPlaceholder>
         </TopContainer>
       </Container>

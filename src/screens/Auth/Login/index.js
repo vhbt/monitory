@@ -14,8 +14,9 @@ import {Container, Form} from './styles';
 export default function Login({navigation}) {
   const dispatch = useDispatch();
   const loading = useSelector(state => state.profile.loading);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const profile = useSelector(state => state.profile);
+  const [username, setUsername] = useState(profile.username || '');
+  const [password, setPassword] = useState(profile.password || '');
 
   const passwordRef = useRef();
 
@@ -49,7 +50,6 @@ export default function Login({navigation}) {
           style={{marginBottom: 15}}
           ref={passwordRef}
         />
-
         <Button
           loading={loading}
           onPress={handleLogin}

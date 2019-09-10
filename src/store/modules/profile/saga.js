@@ -6,6 +6,7 @@ import OneSignal from 'react-native-onesignal';
 import {api, suap_api} from '../../../services/api';
 
 import {
+  loginRequest,
   loginFailed,
   loginSuccess,
   updateUserSuccess,
@@ -15,9 +16,9 @@ import {
 } from './actions';
 
 export function* login({payload}) {
-  try {
-    const {username, password} = payload;
+  const {username, password, renew} = payload;
 
+  try {
     const suap_response = yield call(suap_api.post, '/autenticacao/token/', {
       username,
       password,
@@ -68,10 +69,13 @@ export function* login({payload}) {
       curso_turno: user.curso_turno,
     });
 
-    yield put(loginSuccess({token, user}));
+    yield put(loginSuccess({token, user, username, password}));
   } catch (err) {
     if (err.response) {
       showMessage({type: 'danger', message: err.response.data.detail});
+      if (renew) {
+        yield put(logout());
+      }
     } else {
       showMessage({
         type: 'danger',
@@ -143,7 +147,7 @@ export function* refresh() {
   suap_api.defaults.timeout = 10000;
 
   const state = yield select();
-  const {token, user} = state.profile;
+  const {token, user, username, password} = state.profile;
 
   if (!token) return;
 
@@ -165,13 +169,7 @@ export function* refresh() {
   } catch (err) {
     if (err.response) {
       if (err.response.status === 400) {
-        yield put(logout());
-        showMessage({
-          type: 'info',
-          duration: 3000,
-          message:
-            'Sua sessão do SUAP expirou. Por favor, faça login novamente.',
-        });
+        yield put(loginRequest(username, password, true));
       }
     } else {
       showMessage({

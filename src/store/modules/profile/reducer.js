@@ -4,6 +4,8 @@ const INITIAL_STATE = {
   token: null,
   user: null,
   loading: false,
+  username: null,
+  password: null,
 };
 
 export default function profile(state = INITIAL_STATE, action) {
@@ -17,6 +19,8 @@ export default function profile(state = INITIAL_STATE, action) {
         draft.loading = false;
         draft.token = action.payload.token;
         draft.user = action.payload.user;
+        draft.username = action.payload.username;
+        draft.password = action.payload.password;
         break;
       }
       case '@profile/LOGIN_FAILED': {
@@ -26,6 +30,8 @@ export default function profile(state = INITIAL_STATE, action) {
       case '@profile/LOGOUT': {
         draft.token = null;
         draft.user = null;
+        draft.username = null;
+        draft.password = null;
         break;
       }
       case '@profile/UPDATE_USER_REQUEST': {

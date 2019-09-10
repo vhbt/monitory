@@ -1,7 +1,7 @@
-export function loginRequest(username, password) {
+export function loginRequest(username, password, renew = false) {
   return {
     type: '@profile/LOGIN_REQUEST',
-    payload: {username, password},
+    payload: {username, password, renew},
   };
 }
 
