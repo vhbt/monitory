@@ -61,7 +61,7 @@ export default function Home({navigation}) {
   }
 
   async function getQuestion() {
-    const response = await api.get('/questions?limit=1');
+    const response = await api.get('/questions?limit=1&new=1');
     setHomeQuestion(response.data.questions[0]);
   }
 

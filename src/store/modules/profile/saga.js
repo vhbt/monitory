@@ -139,8 +139,8 @@ export function* updateUser({payload}) {
 export function* refresh() {
   yield put(resetLoading());
 
-  api.defaults.timeout = 15000;
-  suap_api.defaults.timeout = 15000;
+  api.defaults.timeout = 10000;
+  suap_api.defaults.timeout = 10000;
 
   const state = yield select();
   const {token, user} = state.profile;
