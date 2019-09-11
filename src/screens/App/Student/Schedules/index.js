@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 import Text from '../../../../components/Text';
 import Button from '../../../../components/Button';
 
-import colors from '../../../../constants/theme';
+import {getThemeColors} from '../../../../constants/theme';
 
 import {api} from '../../../../services/api';
 
@@ -27,6 +27,8 @@ export default function SelectSchedules({navigation}) {
   const [showImage, setShowImage] = useState(null);
   const [myClasses, setMyClasses] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const colors = getThemeColors();
 
   async function getClasses() {
     const classesResponse = await api.get('/schedules');
@@ -95,8 +97,10 @@ export default function SelectSchedules({navigation}) {
   }
 
   return (
-    <Container>
-      <Text h1>De qual turma e turno?</Text>
+    <Container colors={colors}>
+      <Text black h1>
+        De qual turma e turno?
+      </Text>
       <FlatList
         showsVerticalScrollIndicator={false}
         data={myClasses}

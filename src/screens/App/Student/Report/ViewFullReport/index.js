@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import Text from '../../../../../components/Text';
 
-import colors from '../../../../../constants/theme';
+import {getThemeColors} from '../../../../../constants/theme';
 
 import {Container} from './styles';
 
@@ -24,6 +24,8 @@ export default function ViewFullReport({navigation}) {
     media_final_disciplina,
     nota_avaliacao_final,
   } = navigation.getParam('item');
+
+  const colors = getThemeColors();
 
   const labels_notas_semestre = segundo_semestre ? ['3', '4'] : ['1', '2'];
 
@@ -96,10 +98,8 @@ export default function ViewFullReport({navigation}) {
     return 'Cursando';
   }
 
-  function calcIfCanPass() {}
-
   return (
-    <Container>
+    <Container colors={colors}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text h2 semibold black style={{textAlign: 'center'}}>
           {formattedDisciplina}
@@ -113,13 +113,13 @@ export default function ViewFullReport({navigation}) {
           </Text>
           <Text black>Presença: {percentual_carga_horaria_frequentada}%</Text>
           <Text black>Média Final: {media_final_disciplina}</Text>
-          <Text medium style={{marginTop: 15}}>
+          <Text black medium style={{marginTop: 15}}>
             Situação atual
           </Text>
-          <Text>{calcFinal()}</Text>
+          <Text black>{calcFinal()}</Text>
           <Text />
         </View>
-        <Text medium style={{marginTop: 15}}>
+        <Text black medium style={{marginTop: 15}}>
           Desempenho (Bimestre)
         </Text>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -161,9 +161,9 @@ export default function ViewFullReport({navigation}) {
           width={Dimensions.get('window').width - 60}
           height={220}
           chartConfig={{
-            backgroundColor: colors.black,
-            backgroundGradientFrom: colors.black,
-            backgroundGradientTo: colors.black,
+            backgroundColor: '#323643',
+            backgroundGradientFrom: '#323643',
+            backgroundGradientTo: '#323643',
             decimalPlaces: 0,
             color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
             style: {
@@ -171,7 +171,7 @@ export default function ViewFullReport({navigation}) {
             },
           }}
         />
-        <Text medium style={{marginTop: 15}}>
+        <Text black medium style={{marginTop: 15}}>
           Faltas (Bimestre)
         </Text>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -214,9 +214,9 @@ export default function ViewFullReport({navigation}) {
           width={Dimensions.get('window').width - 60}
           height={220}
           chartConfig={{
-            backgroundColor: colors.black,
-            backgroundGradientFrom: colors.black,
-            backgroundGradientTo: colors.black,
+            backgroundColor: '#323643',
+            backgroundGradientFrom: '#323643',
+            backgroundGradientTo: '#323643',
             decimalPlaces: 0,
             color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
             style: {

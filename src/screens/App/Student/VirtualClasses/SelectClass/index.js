@@ -10,11 +10,15 @@ import Button from '../../../../../components/Button';
 
 import {suap_api} from '../../../../../services/api';
 
+import {getThemeColors} from '../../../../../constants/theme';
+
 import {Container} from './styles';
 
 export default function SelectClass({navigation}) {
   const [myClasses, setMyClasses] = useState([]);
   const user = useSelector(state => state.profile.user);
+
+  const colors = getThemeColors();
 
   async function getClasses() {
     try {
@@ -72,6 +76,11 @@ export default function SelectClass({navigation}) {
         <ShimmerPlaceholder
           key={i}
           autoRun
+          colorShimmer={[
+            colors.background2,
+            colors.background2,
+            colors.background,
+          ]}
           style={{
             marginVertical: 5,
             height: 58,
@@ -86,7 +95,7 @@ export default function SelectClass({navigation}) {
   }
 
   return (
-    <Container>
+    <Container colors={colors}>
       <Text h1 black semibold>
         Turmas Virtuais
       </Text>

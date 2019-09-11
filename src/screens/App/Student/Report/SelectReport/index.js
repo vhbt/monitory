@@ -7,12 +7,13 @@ import Text from '../../../../../components/Text';
 import Button from '../../../../../components/Button';
 
 import {suap_api} from '../../../../../services/api';
-import colors from '../../../../../constants/theme';
+import {getThemeColors} from '../../../../../constants/theme';
 
 import {Container} from './styles';
 
 export default function SelectReport({navigation}) {
   const [periods, setPeriods] = useState([]);
+  const colors = getThemeColors();
 
   useEffect(() => {
     async function getPeriods() {
@@ -43,8 +44,10 @@ export default function SelectReport({navigation}) {
   }, []);
 
   return (
-    <Container>
-      <Text h1>De qual ano?</Text>
+    <Container colors={colors}>
+      <Text black h1>
+        De qual ano?
+      </Text>
       <FlatList
         data={periods}
         keyExtractor={item => `${item.ano_letivo}-${item.periodo_letivo}`}

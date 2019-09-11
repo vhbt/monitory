@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 
 import Text from '../Text';
 
+import {getThemeColors} from '../../constants/theme';
+
 import {PickerView, PickerComponent} from './styles';
 
 function Picker({label, items, selectedValue, onValueChange, style}, ref) {
@@ -14,24 +16,35 @@ function Picker({label, items, selectedValue, onValueChange, style}, ref) {
     options.push({label: item, value: item});
   });
 
+  const colors = getThemeColors();
+
   return (
     <>
       <Text gray>{label}</Text>
-      <PickerView style={style}>
+      <PickerView style={style} colors={colors}>
         {Platform.OS === 'ios' ? (
           <RNPickerSelect
             onValueChange={onValueChange}
             items={options}
             value={selectedValue}
-            style={{inputIOS: {paddingTop: 15}}}
+            style={{
+              inputIOS: {paddingTop: 15, color: colors.black},
+              placeholder: {color: colors.black},
+            }}
           />
         ) : (
           <PickerComponent
+            style={{color: colors.black}}
             selectedValue={selectedValue}
             onValueChange={onValueChange}
             ref={ref}>
             {items.map(item => (
-              <PickerComponent.Item key={item} label={item} value={item} />
+              <PickerComponent.Item
+                key={item}
+                label={item}
+                value={item}
+                style={{color: colors.black}}
+              />
             ))}
           </PickerComponent>
         )}

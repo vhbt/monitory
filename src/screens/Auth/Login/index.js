@@ -9,6 +9,7 @@ import Button from '../../../components/Button';
 
 import {loginRequest} from '../../../store/modules/profile/actions';
 
+import {getThemeColors} from '../../../constants/theme';
 import {Container, Form} from './styles';
 
 export default function Login({navigation}) {
@@ -18,6 +19,8 @@ export default function Login({navigation}) {
   const [username, setUsername] = useState(profile.username || '');
   const [password, setPassword] = useState(profile.password || '');
 
+  const colors = getThemeColors();
+
   const passwordRef = useRef();
 
   async function handleLogin() {
@@ -26,8 +29,8 @@ export default function Login({navigation}) {
   }
 
   return (
-    <Container>
-      <Text h1 bold style={{marginBottom: 10}}>
+    <Container colors={colors}>
+      <Text black h1 bold style={{marginBottom: 10}}>
         Login
       </Text>
       <Form>

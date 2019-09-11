@@ -12,6 +12,8 @@ import Button from '../../../../../../components/Button';
 
 import {api} from '../../../../../../services/api';
 
+import {getThemeColors} from '../../../../../../constants/theme';
+
 import {Container} from './styles';
 
 export default function PostNews({navigation}) {
@@ -22,6 +24,8 @@ export default function PostNews({navigation}) {
 
   const categoryRef = useRef();
   const contentRef = useRef();
+
+  const colors = getThemeColors();
 
   const [loading, setLoading] = useState(false);
 
@@ -97,10 +101,10 @@ export default function PostNews({navigation}) {
   }
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <KeyboardAwareScrollView style={{flex: 1}}>
-        <Container>
-          <Text h1 style={{marginBottom: 20}}>
+    <SafeAreaView style={{flex: 1, height: '100%'}}>
+      <KeyboardAwareScrollView style={{flex: 1, height: '100%'}}>
+        <Container colors={colors}>
+          <Text black h1 style={{marginBottom: 20}}>
             Postar Notícia
           </Text>
           <View
@@ -125,6 +129,7 @@ export default function PostNews({navigation}) {
                     height: '100%',
                     alignSelf: 'center',
                     textAlign: 'center',
+                    background: '#fff',
                   }}
                   onPress={() => setBanner('')}>
                   <Text white style={{alignSelf: 'center'}}>

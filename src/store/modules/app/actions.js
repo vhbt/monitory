@@ -10,3 +10,10 @@ export function setOneSignalPlayerId({userId}) {
     payload: {userId},
   };
 }
+
+export function toggleDarkMode(enabled) {
+  return {
+    type: '@app/TOGGLE_DARKMODE',
+    payload: enabled,
+  };
+}

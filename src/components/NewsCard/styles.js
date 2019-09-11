@@ -5,8 +5,8 @@ export const Container = styled.TouchableOpacity`
   height: 200px;
   margin-left: 30px;
 
-  background-color: #fff;
-  border: 1px solid #f3f2f3;
+  background-color: ${props => props.colors.card};
+  border: 1px solid ${props => props.colors.background2};
 `;
 
 export const Tag = styled.View`

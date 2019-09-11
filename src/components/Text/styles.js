@@ -1,16 +1,6 @@
 import styled from 'styled-components/native';
-import colors from '../../constants/theme';
 
 const styles = {
-  accent: `color: ${colors.accent}`,
-  primary: `color: ${colors.primary}`,
-  secondary: `color: ${colors.secondary}`,
-  tertiary: `color: ${colors.tertiary}`,
-  black: `color: ${colors.black}`,
-  white: `color: ${colors.white}`,
-  gray: `color: ${colors.gray}`,
-  gray2: `color: ${colors.gray2}`,
-
   h1: `font-size: 26`,
   h2: `font-size: 20`,
   h3: `font-size: 18`,
@@ -23,14 +13,14 @@ const styles = {
 export const TextComponent = styled.Text`
   font-family: 'SFProText-Regular';
 
-  ${props => props.accent && styles.accent};
-  ${props => props.primary && styles.primary};
-  ${props => props.secondary && styles.secondary};
-  ${props => props.tertiary && styles.tertiary};
-  ${props => props.black && styles.black};
-  ${props => props.white && styles.white};
-  ${props => props.gray && styles.gray};
-  ${props => props.gray2 && styles.gray2};
+  ${props => props.accent && `color: ${props.colors.accent}`};
+  ${props => props.primary && `color: ${props.colors.primary}`};
+  ${props => props.secondary && `color: ${props.colors.secondary}`};
+  ${props => props.tertiary && `color: ${props.colors.tertiary}`};
+  ${props => props.black && `color: ${props.colors.black}`};
+  ${props => props.white && `color: ${props.colors.white}`};
+  ${props => props.gray && `color: ${props.colors.gray}`};
+  ${props => props.gray2 && `color: ${props.colors.gray2}`};
   ${props => props.h1 && styles.h1};
   ${props => props.h2 && styles.h2};
   ${props => props.h3 && styles.h3};

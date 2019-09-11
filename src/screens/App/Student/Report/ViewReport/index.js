@@ -7,12 +7,13 @@ import PropTypes from 'prop-types';
 import GradesCard from '../../../../../components/GradesCard';
 
 import {suap_api} from '../../../../../services/api';
-import colors from '../../../../../constants/theme';
+import {getThemeColors} from '../../../../../constants/theme';
 
 import {Container} from './styles';
 
 export default function Report({navigation}) {
   const period = navigation.getParam('period');
+  const colors = getThemeColors();
 
   const [grades, setGrades] = useState([]);
 
@@ -62,6 +63,11 @@ export default function Report({navigation}) {
         <ShimmerPlaceholder
           key={i}
           autoRun
+          colorShimmer={[
+            colors.background2,
+            colors.background2,
+            colors.background,
+          ]}
           style={{
             marginBottom: 10,
             height: 130,
@@ -76,7 +82,7 @@ export default function Report({navigation}) {
   }
 
   return (
-    <Container>
+    <Container colors={colors}>
       <FlatList
         data={grades}
         keyExtractor={item => item.codigo_diario}
@@ -87,7 +93,7 @@ export default function Report({navigation}) {
           <GradesCard
             key={item.codigo_diario}
             title={item.formattedDisciplina}
-            colors={[colors.black, colors.black]}
+            colors={['#323643', '#323643']}
             white
             grades={[
               [item.nota_etapa_1.nota, 1],

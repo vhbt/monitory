@@ -5,11 +5,14 @@ import {
   ActivityIndicator,
   Modal,
   SafeAreaView,
+  TouchableOpacity,
+  Platform,
 } from 'react-native';
 import {format} from 'date-fns';
 import ptbr from 'date-fns/locale/pt-BR';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import Config from 'react-native-config';
+import Icon from 'react-native-vector-icons/Ionicons';
 import PropTypes from 'prop-types';
 
 import Text from '../../../../../../components/Text';
@@ -17,7 +20,7 @@ import Button from '../../../../../../components/Button';
 
 import {onesignal} from '../../../../../../services/api';
 
-import colors from '../../../../../../constants/theme';
+import {getThemeColors} from '../../../../../../constants/theme';
 import {Container, NotificationCard} from './styles';
 
 export default function Home({navigation}) {
@@ -27,6 +30,8 @@ export default function Home({navigation}) {
   const [maxiumOffset, setMaxiumOffset] = useState(0);
   const [fetching, setFetching] = useState(false);
   const [showNotificationDetails, setShowNotificationDetails] = useState(null);
+
+  const colors = getThemeColors();
 
   const limit = 15;
 
@@ -72,8 +77,28 @@ export default function Home({navigation}) {
 
   function renderNotificationDetailsModal() {
     return showNotificationDetails ? (
-      <Modal animationType="slide" visible={!!showNotificationDetails}>
-        <SafeAreaView style={{marginTop: 20, marginHorizontal: 20}}>
+      <Modal
+        animationType="slide"
+        visible={!!showNotificationDetails}
+        style={{padding: 20}}>
+        <SafeAreaView
+          style={{
+            flex: 1,
+            padding: 20,
+            backgroundColor: colors.background,
+          }}>
+          <TouchableOpacity
+            onPress={() => setShowNotificationDetails('')}
+            style={{
+              padding: 5,
+              margin: 5,
+              height: Platform.OS === 'ios' ? 48 : 38,
+              width: Platform.OS === 'ios' ? 48 : 38,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Icon name="ios-close" size={48} color={colors.black} />
+          </TouchableOpacity>
           <Text h2 black medium>
             {showNotificationDetails.headings.en}
           </Text>
@@ -93,9 +118,6 @@ export default function Home({navigation}) {
               {locale: ptbr},
             )}
           </Text>
-          <Button onPress={() => setShowNotificationDetails(null)}>
-            <Text white>Fechar</Text>
-          </Button>
         </SafeAreaView>
       </Modal>
     ) : null;
@@ -109,6 +131,11 @@ export default function Home({navigation}) {
           key={i}
           autoRun
           hasBorder
+          colorShimmer={[
+            colors.background2,
+            colors.background2,
+            colors.background,
+          ]}
           style={{
             width: '100%',
             height: 75,
@@ -123,7 +150,7 @@ export default function Home({navigation}) {
   }
 
   return (
-    <Container>
+    <Container colors={colors}>
       <View style={{marginHorizontal: 30}}>
         <Text h1 black medium>
           Notificações
@@ -136,11 +163,15 @@ export default function Home({navigation}) {
           data={notifications}
           style={{height: '75%'}}
           renderItem={({item}) => (
-            <NotificationCard onPress={() => setShowNotificationDetails(item)}>
-              <Text medium>{item.headings.en || 'Sem título'}</Text>
-              <Text>{item.shortContent}</Text>
+            <NotificationCard
+              colors={colors}
+              onPress={() => setShowNotificationDetails(item)}>
+              <Text black medium>
+                {item.headings.en || 'Sem título'}
+              </Text>
+              <Text black>{item.shortContent}</Text>
               {item.included_segments.map(segment => (
-                <Text key={segment} gray style={{marginTop: 5}}>
+                <Text gray key={segment} style={{marginTop: 5}}>
                   {segment}
                 </Text>
               ))}

@@ -5,11 +5,11 @@ import ptbr from 'date-fns/locale/pt-BR';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import Button from '../../../../../../components/Button';
 import Text from '../../../../../../components/Text';
 
 import {api} from '../../../../../../services/api';
 
+import {getThemeColors} from '../../../../../../constants/theme';
 import {Container, QuestionCard} from './styles';
 
 export default function Home() {
@@ -17,6 +17,8 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [showAnswers, setShowAnswers] = useState(null);
+
+  const colors = getThemeColors();
 
   async function getQuestions() {
     const response = await api.get(`/questions?limit=${10}&page=${page}&new=1`);
@@ -36,6 +38,11 @@ export default function Home() {
         <ShimmerPlaceholder
           key={i}
           autoRun
+          colorShimmer={[
+            colors.background2,
+            colors.background2,
+            colors.background,
+          ]}
           style={{
             marginVertical: 5,
             height: 58,
@@ -54,9 +61,11 @@ export default function Home() {
       <Modal animationType="slide" visible={Boolean(showAnswers)}>
         <View
           style={{
+            flex: 1,
             padding: 20,
             height: '100%',
             width: '100%',
+            backgroundColor: colors.background,
           }}>
           <TouchableOpacity
             onPress={() => {
@@ -71,16 +80,16 @@ export default function Home() {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Icon name="ios-close" size={48} />
+            <Icon name="ios-close" size={48} color={colors.black} />
           </TouchableOpacity>
-          <View>
+          <View style={{flex: 1}}>
             <FlatList
               showsVerticalScrollIndicator={false}
               data={showAnswers}
               keyExtractor={item => String(item.id)}
               renderItem={({item}) => (
                 <View style={{marginVertical: 10}}>
-                  <Text>{item.content}</Text>
+                  <Text black>{item.content}</Text>
                   <Text gray>{item.user.nome_usual}</Text>
                   <Text gray>
                     {format(
@@ -99,7 +108,7 @@ export default function Home() {
   }
 
   return (
-    <Container>
+    <Container colors={colors}>
       <FlatList
         data={questions}
         keyExtractor={item => String(item.id)}
@@ -111,8 +120,10 @@ export default function Home() {
           )
         }
         renderItem={({item}) => (
-          <QuestionCard onPress={() => setShowAnswers(item.answers)}>
-            <Text>{item.content}</Text>
+          <QuestionCard
+            colors={colors}
+            onPress={() => setShowAnswers(item.answers)}>
+            <Text black>{item.content}</Text>
             <Text gray>Resposta(s): {item.answers.length}</Text>
             <Text gray style={{marginTop: 10}}>
               {format(parseISO(item.createdAt), "d 'de' MMMM 'às' HH:MM", {

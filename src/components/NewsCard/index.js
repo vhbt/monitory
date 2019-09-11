@@ -1,9 +1,11 @@
 import React from 'react';
-import {View, Image} from 'react-native';
+import {View} from 'react-native';
 import PropTypes from 'prop-types';
 
 import Text from '../Text';
 import LazyImage from '../LazyImage';
+
+import {getThemeColors} from '../../constants/theme';
 
 import {Container, Tag} from './styles';
 
@@ -15,8 +17,9 @@ export default function NewsCard({
   shouldLoad,
   onPress,
 }) {
+  const colors = getThemeColors();
   return (
-    <Container onPress={onPress}>
+    <Container colors={colors} onPress={onPress}>
       <View>
         <LazyImage
           thumb={{uri: bannerThumb}}

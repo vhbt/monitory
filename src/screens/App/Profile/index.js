@@ -11,7 +11,7 @@ import Input from '../../../components/Input';
 import Text from '../../../components/Text';
 import Picker from '../../../components/Picker';
 
-import colors from '../../../constants/theme';
+import {getThemeColors} from '../../../constants/theme';
 import {Container} from './styles';
 
 import {
@@ -24,6 +24,8 @@ export default function Profile() {
   const user = useSelector(state => state.profile.user);
   const app = useSelector(state => state.app);
   const loading = useSelector(state => state.profile.loading);
+
+  const colors = getThemeColors();
 
   const [email, setEmail] = useState(user.email);
   const [selectedClassYear, setSelectedClassYear] = useState(
@@ -53,24 +55,30 @@ export default function Profile() {
     user.curso_turno === 'Noturno' ? 'Período' : 'Ano';
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#f5f7fb'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: colors.background}}>
       <KeyboardAwareScrollView style={{flex: 1}}>
-        <Container>
-          <Text h1 bold style={{marginTop: 10, marginBottom: 20}}>
+        <Container colors={colors}>
+          <Text black h1 bold style={{marginTop: 10, marginBottom: 20}}>
             Perfil
           </Text>
           <Text gray style={{marginBottom: 5}}>
             Matricula
           </Text>
-          <Text style={{marginBottom: 15}}>{user.matricula}</Text>
+          <Text black style={{marginBottom: 15}}>
+            {user.matricula}
+          </Text>
           <Text gray style={{marginBottom: 5}}>
             E-mail do SUAP
           </Text>
-          <Text style={{marginBottom: 15}}>{user.email_suap}</Text>
+          <Text black style={{marginBottom: 15}}>
+            {user.email_suap}
+          </Text>
           <Text gray style={{marginBottom: 5}}>
             Curso
           </Text>
-          <Text style={{marginBottom: 15}}>{user.curso}</Text>
+          <Text black style={{marginBottom: 15}}>
+            {user.curso}
+          </Text>
           <View>
             <Input
               label="E-mail pessoal (opcional)"

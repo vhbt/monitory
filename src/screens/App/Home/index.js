@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {
   View,
   FlatList,
@@ -25,13 +25,16 @@ import Button from '../../../components/Button';
 import ImportantWarning from '../../../components/ImportantWarning';
 import NewsCard from '../../../components/NewsCard';
 import LoadingNews from '../../../components/NewsCard/loading';
+import Switch from '../../../components/Switch';
 
 import {api} from '../../../services/api';
-import colors from '../../../constants/theme';
+import {toggleDarkMode} from '../../../store/modules/app/actions';
 
+import {getThemeColors} from '../../../constants/theme';
 import {Container, QuickItems, Item} from './styles';
 
 export default function Home({navigation}) {
+  const dispatch = useDispatch();
   const [showNews, setShowNews] = useState(null);
   const [showHomeQuestionModal, setShowHomeQuestionModal] = useState(null);
   const [news, setNews] = useState(null);
@@ -41,11 +44,16 @@ export default function Home({navigation}) {
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const colors = getThemeColors();
+
   const user = useSelector(state => state.profile.user);
+  const app = useSelector(state => state.app);
   const isAdmin = user.admin;
 
+  const [darkMode, setDarkMode] = useState(app.darkMode || false);
+
   async function getNews() {
-    const response = await api.get('/news?limit=10');
+    const response = await api.get('/news?limit=20');
 
     const newsData = response.data.map(newsDataRaw => ({
       ...newsDataRaw,
@@ -115,13 +123,32 @@ export default function Home({navigation}) {
 
   function renderNews() {
     return (
-      <Modal animationType="slide" visible={Boolean(showNews)}>
-        <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
+      <Modal
+        animationType="slide"
+        visible={Boolean(showNews)}
+        style={{backgroundColor: colors.background}}>
+        <KeyboardAwareScrollView
+          showsVerticalScrollIndicator={false}
+          style={{backgroundColor: colors.background}}>
           <Image
             source={{uri: showNews && showNews.banner}}
             style={{height: 200, width: '100%'}}
           />
-          <View style={{flex: 1, margin: 15}}>
+          <View style={{alignItems: 'flex-end'}}>
+            <TouchableOpacity
+              onPress={() => setShowNews('')}
+              style={{
+                marginTop: 5,
+                marginRight: 5,
+                height: Platform.OS === 'ios' ? 48 : 38,
+                width: Platform.OS === 'ios' ? 48 : 38,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Icon name="ios-close" size={48} color={colors.black} />
+            </TouchableOpacity>
+          </View>
+          <View style={{flex: 1, marginHorizontal: 15, marginTop: 5}}>
             <Text h2 black bold style={{textAlign: 'justify'}}>
               {showNews && showNews.title}
             </Text>
@@ -134,24 +161,11 @@ export default function Home({navigation}) {
                 <Text white>Deletar</Text>
               </Button>
             ) : null}
-            <Text style={{marginTop: 10, textAlign: 'justify'}}>
+            <Text black style={{marginTop: 10, textAlign: 'justify'}}>
               {showNews && showNews.content}
             </Text>
           </View>
         </KeyboardAwareScrollView>
-        <Button
-          gradient
-          onPress={() => setShowNews('')}
-          style={{
-            height: 44,
-            width: '90%',
-            borderRadius: 0,
-            alignSelf: 'center',
-            marginHorizontal: Platform.OS === 'ios' ? 20 : 10,
-            marginBottom: Platform.OS === 'ios' ? 25 : 10,
-          }}>
-          <Text white>Fechar</Text>
-        </Button>
       </Modal>
     );
   }
@@ -197,9 +211,9 @@ export default function Home({navigation}) {
             style={{
               width: '90%',
               height: 240,
-              borderColor: '#f3f2f3',
+              borderColor: colors.background2,
               borderWidth: 1,
-              backgroundColor: '#fff',
+              backgroundColor: colors.background,
               elevation: 2,
               padding: 10,
               borderRadius: 4,
@@ -216,7 +230,7 @@ export default function Home({navigation}) {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <Icon name="ios-close" size={48} />
+              <Icon name="ios-close" size={48} color={colors.black} />
             </TouchableOpacity>
             <Input
               label={homeQuestion && homeQuestion.content}
@@ -241,8 +255,13 @@ export default function Home({navigation}) {
     );
   }
 
+  function handleToggleDarkMode(value) {
+    setDarkMode(value);
+    dispatch(toggleDarkMode(value));
+  }
+
   return (
-    <Container>
+    <Container colors={colors}>
       <Header />
       <ScrollView>
         <View style={{paddingHorizontal: 30, paddingVertical: 10}}>
@@ -256,14 +275,20 @@ export default function Home({navigation}) {
         <View style={{paddingHorizontal: 30}}>
           {!(user.curso_ano && user.curso_turno) ? null : (
             <QuickItems>
-              <Item onPress={() => navigation.navigate('Schedules')}>
-                <Icon name="md-time" size={30} color="#acacb8" />
+              <Item
+                colors={colors}
+                onPress={() => navigation.navigate('Schedules')}>
+                <Icon name="md-time" size={30} color={colors.icon} />
               </Item>
-              <Item onPress={() => navigation.navigate('SelectReport')}>
-                <Icon name="md-list-box" size={30} color="#acacb8" />
+              <Item
+                colors={colors}
+                onPress={() => navigation.navigate('SelectReport')}>
+                <Icon name="md-list-box" size={30} color={colors.icon} />
               </Item>
-              <Item onPress={() => navigation.navigate('SelectClass')}>
-                <Icon name="md-school" size={30} color="#acacb8" />
+              <Item
+                colors={colors}
+                onPress={() => navigation.navigate('SelectClass')}>
+                <Icon name="md-school" size={30} color={colors.icon} />
               </Item>
             </QuickItems>
           )}
@@ -322,6 +347,11 @@ export default function Home({navigation}) {
           <ShimmerPlaceHolder
             autoRun
             visible={Boolean(homeQuestion)}
+            colorShimmer={[
+              colors.background2,
+              colors.background2,
+              colors.background,
+            ]}
             style={{
               textAlign: 'center',
               alignSelf: 'center',
@@ -334,9 +364,9 @@ export default function Home({navigation}) {
               <View
                 style={{
                   marginLeft: 30,
-                  backgroundColor: '#fff',
+                  backgroundColor: colors.card,
                   borderWidth: 1,
-                  borderColor: '#f3f2f3',
+                  borderColor: colors.background2,
                   borderBottomWidth: 0,
                   width: 300,
                 }}>
@@ -368,6 +398,14 @@ export default function Home({navigation}) {
             </View>
           </ShimmerPlaceHolder>
         </ScrollView>
+        <View style={{marginLeft: 30, marginTop: 10}}>
+          <Switch
+            label="Modo escuro"
+            value={darkMode}
+            onValueChange={value => handleToggleDarkMode(value)}
+            style={{marginTop: 10}}
+          />
+        </View>
       </ScrollView>
       {renderNews()}
       {renderHomeQuestion()}

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Text from '../../../../components/Text';
 import Button from '../../../../components/Button';
 
-import colors from '../../../../constants/theme';
+import {getThemeColors} from '../../../../constants/theme';
 
 import {Container} from './styles';
 
@@ -14,9 +14,11 @@ export default function Home({navigation}) {
   const user = useSelector(state => state.profile.user);
   const isAdmin = user.admin;
 
+  const colors = getThemeColors();
+
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Container style={{flex: 1}}>
+      <Container style={{flex: 1}} colors={colors}>
         <ScrollView showsHorizontalScrollIndicator={false}>
           <Text h1 black semibold>
             Central do Aluno

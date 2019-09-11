@@ -5,8 +5,9 @@ export const Container = styled.KeyboardAvoidingView.attrs({
   enabled: Platform.OS === 'ios',
   behavior: 'padding',
 })`
+  flex: 1;
   padding: 0 32px;
-  justify-content: flex-end;
+  background-color: ${props => props.colors.background};
 `;
 
 export const Form = styled.View`

@@ -13,22 +13,32 @@ import {
 
 import configCat from './services/configcat';
 
-import colors from './constants/theme';
+import {getThemeColors} from './constants/theme';
 
 import {resetLoading} from './store/modules/profile/actions';
-import {setOneSignalPlayerId} from './store/modules/app/actions';
+import {
+  toggleDarkMode,
+  setOneSignalPlayerId,
+} from './store/modules/app/actions';
 
 import createRouter from './routes';
 
 function App() {
   const dispatch = useDispatch();
+  const colors = getThemeColors();
 
   const signed = useSelector(state => state.profile.token !== null);
-  const firstTime = useSelector(state => state.app.firstTime);
+  const appState = useSelector(state => state.app);
+
+  const {firstTime} = appState;
+  const {darkMode} = appState;
 
   const postSplashRoute = signed ? 'app' : 'auth';
-  const postSplashStatusBarColor = signed ? '#f5f7fb' : '#fff';
   const Routes = createRouter(firstTime ? 'splash' : postSplashRoute);
+
+  function onIds(id) {
+    dispatch(setOneSignalPlayerId(id));
+  }
 
   useEffect(() => {
     setJSExceptionHandler(error => {
@@ -40,50 +50,70 @@ function App() {
       dispatch(resetLoading());
       Alert.alert('Erro!', exceptionString);
     });
-  }, []);
 
-  function onIds(id) {
-    dispatch(setOneSignalPlayerId(id));
-  }
-  useEffect(() => {
     OneSignal.init(Config.ONESIGNAL_APP_ID);
     OneSignal.addEventListener('received', () => {});
     OneSignal.addEventListener('opened', () => {});
     OneSignal.addEventListener('ids', onIds);
 
+    function showUpdateMessage(currentVersion, storeVersion, storeName) {
+      showMessage({
+        type: 'info',
+        message: 'Novo update disponível!',
+        description: `Você está rodando a versão ${currentVersion}, porém a versão ${storeVersion} já está disponível na ${storeName}.`,
+        duration: 5000,
+      });
+    }
+
     if (!__DEV__ && Platform.OS === 'android') {
       configCat.getValue('androidVersion', 'Default', storeVersion => {
         const currentVersion = DeviceInfo.getVersion();
         if (currentVersion < storeVersion) {
-          showMessage({
-            type: 'info',
-            message: 'Novo update disponível!',
-            description: `Você está rodando a versão ${currentVersion}, porém a versão ${storeVersion} já está disponível na Google Play.`,
-            duration: 5000,
-          });
+          showUpdateMessage(currentVersion, storeVersion, 'Play Store');
         }
       });
     } else if (!__DEV__ && Platform.OS === 'ios') {
       configCat.getValue('iosVersion', 'Default', storeVersion => {
         const currentVersion = DeviceInfo.getVersion();
         if (currentVersion < storeVersion) {
-          showMessage({
-            type: 'info',
-            message: 'Novo update disponível!',
-            description: `Você está rodando a versão ${currentVersion}, porém a versão ${storeVersion} já está disponível na App Store.`,
-            duration: 5000,
-          });
+          showUpdateMessage(currentVersion, storeVersion, 'App Store');
         }
       });
     }
+
+    if (darkMode === undefined) {
+      Alert.alert(
+        'Modo escuro!',
+        'Agora o app tem um modo escuro.\nGostaria de ativá-lo?',
+        [
+          {
+            text: 'Ativar',
+            onPress: () => dispatch(toggleDarkMode(true)),
+          },
+          {
+            text: 'Não',
+            onPress: () => {
+              dispatch(toggleDarkMode(false));
+              Alert.alert(
+                'Ok! Deixando no modo claro!',
+                'Qualquer coisa, você ativá-la no seu dashboard. Aproveite o app! ;)',
+              );
+            },
+            style: 'cancel',
+          },
+        ],
+      );
+    }
   }, []);
+
+  const appStatusBarStyle = colors.darkMode ? 'light-content' : 'dark-content';
 
   return (
     <>
       <Routes />
       <StatusBar
-        backgroundColor={firstTime ? colors.primary : postSplashStatusBarColor}
-        barStyle={firstTime ? 'light-content' : 'dark-content'}
+        backgroundColor={firstTime ? colors.primary : colors.background}
+        barStyle={firstTime ? 'light-content' : appStatusBarStyle}
       />
     </>
   );

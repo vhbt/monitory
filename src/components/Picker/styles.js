@@ -1,10 +1,9 @@
 import styled from 'styled-components/native';
-import colors from '../../constants/theme';
 
 export const PickerView = styled.View`
-  color: ${colors.black};
+  color: ${props => props.colors.black};
   height: 42px;
-  border-bottom-color: ${colors.gray2};
+  border-bottom-color: ${props => props.colors.gray2};
   border-bottom-width: 1px;
 `;
 

@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
-  background-color: #f5f7fb;
+  background-color: ${props => props.colors.background};
 `;
 
 export const SubjectsList = styled.ScrollView``;
@@ -24,7 +24,7 @@ export const Item = styled.TouchableOpacity`
   height: 42px;
   justify-content: center;
   align-items: center;
-  border: 1px solid #e6e9f1;
+  border: 1px solid ${props => props.colors.background2};
   border-radius: 22px;
   margin-right: 10px;
 `;

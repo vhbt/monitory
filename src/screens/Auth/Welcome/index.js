@@ -15,15 +15,18 @@ import {
   TermsButton,
 } from './styles';
 
+import {getThemeColors} from '../../../constants/theme';
+
 import welcome from '../../../assets/images/welcome.png';
 
 export default function Welcome({navigation}) {
   const [showTerms, setShowTerms] = useState(false);
+  const colors = getThemeColors();
 
   function renderTerms() {
     return (
       <Modal animationType="slide" visible={showTerms}>
-        <SafeAreaView>
+        <SafeAreaView style={{flex: 1, backgroundColor: colors.background}}>
           <Text black style={{margin: 10}}>
             Nos não salvamos, em hipótese alguma, seus dados de login do SUAP.
             As informaçoes coletadas são referentes aos dados necessários para a
@@ -39,7 +42,7 @@ export default function Welcome({navigation}) {
   }
 
   return (
-    <Container>
+    <Container colors={colors}>
       <WelcomeText>
         <Title style={{alignSelf: 'center'}}>
           <Text h1 primary bold>

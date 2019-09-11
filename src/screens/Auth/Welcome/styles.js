@@ -3,9 +3,10 @@ import Button from '../../../components/Button';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
-  margin-top: 40px;
+  padding-top: 40px;
   align-items: center;
   justify-content: center;
+  background: ${props => props.colors.background};
 `;
 
 export const WelcomeText = styled.View`
@@ -24,7 +25,9 @@ export const SubTitle = styled.View`
 
 export const WelcomeImage = styled.Image`
   flex: 0.5;
-  width: 90%;
+  width: 75%;
+  background-color: transparent;
+  resize-mode: contain;
 `;
 
 export const BottomButtons = styled.View`

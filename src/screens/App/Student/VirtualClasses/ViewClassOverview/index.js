@@ -9,11 +9,12 @@ import Text from '../../../../../components/Text';
 
 import {suap_api} from '../../../../../services/api';
 
-import colors from '../../../../../constants/theme';
+import {getThemeColors} from '../../../../../constants/theme';
 import {Container} from './styles';
 
 export default function ViewClassOverview({navigation}) {
   const myClass = navigation.getParam('data');
+  const colors = getThemeColors();
 
   const [myClassData, setMyClassData] = useState(null);
   const [classes, setClasses] = useState(null);
@@ -66,6 +67,11 @@ export default function ViewClassOverview({navigation}) {
         <ShimmerPlaceholder
           key={i}
           autoRun
+          colorShimmer={[
+            colors.background2,
+            colors.background2,
+            colors.background,
+          ]}
           style={{
             marginRight: direction === 'row' ? 10 : 0,
             marginBottom: direction === 'column' ? 5 : 0,
@@ -81,19 +87,29 @@ export default function ViewClassOverview({navigation}) {
   }
 
   return (
-    <Container>
+    <Container colors={colors}>
       <View style={{marginBottom: 15, paddingHorizontal: 30}}>
         <Text h3 black medium>
           Professor(a):
         </Text>
         <ShimmerPlaceholder
           autoRun
+          colorShimmer={[
+            colors.background2,
+            colors.background2,
+            colors.background,
+          ]}
           visible={!loading}
           style={{width: 200, height: 15, marginVertical: 5}}>
           <Text black>{myClassData && myClassData.professores[0].nome}</Text>
         </ShimmerPlaceholder>
         <ShimmerPlaceholder
           autoRun
+          colorShimmer={[
+            colors.background2,
+            colors.background2,
+            colors.background,
+          ]}
           visible={!loading}
           style={{width: 180, height: 15}}>
           <Text black>{myClassData && myClassData.professores[0].email}</Text>
@@ -120,7 +136,7 @@ export default function ViewClassOverview({navigation}) {
           renderItem={({item}) => (
             <View
               style={{
-                backgroundColor: colors.black,
+                backgroundColor: '#323643',
                 padding: 10,
                 marginRight: 10,
                 borderRadius: 4,
@@ -187,6 +203,7 @@ export default function ViewClassOverview({navigation}) {
               <Icon
                 name="md-download"
                 size={22}
+                color={colors.black}
                 onPress={() =>
                   Linking.openURL(`https://suap.ifrn.edu.br${item.url}`)
                 }

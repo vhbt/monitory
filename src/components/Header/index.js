@@ -11,12 +11,16 @@ import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 
 import Text from '../Text';
 
+import {getThemeColors} from '../../constants/theme';
+
 import {Container, TopContainer, Avatar} from './styles';
 
 export default function Header() {
   const user = useSelector(state => state.profile.user);
   const [loading, setLoading] = useState(true);
   const [infoClicks, setInfoClicks] = useState(0);
+
+  const colors = getThemeColors();
 
   function handleShowInfo() {
     if (infoClicks === 6) {
@@ -37,11 +41,16 @@ export default function Header() {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView forceInset={{top: 'always', bottom: 'never'}}>
       <Container>
         <TopContainer>
           <ShimmerPlaceholder
             autoRun
+            colorShimmer={[
+              colors.background2,
+              colors.background2,
+              colors.background,
+            ]}
             visible={!loading}
             style={{height: 25, width: 220}}>
             <View style={{flexDirection: 'row'}}>

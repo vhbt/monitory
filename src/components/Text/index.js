@@ -1,10 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {getThemeColors} from '../../constants/theme';
 import {TextComponent} from './styles';
 
 export default function Text({children, ...rest}) {
-  return <TextComponent {...rest}>{children}</TextComponent>;
+  const colors = getThemeColors();
+  return (
+    <TextComponent colors={colors} {...rest}>
+      {children}
+    </TextComponent>
+  );
 }
 
 Text.propTypes = {

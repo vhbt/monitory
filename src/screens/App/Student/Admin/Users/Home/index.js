@@ -5,14 +5,16 @@ import {showMessage} from 'react-native-flash-message';
 import PropTypes from 'prop-types';
 
 import Text from '../../../../../../components/Text';
+import Input from '../../../../../../components/Input';
 
 import {api} from '../../../../../../services/api';
-import colors from '../../../../../../constants/theme';
+import {getThemeColors} from '../../../../../../constants/theme';
 
 import {Container, UserCard} from './styles';
 
 export default function Home({navigation}) {
   const [page, setPage] = useState(1);
+  const [search, setSearch] = useState('');
   const [users, setUsers] = useState([]);
   const [totalCount, setTotalCount] = useState(null);
 
@@ -20,17 +22,27 @@ export default function Home({navigation}) {
   const [fetching, setFetching] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
-  async function getUsers(shouldRefresh = false) {
+  const colors = getThemeColors();
+
+  async function getUsers(shouldRefresh = false, firstSearch = false) {
     try {
       setLoading(true);
-      const response = await api.get(`/users?limit=${15}&page=${page}`);
+      setFetching(true);
+
+      if (firstSearch) {
+        setUsers([]);
+      }
+
+      const response = await api.get(
+        `/users?limit=${15}&page=${firstSearch ? 1 : page}&search=${search}`,
+      );
 
       const filteredResponse = response.data.users.map(user => ({
         ...user,
         smallCurso: user.curso.replace('Técnico de Nível Médio em ', ''),
       }));
 
-      if (refreshing || shouldRefresh) {
+      if (refreshing || shouldRefresh || firstSearch) {
         setUsers(filteredResponse);
       } else {
         setUsers(
@@ -64,7 +76,6 @@ export default function Home({navigation}) {
 
   async function loadMore() {
     if (totalCount > users.length && !fetching) {
-      setFetching(true);
       setPage(page + 1);
     }
   }
@@ -79,6 +90,10 @@ export default function Home({navigation}) {
     }
   }
 
+  function handleSearch() {
+    getUsers(false, true);
+  }
+
   function renderNotificationShimmerRows(numberOfrows) {
     const shimmerRows = [];
     for (let i = 0; i < numberOfrows; i += 1) {
@@ -87,6 +102,11 @@ export default function Home({navigation}) {
           key={i}
           autoRun
           hasBorder
+          colorShimmer={[
+            colors.background2,
+            colors.background2,
+            colors.background,
+          ]}
           style={{
             width: '100%',
             height: 100,
@@ -101,22 +121,35 @@ export default function Home({navigation}) {
   }
 
   return (
-    <Container>
+    <Container colors={colors}>
       <Text h1 black medium style={{marginBottom: 15}}>
         Alunos
       </Text>
 
       <ShimmerPlaceholder
         autoRun
+        colorShimmer={[
+          colors.background2,
+          colors.background2,
+          colors.background,
+        ]}
         visible={totalCount !== null}
         style={{height: 20, width: 80}}>
         <View style={{flexDirection: 'row'}}>
-          <Text>Total: </Text>
+          <Text black>Total: </Text>
           <Text black bold>
             {totalCount}
           </Text>
         </View>
       </ShimmerPlaceholder>
+      <Input
+        hasButton
+        placeholder="Pesquisar"
+        buttonStyle={{height: 44, position: 'absolute'}}
+        value={search}
+        onChangeText={setSearch}
+        onPress={handleSearch}
+      />
       <FlatList
         showsVerticalScrollIndicator={false}
         style={{marginTop: 15}}
@@ -124,6 +157,7 @@ export default function Home({navigation}) {
         keyExtractor={item => String(item.id)}
         renderItem={({item}) => (
           <UserCard
+            colors={colors}
             onPress={() => navigation.navigate('ViewStudent', {student: item})}>
             <Text black medium>
               {item.nome_usual} ({item.matricula})
@@ -143,7 +177,7 @@ export default function Home({navigation}) {
           loading ? (
             renderNotificationShimmerRows(7)
           ) : (
-            <Text>Algo deu errado...</Text>
+            <Text black>Nada foi encontrado...</Text>
           )
         }
         ListFooterComponent={

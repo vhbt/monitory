@@ -8,7 +8,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import PropTypes from 'prop-types';
 
-import colors from './constants/theme';
+import {getThemeColors} from './constants/theme';
 
 import Splash from './screens/Splash';
 
@@ -42,6 +42,11 @@ function StudentIcon({tintColor}) {
   return <Icon name="ios-school" size={32} color={tintColor} />;
 }
 
+function TabBarColor() {
+  const colors = getThemeColors();
+  return colors;
+}
+
 export default (initialRoute = 'splash') =>
   createAppContainer(
     createSwitchNavigator(
@@ -65,7 +70,7 @@ export default (initialRoute = 'splash') =>
           {
             defaultNavigationOptions: {
               headerStyle: {
-                backgroundColor: 'white',
+                backgroundColor: TabBarColor().background,
                 borderBottomColor: 'transparent',
                 elevation: 0,
               },
@@ -75,7 +80,7 @@ export default (initialRoute = 'splash') =>
                 paddingRight: 16,
               },
               headerBackTitle: null,
-              headerTintColor: '#000',
+              headerTintColor: TabBarColor().black,
             },
           },
         ),
@@ -102,8 +107,8 @@ export default (initialRoute = 'splash') =>
                 {
                   defaultNavigationOptions: {
                     headerStyle: {
-                      backgroundColor: '#f5f7fb',
-                      borderBottomColor: '#f5f7fb',
+                      backgroundColor: TabBarColor().background,
+                      borderBottomColor: TabBarColor().background,
                       elevation: 0,
                     },
                     headerLeftContainerStyle: {
@@ -112,7 +117,7 @@ export default (initialRoute = 'splash') =>
                       paddingRight: 16,
                     },
                     headerBackTitle: null,
-                    headerTintColor: '#000',
+                    headerTintColor: TabBarColor().black,
                   },
                 },
               ),
@@ -126,12 +131,15 @@ export default (initialRoute = 'splash') =>
           {
             defaultNavigationOptions: {
               tabBarOptions: {
-                activeTintColor: colors.primary,
+                activeTintColor: TabBarColor().primary,
                 showLabel: true,
                 keyboardHidesTabBar: true,
                 style: {
                   borderTopWidth: 0,
                   height: 55,
+                  backgroundColor: TabBarColor().darkMode
+                    ? TabBarColor().background2
+                    : TabBarColor().white,
                 },
               },
             },

@@ -5,52 +5,53 @@ import ptbr from 'date-fns/locale/pt-BR';
 import PropTypes from 'prop-types';
 
 import Text from '../../../../../../components/Text';
-import Button from '../../../../../../components/Button';
 
+import {getThemeColors} from '../../../../../../constants/theme';
 import {Container} from './styles';
 
 export default function ViewStudent({navigation}) {
   const student = navigation.getParam('student');
+  const colors = getThemeColors();
 
   return (
-    <Container>
+    <Container colors={colors}>
       <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
         <Text gray style={{marginTop: 10}}>
           Matrícula
         </Text>
-        <Text>{student.matricula}</Text>
+        <Text black>{student.matricula}</Text>
         <Text gray style={{marginTop: 10}}>
           Nome Completo
         </Text>
-        <Text>{student.nome_completo}</Text>
+        <Text black>{student.nome_completo}</Text>
         <Text gray style={{marginTop: 10}}>
           Email SUAP
         </Text>
-        <Text>{student.email_suap || 'não tem'}</Text>
+        <Text black>{student.email_suap || 'não tem'}</Text>
         <Text gray style={{marginTop: 10}}>
           Email pessoal
         </Text>
-        <Text>{student.email_suap || 'não configurou'}</Text>
+        <Text black>{student.email_suap || 'não configurou'}</Text>
         <Text gray style={{marginTop: 10}}>
           Curso
         </Text>
-        <Text>{student.curso}</Text>
+        <Text black>{student.curso}</Text>
         <Text gray style={{marginTop: 10}}>
           Ano
         </Text>
-        <Text>{student.curso_ano || 'não configurou'}</Text>
+        <Text black>{student.curso_ano || 'não configurou'}</Text>
         <Text gray style={{marginTop: 10}}>
           Turno
         </Text>
-        <Text>{student.curso_turno || 'não configurou'}</Text>
+        <Text black>{student.curso_turno || 'não configurou'}</Text>
         <Text gray style={{marginTop: 10}}>
           Dispositivos
         </Text>
-        <Text>{student.devices.length}</Text>
+        <Text black>{student.devices.length}</Text>
         <Text gray style={{marginTop: 10}}>
           Registrado em
         </Text>
-        <Text>
+        <Text black>
           {format(parseISO(student.createdAt), "d 'de' MMMM 'às' HH:MM", {
             locale: ptbr,
           })}
