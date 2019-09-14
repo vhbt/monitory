@@ -53,7 +53,14 @@ function App() {
 
     OneSignal.init(Config.ONESIGNAL_APP_ID);
     OneSignal.addEventListener('received', () => {});
-    OneSignal.addEventListener('opened', () => {});
+    OneSignal.addEventListener('opened', data => {
+      const {payload, isAppInFocus} = data.notification;
+      const {title, body} = payload;
+
+      if (!isAppInFocus) {
+        Alert.alert(title, body);
+      }
+    });
     OneSignal.addEventListener('ids', onIds);
 
     function showUpdateMessage(currentVersion, storeVersion, storeName) {

@@ -77,21 +77,14 @@ export default function Home({navigation}) {
 
   function renderNotificationDetailsModal() {
     return showNotificationDetails ? (
-      <Modal
-        animationType="slide"
-        visible={!!showNotificationDetails}
-        style={{padding: 20}}>
-        <SafeAreaView
-          style={{
-            flex: 1,
-            padding: 20,
-            backgroundColor: colors.background,
-          }}>
+      <Modal animationType="slide" visible={!!showNotificationDetails}>
+        <View
+          style={{flex: 1, padding: 20, backgroundColor: colors.background}}>
           <TouchableOpacity
             onPress={() => setShowNotificationDetails('')}
             style={{
               padding: 5,
-              margin: 5,
+              marginVertical: Platform.OS === 'ios' ? 10 : 0,
               height: Platform.OS === 'ios' ? 48 : 38,
               width: Platform.OS === 'ios' ? 48 : 38,
               alignItems: 'center',
@@ -118,7 +111,7 @@ export default function Home({navigation}) {
               {locale: ptbr},
             )}
           </Text>
-        </SafeAreaView>
+        </View>
       </Modal>
     ) : null;
   }

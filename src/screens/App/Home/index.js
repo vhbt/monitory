@@ -53,7 +53,7 @@ export default function Home({navigation}) {
   const [darkMode, setDarkMode] = useState(app.darkMode || false);
 
   async function getNews() {
-    const response = await api.get('/news?limit=20');
+    const response = await api.get('/news?limit=8&page=1');
 
     const newsData = response.data.map(newsDataRaw => ({
       ...newsDataRaw,

@@ -101,89 +101,88 @@ export default function PostNews({navigation}) {
   }
 
   return (
-    <SafeAreaView style={{flex: 1, height: '100%'}}>
-      <KeyboardAwareScrollView style={{flex: 1, height: '100%'}}>
-        <Container colors={colors}>
-          <Text black h1 style={{marginBottom: 20}}>
-            Postar Notícia
-          </Text>
-          <View
-            style={{
-              height: 120,
-              width: '100%',
-              backgroundColor: '#ddd',
-              borderRadius: 4,
-            }}>
-            {banner ? (
-              <>
-                <Image
-                  source={{uri: banner.uri}}
-                  style={{flex: 1, borderRadius: 4}}
-                />
-                <Button
-                  borderless
-                  style={{
-                    position: 'absolute',
-                    flex: 1,
-                    width: '100%',
-                    height: '100%',
-                    alignSelf: 'center',
-                    textAlign: 'center',
-                    background: '#fff',
-                  }}
-                  onPress={() => setBanner('')}>
-                  <Text white style={{alignSelf: 'center'}}>
-                    Limpar banner
-                  </Text>
-                </Button>
-              </>
-            ) : (
+    <KeyboardAwareScrollView
+      style={{flex: 1, backgroundColor: colors.background}}>
+      <Container colors={colors}>
+        <Text black h1 style={{marginBottom: 20}}>
+          Postar Notícia
+        </Text>
+        <View
+          style={{
+            height: 120,
+            width: '100%',
+            backgroundColor: colors.background2,
+            borderRadius: 4,
+          }}>
+          {banner ? (
+            <>
+              <Image
+                source={{uri: banner.uri}}
+                style={{flex: 1, borderRadius: 4}}
+              />
               <Button
                 borderless
-                marginless
                 style={{
+                  position: 'absolute',
                   flex: 1,
-                  justifyContent: 'center',
-                  alignItems: 'center',
+                  width: '100%',
+                  height: '100%',
+                  alignSelf: 'center',
+                  textAlign: 'center',
+                  background: '#fff',
                 }}
-                onPress={handleChoosePhoto}>
-                {banner ? null : <Text gray>Selecionar Banner</Text>}
+                onPress={() => setBanner('')}>
+                <Text white style={{alignSelf: 'center'}}>
+                  Limpar banner
+                </Text>
               </Button>
-            )}
-          </View>
-          <Input
-            label="Título"
-            onChangeText={setTitle}
-            value={title}
-            returnKeyType="next"
-            onSubmitEditing={() => categoryRef.current.focus()}
-          />
-          <Input
-            label="Categoria"
-            onChangeText={setCategory}
-            value={category}
-            ref={categoryRef}
-            returnKeyType="next"
-            onSubmitEditing={() => contentRef.current.focus()}
-          />
-          <Input
-            label="Conteúdo"
-            multiline
-            autoCorrect
-            onChangeText={setContent}
-            value={content}
-            style={{height: 130, textAlignVertical: 'top'}}
-            ref={contentRef}
-          />
-          <Button
-            loading={loading}
-            style={{height: 44, alignSelf: 'stretch', marginTop: 10}}
-            onPress={handleSubmit}>
-            <Text white>Postar</Text>
-          </Button>
-        </Container>
-      </KeyboardAwareScrollView>
-    </SafeAreaView>
+            </>
+          ) : (
+            <Button
+              borderless
+              marginless
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              onPress={handleChoosePhoto}>
+              {banner ? null : <Text gray>Selecionar Banner</Text>}
+            </Button>
+          )}
+        </View>
+        <Input
+          label="Título"
+          onChangeText={setTitle}
+          value={title}
+          returnKeyType="next"
+          onSubmitEditing={() => categoryRef.current.focus()}
+        />
+        <Input
+          label="Categoria"
+          onChangeText={setCategory}
+          value={category}
+          ref={categoryRef}
+          returnKeyType="next"
+          onSubmitEditing={() => contentRef.current.focus()}
+        />
+        <Input
+          label="Conteúdo"
+          multiline
+          autoCorrect
+          onChangeText={setContent}
+          value={content}
+          style={{height: 130, textAlignVertical: 'top'}}
+          ref={contentRef}
+        />
+        <Button
+          loading={loading}
+          style={{height: 44, alignSelf: 'stretch', marginTop: 10}}
+          onPress={handleSubmit}>
+          <Text white>Postar</Text>
+        </Button>
+      </Container>
+    </KeyboardAwareScrollView>
   );
 }
 

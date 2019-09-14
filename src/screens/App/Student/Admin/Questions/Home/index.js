@@ -74,7 +74,7 @@ export default function Home() {
             }}
             style={{
               padding: 5,
-              marginTop: Platform.OS === 'ios' ? 10 : 0,
+              martinVertical: Platform.OS === 'ios' ? 10 : 0,
               height: Platform.OS === 'ios' ? 48 : 38,
               width: Platform.OS === 'ios' ? 48 : 38,
               alignItems: 'center',

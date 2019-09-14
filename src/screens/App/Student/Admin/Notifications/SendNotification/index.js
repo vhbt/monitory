@@ -12,7 +12,7 @@ import Button from '../../../../../../components/Button';
 
 import {api} from '../../../../../../services/api';
 
-import colors from '../../../../../../constants/theme';
+import {getThemeColors} from '../../../../../../constants/theme';
 import {Container} from './styles';
 
 export default function SendNotification({navigation}) {
@@ -26,6 +26,8 @@ export default function SendNotification({navigation}) {
   const [loadingList, setLoadingList] = useState();
 
   const messageRef = useRef();
+
+  const colors = getThemeColors();
 
   async function getStudents() {
     setLoadingList(true);
@@ -170,9 +172,10 @@ export default function SendNotification({navigation}) {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <KeyboardAwareScrollView style={{flex: 1, backgroundColor: '#fafafa'}}>
-        <Container>
-          <Text h1 medium style={{marginBottom: 20}}>
+      <KeyboardAwareScrollView
+        style={{flex: 1, backgroundColor: colors.background}}>
+        <Container colors={colors}>
+          <Text black h1 medium style={{marginBottom: 20}}>
             Enviar Notificação
           </Text>
           <SectionedMultiSelect

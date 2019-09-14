@@ -11,7 +11,6 @@ import ImageViewer from 'react-native-image-zoom-viewer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Config from 'react-native-config';
 import {showMessage} from 'react-native-flash-message';
-import PropTypes from 'prop-types';
 
 import Text from '../../../../components/Text';
 import Button from '../../../../components/Button';
@@ -22,7 +21,7 @@ import {api} from '../../../../services/api';
 
 import {Container} from './styles';
 
-export default function SelectSchedules({navigation}) {
+export default function SelectSchedules() {
   const user = useSelector(state => state.profile.user);
   const [showImage, setShowImage] = useState(null);
   const [myClasses, setMyClasses] = useState([]);
@@ -33,21 +32,27 @@ export default function SelectSchedules({navigation}) {
   async function getClasses() {
     const classesResponse = await api.get('/schedules');
     const classes = classesResponse.data;
+    const otherClasses = classes.filter(
+      otherClass =>
+        user.curso !== otherClass.course.description ||
+        Number(user.curso_ano) !== Number(otherClass.year) ||
+        user.curso_turno !== otherClass.turn,
+    );
 
-    const filteredClasses = classes.filter(mc => {
-      if (user.curso_ano && user.curso_turno) {
-        return (
-          user.curso === mc.course.description &&
-          Number(user.curso_ano) === Number(mc.year) &&
-          user.curso_turno === mc.turn
-        );
-      }
-      return mc;
-    });
+    const myClass = classes
+      .filter(mc => {
+        if (user.curso_ano && user.curso_turno) {
+          return (
+            user.curso === mc.course.description &&
+            Number(user.curso_ano) === Number(mc.year) &&
+            user.curso_turno === mc.turn
+          );
+        }
+        return mc;
+      })
+      .map(mc => ({...mc, myClass: true}));
 
-    if (filteredClasses.length === 1) {
-      setShowImage(`${Config.STATIC_FILES_URL}/${filteredClasses[0].name}.png`);
-    } else if (!user.curso_ano || !user.curso_turno) {
+    if (!user.curso_ano || !user.curso_turno) {
       showMessage({
         type: 'info',
         duration: 6000,
@@ -56,7 +61,7 @@ export default function SelectSchedules({navigation}) {
       });
     }
 
-    setMyClasses(filteredClasses);
+    setMyClasses([...myClass, ...otherClasses]);
     setLoading(false);
   }
 
@@ -72,15 +77,13 @@ export default function SelectSchedules({navigation}) {
           enableSwipeDown
           onCancel={() => {
             setShowImage(false);
-            navigation.navigate('StudentHome');
           }}
-          renderIndicator={() => {}}
+          renderIndicator={() => null}
           loadingRender={() => <ActivityIndicator size="large" color="#fff" />}
           renderHeader={() => (
             <TouchableOpacity
               onPress={() => {
                 setShowImage(false);
-                navigation.navigate('StudentHome');
               }}
               style={{
                 padding: 20,
@@ -89,7 +92,14 @@ export default function SelectSchedules({navigation}) {
             </TouchableOpacity>
           )}
           renderImage={props => (
-            <Image {...props} style={{width: '100%', aspectRatio: 1.47}} />
+            <Image
+              {...props}
+              style={{
+                width: '100%',
+                aspectRatio: 1.47,
+                position: 'absolute',
+              }}
+            />
           )}
         />
       </Modal>
@@ -105,7 +115,7 @@ export default function SelectSchedules({navigation}) {
         showsVerticalScrollIndicator={false}
         data={myClasses}
         keyExtractor={item => `${item.name}${item.year}${item.turn}`}
-        style={{marginTop: 30}}
+        style={{marginTop: 30, flex: 1}}
         ListEmptyComponent={
           loading ? (
             <ActivityIndicator
@@ -121,22 +131,29 @@ export default function SelectSchedules({navigation}) {
           )
         }
         renderItem={({item}) => (
-          <Button
-            style={{height: 44, alignSelf: 'stretch'}}
-            onPress={() => setShowImage(item.path)}>
-            <Text white>
-              {item.name} ({item.turn})
-            </Text>
-          </Button>
+          <>
+            <Button
+              style={{
+                height: 44,
+                alignSelf: 'stretch',
+                marginBottom: item.myClass ? 25 : 5,
+              }}
+              onPress={() =>
+                setShowImage(`${Config.STATIC_FILES_URL}/${item.name}.png`)
+              }>
+              <Text white>
+                {item.name} ({item.turn})
+              </Text>
+            </Button>
+            {item.myClass ? (
+              <Text black h3 style={{marginBottom: 5}}>
+                Outras turmas
+              </Text>
+            ) : null}
+          </>
         )}
       />
       {renderImage()}
     </Container>
   );
 }
-
-SelectSchedules.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func,
-  }).isRequired,
-};
