@@ -16,7 +16,7 @@ import {unsetFirstTime} from '../../store/modules/app/actions';
 
 import {Container} from './styles';
 
-export default function Splash() {
+export default function Splash({navigation}) {
   const dispatch = useDispatch();
   const [done, setDone] = useState(false);
 
@@ -68,6 +68,7 @@ export default function Splash() {
   useEffect(() => {
     if (done) {
       dispatch(unsetFirstTime());
+      navigation.navigate('auth');
     }
   }, [done]);
 

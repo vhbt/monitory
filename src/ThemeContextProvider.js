@@ -9,7 +9,10 @@ const {Provider, Consumer} = createContext();
 
 function ThemeContextProvider({children}) {
   const dispatch = useDispatch();
-  const darkMode = useSelector(state => state.app.darkMode);
+  const app = useSelector(state => state.app);
+
+  const {darkMode} = app;
+  const {firstTime} = app;
 
   const darkTheme = {
     darkMode: true,
@@ -56,7 +59,9 @@ function ThemeContextProvider({children}) {
       <>
         <ThemeProvider theme={activeTheme}>{children}</ThemeProvider>
         <StatusBar
-          backgroundColor={activeTheme.background}
+          backgroundColor={
+            firstTime ? activeTheme.primary : activeTheme.background
+          }
           barStyle={darkMode ? 'light-content' : 'dark-content'}
         />
       </>
