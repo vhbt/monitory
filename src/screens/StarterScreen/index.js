@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {View} from 'react-native';
 import PropTypes from 'prop-types';
+import SplashScreen from 'react-native-splash-screen';
 
 export default function StarterScreen({navigation}) {
   const storedState = useSelector(state => state);
@@ -17,6 +18,8 @@ export default function StarterScreen({navigation}) {
     } else {
       navigation.navigate('auth');
     }
+
+    SplashScreen.hide();
   }, []);
 
   return <View />;
