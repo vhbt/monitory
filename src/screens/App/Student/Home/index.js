@@ -1,6 +1,7 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {SafeAreaView, ScrollView} from 'react-native';
+import {withTheme} from 'styled-components';
 import PropTypes from 'prop-types';
 
 import Text from '../../../../components/Text';
@@ -10,7 +11,7 @@ import {getThemeColors} from '../../../../constants/theme';
 
 import {Container} from './styles';
 
-export default function Home({navigation}) {
+function Home({navigation}) {
   const user = useSelector(state => state.profile.user);
   const isAdmin = user.admin;
 
@@ -72,8 +73,19 @@ export default function Home({navigation}) {
   );
 }
 
+Home.navigationOptions = ({screenProps}) => ({
+  headerStyle: {
+    backgroundColor: screenProps.theme.background,
+    borderBottomColor: screenProps.theme.background,
+    elevation: 0,
+  },
+  headerTintColor: screenProps.theme.black,
+});
+
 Home.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }).isRequired,
 };
+
+export default withTheme(Home);

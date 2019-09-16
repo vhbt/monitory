@@ -3,6 +3,7 @@ import {View, FlatList, Linking} from 'react-native';
 import {parseISO, isAfter, subDays} from 'date-fns';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import {showMessage} from 'react-native-flash-message';
+import {withTheme} from 'styled-components';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Text from '../../../../../components/Text';
@@ -12,7 +13,7 @@ import {suap_api} from '../../../../../services/api';
 import {getThemeColors} from '../../../../../constants/theme';
 import {Container} from './styles';
 
-export default function ViewClassOverview({navigation}) {
+function ViewClassOverview({navigation}) {
   const myClass = navigation.getParam('data');
   const colors = getThemeColors();
 
@@ -223,6 +224,14 @@ export default function ViewClassOverview({navigation}) {
   );
 }
 
-ViewClassOverview.navigationOptions = ({navigation}) => ({
+ViewClassOverview.navigationOptions = ({navigation, screenProps}) => ({
   title: navigation.getParam('data').formattedDisciplina,
+  headerStyle: {
+    backgroundColor: screenProps.theme.background,
+    borderBottomColor: screenProps.theme.background,
+    elevation: 0,
+  },
+  headerTintColor: screenProps.theme.black,
 });
+
+export default withTheme(ViewClassOverview);

@@ -2,6 +2,7 @@ import React from 'react';
 import {ScrollView} from 'react-native';
 import {format, parseISO} from 'date-fns';
 import ptbr from 'date-fns/locale/pt-BR';
+import {withTheme} from 'styled-components';
 import PropTypes from 'prop-types';
 
 import Text from '../../../../../../components/Text';
@@ -9,7 +10,7 @@ import Text from '../../../../../../components/Text';
 import {getThemeColors} from '../../../../../../constants/theme';
 import {Container} from './styles';
 
-export default function ViewStudent({navigation}) {
+function ViewStudent({navigation}) {
   const student = navigation.getParam('student');
   const colors = getThemeColors();
 
@@ -61,8 +62,14 @@ export default function ViewStudent({navigation}) {
   );
 }
 
-ViewStudent.navigationOptions = ({navigation}) => ({
+ViewStudent.navigationOptions = ({navigation, screenProps}) => ({
   title: navigation.getParam('student').nome_usual,
+  headerStyle: {
+    backgroundColor: screenProps.theme.background,
+    borderBottomColor: screenProps.theme.background,
+    elevation: 0,
+  },
+  headerTintColor: screenProps.theme.black,
 });
 
 ViewStudent.propTypes = {
@@ -70,3 +77,5 @@ ViewStudent.propTypes = {
     getParam: PropTypes.func,
   }).isRequired,
 };
+
+export default withTheme(ViewStudent);

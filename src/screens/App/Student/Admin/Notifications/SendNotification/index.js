@@ -4,6 +4,7 @@ import {SafeAreaView, Alert} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
+import {withTheme} from 'styled-components';
 import PropTypes from 'prop-types';
 
 import Text from '../../../../../../components/Text';
@@ -15,7 +16,7 @@ import {api} from '../../../../../../services/api';
 import {getThemeColors} from '../../../../../../constants/theme';
 import {Container} from './styles';
 
-export default function SendNotification({navigation}) {
+function SendNotification({navigation}) {
   const myCurrentPlayerId = useSelector(state => state.app.oneSignalPlayerId);
 
   const [title, setTitle] = useState('');
@@ -236,8 +237,19 @@ export default function SendNotification({navigation}) {
   );
 }
 
+SendNotification.navigationOptions = ({screenProps}) => ({
+  headerStyle: {
+    backgroundColor: screenProps.theme.background,
+    borderBottomColor: screenProps.theme.background,
+    elevation: 0,
+  },
+  headerTintColor: screenProps.theme.black,
+});
+
 SendNotification.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }).isRequired,
 };
+
+export default withTheme(SendNotification);

@@ -1,6 +1,7 @@
 import React from 'react';
 import {Dimensions, ScrollView, View} from 'react-native';
 import {LineChart, BarChart} from 'react-native-chart-kit';
+import {withTheme} from 'styled-components';
 import PropTypes from 'prop-types';
 
 import Text from '../../../../../components/Text';
@@ -9,7 +10,7 @@ import {getThemeColors} from '../../../../../constants/theme';
 
 import {Container} from './styles';
 
-export default function ViewFullReport({navigation}) {
+function ViewFullReport({navigation}) {
   const {
     formattedDisciplina,
     segundo_semestre,
@@ -229,9 +230,20 @@ export default function ViewFullReport({navigation}) {
   );
 }
 
+ViewFullReport.navigationOptions = ({screenProps}) => ({
+  headerStyle: {
+    backgroundColor: screenProps.theme.background,
+    borderBottomColor: screenProps.theme.background,
+    elevation: 0,
+  },
+  headerTintColor: screenProps.theme.black,
+});
+
 ViewFullReport.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
     getParam: PropTypes.func,
   }).isRequired,
 };
+
+export default withTheme(ViewFullReport);

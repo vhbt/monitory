@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {FlatList} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
+import {withTheme} from 'styled-components';
 import PropTypes from 'prop-types';
 
 import GradesCard from '../../../../../components/GradesCard';
@@ -11,7 +12,7 @@ import {getThemeColors} from '../../../../../constants/theme';
 
 import {Container} from './styles';
 
-export default function Report({navigation}) {
+function Report({navigation}) {
   const period = navigation.getParam('period');
   const colors = getThemeColors();
 
@@ -115,8 +116,14 @@ export default function Report({navigation}) {
   );
 }
 
-Report.navigationOptions = ({navigation}) => ({
+Report.navigationOptions = ({navigation, screenProps}) => ({
   title: `Boletim ${navigation.getParam('period').split('/')[0]}`,
+  headerStyle: {
+    backgroundColor: screenProps.theme.background,
+    borderBottomColor: screenProps.theme.background,
+    elevation: 0,
+  },
+  headerTintColor: screenProps.theme.black,
 });
 
 Report.propTypes = {
@@ -125,3 +132,5 @@ Report.propTypes = {
     getParam: PropTypes.func,
   }).isRequired,
 };
+
+export default withTheme(Report);

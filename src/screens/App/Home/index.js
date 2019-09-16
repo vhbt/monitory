@@ -1,23 +1,15 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {
-  View,
-  FlatList,
-  Image,
-  Platform,
-  Alert,
-  Modal,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import {View, FlatList, Image, Alert, Modal, ScrollView} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {format, parseISO} from 'date-fns';
 import ptbr from 'date-fns/locale/pt-BR';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {showMessage} from 'react-native-flash-message';
+import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
+import {withTheme} from 'styled-components';
 import PropTypes from 'prop-types';
 
-import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
 import Header from '../../../components/Header';
 import Text from '../../../components/Text';
 import Input from '../../../components/Input';
@@ -30,10 +22,17 @@ import Switch from '../../../components/Switch';
 import {api} from '../../../services/api';
 import {toggleDarkMode} from '../../../store/modules/app/actions';
 
-import {getThemeColors} from '../../../constants/theme';
-import {Container, QuickItems, Item} from './styles';
+import {
+  Container,
+  QuickItems,
+  Item,
+  QuestionContainer,
+  CloseModalButton,
+  QuestionModalContainer,
+  QuestionModalBackdrop,
+} from './styles';
 
-export default function Home({navigation}) {
+function Home({navigation, theme}) {
   const dispatch = useDispatch();
   const [showNews, setShowNews] = useState(null);
   const [showHomeQuestionModal, setShowHomeQuestionModal] = useState(null);
@@ -43,8 +42,6 @@ export default function Home({navigation}) {
   const [homeQuestion, setHomeQuestion] = useState();
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
-
-  const colors = getThemeColors();
 
   const user = useSelector(state => state.profile.user);
   const app = useSelector(state => state.app);
@@ -126,27 +123,18 @@ export default function Home({navigation}) {
       <Modal
         animationType="slide"
         visible={Boolean(showNews)}
-        style={{backgroundColor: colors.background}}>
+        style={{backgroundColor: theme.background}}>
         <KeyboardAwareScrollView
           showsVerticalScrollIndicator={false}
-          style={{backgroundColor: colors.background}}>
+          style={{backgroundColor: theme.background}}>
           <Image
             source={{uri: showNews && showNews.banner}}
             style={{height: 200, width: '100%'}}
           />
           <View style={{alignItems: 'flex-end'}}>
-            <TouchableOpacity
-              onPress={() => setShowNews('')}
-              style={{
-                marginTop: 5,
-                marginRight: 5,
-                height: Platform.OS === 'ios' ? 48 : 38,
-                width: Platform.OS === 'ios' ? 48 : 38,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Icon name="ios-close" size={48} color={colors.black} />
-            </TouchableOpacity>
+            <CloseModalButton onPress={() => setShowNews('')}>
+              <Icon name="ios-close" size={48} color={theme.black} />
+            </CloseModalButton>
           </View>
           <View style={{flex: 1, marginHorizontal: 15, marginTop: 5}}>
             <Text h2 black bold style={{textAlign: 'justify'}}>
@@ -156,7 +144,7 @@ export default function Home({navigation}) {
             {isAdmin ? (
               <Button
                 style={{height: 26, width: 110}}
-                colors={[colors.accent, colors.accent]}
+                colors={[theme.accent, theme.accent]}
                 onPress={() => handleConfirmDelete(showNews.id)}>
                 <Text white>Deletar</Text>
               </Button>
@@ -195,43 +183,19 @@ export default function Home({navigation}) {
     }
   }
 
+  function handleCloseHomeQuestionModal() {
+    setShowHomeQuestionModal(false);
+    setLoading(false);
+  }
+
   function renderHomeQuestion() {
     return (
       <Modal animationType="slide" visible={showHomeQuestionModal} transparent>
-        <View
-          style={{
-            padding: 20,
-            height: '100%',
-            width: '100%',
-            backgroundColor: 'rgba(0,0,0,0.5)',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <View
-            style={{
-              width: '90%',
-              height: 240,
-              borderColor: colors.background2,
-              borderWidth: 1,
-              backgroundColor: colors.background,
-              elevation: 2,
-              padding: 10,
-              borderRadius: 4,
-            }}>
-            <TouchableOpacity
-              onPress={() => {
-                setShowHomeQuestionModal(false);
-                setLoading(false);
-              }}
-              style={{
-                padding: 5,
-                height: Platform.OS === 'ios' ? 48 : 38,
-                width: Platform.OS === 'ios' ? 48 : 38,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Icon name="ios-close" size={48} color={colors.black} />
-            </TouchableOpacity>
+        <QuestionModalBackdrop>
+          <QuestionModalContainer>
+            <CloseModalButton onPress={handleCloseHomeQuestionModal}>
+              <Icon name="ios-close" size={48} color={theme.black} />
+            </CloseModalButton>
             <Input
               label={homeQuestion && homeQuestion.content}
               multiline
@@ -249,19 +213,14 @@ export default function Home({navigation}) {
               onPress={() => handleSendQuestionAnswers()}>
               <Text white>Enviar</Text>
             </Button>
-          </View>
-        </View>
+          </QuestionModalContainer>
+        </QuestionModalBackdrop>
       </Modal>
     );
   }
 
-  function handleToggleDarkMode(value) {
-    setDarkMode(value);
-    dispatch(toggleDarkMode(value));
-  }
-
   return (
-    <Container colors={colors}>
+    <Container>
       <Header />
       <ScrollView>
         <View style={{paddingHorizontal: 30, paddingVertical: 10}}>
@@ -275,20 +234,14 @@ export default function Home({navigation}) {
         <View style={{paddingHorizontal: 30}}>
           {!(user.curso_ano && user.curso_turno) ? null : (
             <QuickItems>
-              <Item
-                colors={colors}
-                onPress={() => navigation.navigate('Schedules')}>
-                <Icon name="md-time" size={30} color={colors.icon} />
+              <Item onPress={() => navigation.navigate('Schedules')}>
+                <Icon name="md-time" size={30} color={theme.icon} />
               </Item>
-              <Item
-                colors={colors}
-                onPress={() => navigation.navigate('SelectReport')}>
-                <Icon name="md-list-box" size={30} color={colors.icon} />
+              <Item onPress={() => navigation.navigate('SelectReport')}>
+                <Icon name="md-list-box" size={30} color={theme.icon} />
               </Item>
-              <Item
-                colors={colors}
-                onPress={() => navigation.navigate('SelectClass')}>
-                <Icon name="md-school" size={30} color={colors.icon} />
+              <Item onPress={() => navigation.navigate('SelectClass')}>
+                <Icon name="md-school" size={30} color={theme.icon} />
               </Item>
             </QuickItems>
           )}
@@ -348,9 +301,9 @@ export default function Home({navigation}) {
             autoRun
             visible={Boolean(homeQuestion)}
             colorShimmer={[
-              colors.background2,
-              colors.background2,
-              colors.background,
+              theme.background2,
+              theme.background2,
+              theme.background,
             ]}
             style={{
               textAlign: 'center',
@@ -361,15 +314,7 @@ export default function Home({navigation}) {
               height: 100,
             }}>
             <View>
-              <View
-                style={{
-                  marginLeft: 30,
-                  backgroundColor: colors.card,
-                  borderWidth: 1,
-                  borderColor: colors.background2,
-                  borderBottomWidth: 0,
-                  width: 300,
-                }}>
+              <QuestionContainer>
                 <Text
                   gray
                   medium
@@ -378,11 +323,12 @@ export default function Home({navigation}) {
                     alignSelf: 'center',
                     flexWrap: 'wrap',
                     paddingVertical: 10,
+                    maxWidth: 270,
                   }}>
                   Pergunta: {homeQuestion && homeQuestion.content}
                 </Text>
-              </View>
-              <View style={{marginLeft: 30}}>
+              </QuestionContainer>
+              <View style={{flex: 1, marginLeft: 30}}>
                 <Button
                   marginless
                   style={{
@@ -398,14 +344,6 @@ export default function Home({navigation}) {
             </View>
           </ShimmerPlaceHolder>
         </ScrollView>
-        <View style={{marginLeft: 30, marginTop: 10}}>
-          <Switch
-            label="Modo escuro"
-            value={darkMode}
-            onValueChange={value => handleToggleDarkMode(value)}
-            style={{marginTop: 10}}
-          />
-        </View>
       </ScrollView>
       {renderNews()}
       {renderHomeQuestion()}
@@ -417,10 +355,19 @@ function HomeIcon({tintColor}) {
   return <Icon name="ios-home" size={32} color={tintColor} />;
 }
 
-Home.navigationOptions = {
+Home.navigationOptions = ({screenProps}) => ({
   tabBarLabel: 'Home',
   tabBarIcon: HomeIcon,
-};
+  tabBarOptions: {
+    style: {
+      backgroundColor: screenProps.theme.darkMode
+        ? screenProps.theme.background2
+        : screenProps.theme.white,
+      height: 58,
+    },
+    activeTintColor: screenProps.theme.primary,
+  },
+});
 
 HomeIcon.propTypes = {
   tintColor: PropTypes.string.isRequired,
@@ -430,4 +377,13 @@ Home.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }).isRequired,
+  theme: PropTypes.shape({
+    background: PropTypes.string,
+    background2: PropTypes.string,
+    black: PropTypes.string,
+    accent: PropTypes.string,
+    icon: PropTypes.string,
+  }).isRequired,
 };
+
+export default withTheme(Home);

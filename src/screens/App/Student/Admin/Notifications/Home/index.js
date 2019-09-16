@@ -1,18 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  FlatList,
-  ActivityIndicator,
-  Modal,
-  SafeAreaView,
-  TouchableOpacity,
-  Platform,
-} from 'react-native';
+import {View, FlatList, ActivityIndicator, Modal} from 'react-native';
 import {format} from 'date-fns';
 import ptbr from 'date-fns/locale/pt-BR';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import Config from 'react-native-config';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {withTheme} from 'styled-components';
 import PropTypes from 'prop-types';
 
 import Text from '../../../../../../components/Text';
@@ -21,9 +14,14 @@ import Button from '../../../../../../components/Button';
 import {onesignal} from '../../../../../../services/api';
 
 import {getThemeColors} from '../../../../../../constants/theme';
-import {Container, NotificationCard} from './styles';
+import {
+  Container,
+  NotificationCard,
+  CloseModalButton,
+  ModalContainer,
+} from './styles';
 
-export default function Home({navigation}) {
+function Home({navigation}) {
   const [loading, setLoading] = useState(true);
   const [notifications, setNotifications] = useState([]);
   const [currentOffset, setCurrentOffset] = useState(0);
@@ -78,20 +76,10 @@ export default function Home({navigation}) {
   function renderNotificationDetailsModal() {
     return showNotificationDetails ? (
       <Modal animationType="slide" visible={!!showNotificationDetails}>
-        <View
-          style={{flex: 1, padding: 20, backgroundColor: colors.background}}>
-          <TouchableOpacity
-            onPress={() => setShowNotificationDetails('')}
-            style={{
-              padding: 5,
-              marginVertical: Platform.OS === 'ios' ? 10 : 0,
-              height: Platform.OS === 'ios' ? 48 : 38,
-              width: Platform.OS === 'ios' ? 48 : 38,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
+        <ModalContainer>
+          <CloseModalButton onPress={() => setShowNotificationDetails('')}>
             <Icon name="ios-close" size={48} color={colors.black} />
-          </TouchableOpacity>
+          </CloseModalButton>
           <Text h2 black medium>
             {showNotificationDetails.headings.en}
           </Text>
@@ -111,7 +99,7 @@ export default function Home({navigation}) {
               {locale: ptbr},
             )}
           </Text>
-        </View>
+        </ModalContainer>
       </Modal>
     ) : null;
   }
@@ -205,8 +193,19 @@ export default function Home({navigation}) {
   );
 }
 
+Home.navigationOptions = ({screenProps}) => ({
+  headerStyle: {
+    backgroundColor: screenProps.theme.background,
+    borderBottomColor: screenProps.theme.background,
+    elevation: 0,
+  },
+  headerTintColor: screenProps.theme.black,
+});
+
 Home.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }).isRequired,
 };
+
+export default withTheme(Home);

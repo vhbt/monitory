@@ -10,6 +10,9 @@ import Button from '../../../components/Button';
 import Input from '../../../components/Input';
 import Text from '../../../components/Text';
 import Picker from '../../../components/Picker';
+import Switch from '../../../components/Switch';
+
+import ThemeContextConsumer from '../../../ThemeContextProvider';
 
 import {getThemeColors} from '../../../constants/theme';
 import {Container} from './styles';
@@ -19,7 +22,7 @@ import {
   updateUserRequest,
 } from '../../../store/modules/profile/actions';
 
-export default function Profile() {
+export default function Profile({navigation}) {
   const dispatch = useDispatch();
   const user = useSelector(state => state.profile.user);
   const app = useSelector(state => state.app);
@@ -100,6 +103,20 @@ export default function Profile() {
               selectedValue={selectedClassTurn}
               onValueChange={value => setSelectedClassTurn(value)}
             />
+            <ThemeContextConsumer>
+              {context => {
+                const {handleToggleDarkMode, isDarkModeActive} = context;
+
+                return (
+                  <Switch
+                    label="Modo escuro"
+                    value={isDarkModeActive}
+                    onValueChange={handleToggleDarkMode}
+                    style={{marginTop: 10}}
+                  />
+                );
+              }}
+            </ThemeContextConsumer>
             <Button
               style={{height: 44, alignSelf: 'stretch', marginTop: 20}}
               loading={loading}
@@ -124,7 +141,10 @@ export default function Profile() {
                 marginBottom: 8,
               }}
               colors={[colors.accent, colors.accent2]}
-              onPress={() => dispatch(logout())}>
+              onPress={() => {
+                dispatch(logout());
+                navigation.navigate('auth');
+              }}>
               <Text white>Sair</Text>
             </Button>
           </View>
@@ -138,10 +158,19 @@ function ProfileIcon({tintColor}) {
   return <Icon name="ios-person" size={32} color={tintColor} />;
 }
 
-Profile.navigationOptions = {
+Profile.navigationOptions = ({screenProps}) => ({
   tabBarLabel: 'Perfil',
   tabBarIcon: ProfileIcon,
-};
+  tabBarOptions: {
+    style: {
+      backgroundColor: screenProps.theme.darkMode
+        ? screenProps.theme.background2
+        : screenProps.theme.white,
+      height: 58,
+    },
+    activeTintColor: screenProps.theme.primary,
+  },
+});
 
 ProfileIcon.propTypes = {
   tintColor: PropTypes.string.isRequired,

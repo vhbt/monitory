@@ -10,6 +10,7 @@ import {
 import ImageViewer from 'react-native-image-zoom-viewer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Config from 'react-native-config';
+import {withTheme} from 'styled-components';
 import {showMessage} from 'react-native-flash-message';
 
 import Text from '../../../../components/Text';
@@ -21,7 +22,7 @@ import {api} from '../../../../services/api';
 
 import {Container} from './styles';
 
-export default function SelectSchedules() {
+function SelectSchedules() {
   const user = useSelector(state => state.profile.user);
   const [showImage, setShowImage] = useState(null);
   const [myClasses, setMyClasses] = useState([]);
@@ -157,3 +158,14 @@ export default function SelectSchedules() {
     </Container>
   );
 }
+
+SelectSchedules.navigationOptions = ({screenProps}) => ({
+  headerStyle: {
+    backgroundColor: screenProps.theme.background,
+    borderBottomColor: screenProps.theme.background,
+    elevation: 0,
+  },
+  headerTintColor: screenProps.theme.black,
+});
+
+export default withTheme(SelectSchedules);

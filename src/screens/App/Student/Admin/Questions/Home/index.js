@@ -3,6 +3,7 @@ import {View, FlatList, Modal, TouchableOpacity, Platform} from 'react-native';
 import {format, parseISO} from 'date-fns';
 import ptbr from 'date-fns/locale/pt-BR';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
+import {withTheme} from 'styled-components';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Text from '../../../../../../components/Text';
@@ -12,7 +13,7 @@ import {api} from '../../../../../../services/api';
 import {getThemeColors} from '../../../../../../constants/theme';
 import {Container, QuestionCard} from './styles';
 
-export default function Home() {
+function Home() {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -138,6 +139,14 @@ export default function Home() {
   );
 }
 
-Home.navigationOptions = {
+Home.navigationOptions = ({screenProps}) => ({
   title: 'Perguntas',
-};
+  headerStyle: {
+    backgroundColor: screenProps.theme.background,
+    borderBottomColor: screenProps.theme.background,
+    elevation: 0,
+  },
+  headerTintColor: screenProps.theme.black,
+});
+
+export default withTheme(Home);

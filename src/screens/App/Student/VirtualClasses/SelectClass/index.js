@@ -3,6 +3,7 @@ import {useSelector} from 'react-redux';
 import {FlatList} from 'react-native';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import {showMessage} from 'react-native-flash-message';
+import {withTheme} from 'styled-components';
 import PropTypes from 'prop-types';
 
 import Text from '../../../../../components/Text';
@@ -14,7 +15,7 @@ import {getThemeColors} from '../../../../../constants/theme';
 
 import {Container} from './styles';
 
-export default function SelectClass({navigation}) {
+function SelectClass({navigation}) {
   const [myClasses, setMyClasses] = useState([]);
   const user = useSelector(state => state.profile.user);
 
@@ -121,9 +122,20 @@ export default function SelectClass({navigation}) {
   );
 }
 
+SelectClass.navigationOptions = ({screenProps}) => ({
+  headerStyle: {
+    backgroundColor: screenProps.theme.background,
+    borderBottomColor: screenProps.theme.background,
+    elevation: 0,
+  },
+  headerTintColor: screenProps.theme.black,
+});
+
 SelectClass.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
     goBack: PropTypes.func,
   }).isRequired,
 };
+
+export default withTheme(SelectClass);

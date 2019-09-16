@@ -1,9 +1,10 @@
 import React, {useState, useRef} from 'react';
-import {SafeAreaView, Image, View, Platform} from 'react-native';
+import {Image, View, Platform} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import ImagePicker from 'react-native-image-picker';
 import FormData from 'form-data';
+import {withTheme} from 'styled-components';
 import PropTypes from 'prop-types';
 
 import Text from '../../../../../../components/Text';
@@ -16,7 +17,7 @@ import {getThemeColors} from '../../../../../../constants/theme';
 
 import {Container} from './styles';
 
-export default function PostNews({navigation}) {
+function PostNews({navigation}) {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [content, setContent] = useState('');
@@ -186,8 +187,19 @@ export default function PostNews({navigation}) {
   );
 }
 
+PostNews.navigationOptions = ({screenProps}) => ({
+  headerStyle: {
+    backgroundColor: screenProps.theme.background,
+    borderBottomColor: screenProps.theme.background,
+    elevation: 0,
+  },
+  headerTintColor: screenProps.theme.black,
+});
+
 PostNews.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }).isRequired,
 };
+
+export default withTheme(PostNews);

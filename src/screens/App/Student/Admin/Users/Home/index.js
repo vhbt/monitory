@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {View, FlatList, ActivityIndicator} from 'react-native';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import {showMessage} from 'react-native-flash-message';
+import {withTheme} from 'styled-components';
 import PropTypes from 'prop-types';
 
 import Text from '../../../../../../components/Text';
@@ -12,7 +13,7 @@ import {getThemeColors} from '../../../../../../constants/theme';
 
 import {Container, UserCard} from './styles';
 
-export default function Home({navigation}) {
+function Home({navigation}) {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const [users, setUsers] = useState([]);
@@ -196,9 +197,20 @@ export default function Home({navigation}) {
   );
 }
 
+Home.navigationOptions = ({screenProps}) => ({
+  headerStyle: {
+    backgroundColor: screenProps.theme.background,
+    borderBottomColor: screenProps.theme.background,
+    elevation: 0,
+  },
+  headerTintColor: screenProps.theme.black,
+});
+
 Home.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
     goBack: PropTypes.func,
   }).isRequired,
 };
+
+export default withTheme(Home);

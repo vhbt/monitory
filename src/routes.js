@@ -6,9 +6,10 @@ import {
   createBottomTabNavigator,
 } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {withTheme} from 'styled-components';
 import PropTypes from 'prop-types';
 
-import {getThemeColors} from './constants/theme';
+import StarterScreen from './screens/StarterScreen';
 
 import Splash from './screens/Splash';
 
@@ -42,116 +43,109 @@ function StudentIcon({tintColor}) {
   return <Icon name="ios-school" size={32} color={tintColor} />;
 }
 
-function TabBarColor() {
-  const colors = getThemeColors();
-  return colors;
-}
-
-export default (initialRoute = 'splash') =>
-  createAppContainer(
-    createSwitchNavigator(
-      {
-        splash: createStackNavigator(
-          {
-            Splash,
+const Routes = createAppContainer(
+  createSwitchNavigator(
+    {
+      StarterScreen,
+      splash: createStackNavigator(
+        {
+          Splash,
+        },
+        {
+          defaultNavigationOptions: {
+            header: null,
           },
-          {
-            defaultNavigationOptions: {
-              header: null,
+        },
+      ),
+      auth: createStackNavigator(
+        {
+          Welcome,
+          Login,
+          SignUp,
+        },
+        {
+          defaultNavigationOptions: {
+            headerStyle: {
+              borderBottomColor: 'transparent',
+              elevation: 0,
             },
-          },
-        ),
-        auth: createStackNavigator(
-          {
-            Welcome,
-            Login,
-            SignUp,
-          },
-          {
-            defaultNavigationOptions: {
-              headerStyle: {
-                backgroundColor: TabBarColor().background,
-                borderBottomColor: 'transparent',
-                elevation: 0,
-              },
-              headerLeftContainerStyle: {
-                alignItems: 'center',
-                marginLeft: 16,
-                paddingRight: 16,
-              },
-              headerBackTitle: null,
-              headerTintColor: TabBarColor().black,
+            headerLeftContainerStyle: {
+              alignItems: 'center',
+              marginLeft: 16,
+              paddingRight: 16,
             },
+            headerBackTitle: null,
           },
-        ),
-        app: createBottomTabNavigator(
-          {
-            Home,
-            Student: {
-              screen: createStackNavigator(
-                {
-                  StudentHome,
-                  SelectReport,
-                  ViewReport,
-                  ViewFullReport,
-                  Schedules,
-                  SelectClass,
-                  ViewClassOverview,
-                  PostNews,
-                  Notifications,
-                  SendNotification,
-                  Users,
-                  ViewStudent,
-                  Questions,
-                },
-                {
-                  defaultNavigationOptions: {
-                    headerStyle: {
-                      backgroundColor: TabBarColor().background,
-                      borderBottomColor: TabBarColor().background,
-                      elevation: 0,
-                    },
-                    headerLeftContainerStyle: {
-                      alignItems: 'center',
-                      marginLeft: 16,
-                      paddingRight: 16,
-                    },
-                    headerBackTitle: null,
-                    headerTintColor: TabBarColor().black,
+        },
+      ),
+      app: createBottomTabNavigator(
+        {
+          Home,
+          Student: {
+            screen: createStackNavigator(
+              {
+                StudentHome,
+                SelectReport,
+                ViewReport,
+                ViewFullReport,
+                Schedules,
+                SelectClass,
+                ViewClassOverview,
+                PostNews,
+                Notifications,
+                SendNotification,
+                Users,
+                ViewStudent,
+                Questions,
+              },
+              {
+                defaultNavigationOptions: {
+                  headerStyle: {
+                    elevation: 0,
                   },
-                },
-              ),
-              navigationOptions: {
-                tabBarLabel: 'Aluno',
-                tabBarIcon: StudentIcon,
-              },
-            },
-            Profile,
-          },
-          {
-            defaultNavigationOptions: {
-              tabBarOptions: {
-                activeTintColor: TabBarColor().primary,
-                showLabel: true,
-                keyboardHidesTabBar: true,
-                style: {
-                  borderTopWidth: 0,
-                  height: 55,
-                  backgroundColor: TabBarColor().darkMode
-                    ? TabBarColor().background2
-                    : TabBarColor().white,
+                  headerLeftContainerStyle: {
+                    alignItems: 'center',
+                    marginLeft: 16,
+                    paddingRight: 16,
+                  },
+                  headerBackTitle: null,
                 },
               },
+            ),
+            navigationOptions: {
+              tabBarLabel: 'Aluno',
+              tabBarIcon: StudentIcon,
             },
           },
-        ),
-      },
-      {
-        initialRouteName: initialRoute,
-      },
-    ),
-  );
+          Profile,
+        },
+        {
+          defaultNavigationOptions: {
+            tabBarOptions: {
+              showLabel: true,
+              keyboardHidesTabBar: true,
+              style: {
+                borderTopWidth: 0,
+                height: 58,
+                backgroundColor: props =>
+                  props.theme.darkMode
+                    ? props.theme.background
+                    : props.theme.white,
+              },
+              activeTintColor: props => props.theme.primary,
+            },
+          },
+        },
+      ),
+    },
+    {
+      initialRouteName: 'StarterScreen',
+    },
+  ),
+);
 
 StudentIcon.propTypes = {
   tintColor: PropTypes.string.isRequired,
 };
+
+export default withTheme(({theme}) => <Routes screenProps={{theme}} />);

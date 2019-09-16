@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {FlatList, ActivityIndicator} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
+import {withTheme} from 'styled-components';
 import PropTypes from 'prop-types';
 
 import Text from '../../../../../components/Text';
@@ -11,7 +12,7 @@ import {getThemeColors} from '../../../../../constants/theme';
 
 import {Container} from './styles';
 
-export default function SelectReport({navigation}) {
+function SelectReport({navigation}) {
   const [periods, setPeriods] = useState([]);
   const colors = getThemeColors();
 
@@ -75,8 +76,19 @@ export default function SelectReport({navigation}) {
   );
 }
 
+SelectReport.navigationOptions = ({screenProps}) => ({
+  headerStyle: {
+    backgroundColor: screenProps.theme.background,
+    borderBottomColor: screenProps.theme.background,
+    elevation: 0,
+  },
+  headerTintColor: screenProps.theme.black,
+});
+
 SelectReport.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }).isRequired,
 };
+
+export default withTheme(SelectReport);
