@@ -26,21 +26,31 @@ import ViewFullReport from './screens/App/Student/Report/ViewFullReport';
 
 import Schedules from './screens/App/Student/Schedules';
 
-import PostNews from './screens/App/Student/Admin/News/PostNews';
+import AdminPostNews from './screens/App/Student/Admin/News/PostNews';
 
-import Notifications from './screens/App/Student/Admin/Notifications/Home';
-import SendNotification from './screens/App/Student/Admin/Notifications/SendNotification';
+import AdminNotifications from './screens/App/Student/Admin/Notifications/Home';
+import AdminSendNotification from './screens/App/Student/Admin/Notifications/SendNotification';
 
-import Users from './screens/App/Student/Admin/Users/Home';
-import ViewStudent from './screens/App/Student/Admin/Users/ViewStudent';
+import AdminUsers from './screens/App/Student/Admin/Users/Home';
+import AdminViewStudent from './screens/App/Student/Admin/Users/ViewStudent';
 
 import SelectClass from './screens/App/Student/VirtualClasses/SelectClass';
 import ViewClassOverview from './screens/App/Student/VirtualClasses/ViewClassOverview';
 
-import Questions from './screens/App/Student/Admin/Questions/Home';
+import AdminQuestions from './screens/App/Student/Admin/Questions/Home';
+
+import EventsHome from './screens/App/Events/Home';
+import VotingEvent from './screens/App/Events/VotingEvent';
+
+import AdminEventsHome from './screens/App/Student/Admin/Events/Home';
+import AdminVotingEvent from './screens/App/Student/Admin/Events/VotingEvent';
 
 function StudentIcon({tintColor}) {
   return <Icon name="ios-school" size={32} color={tintColor} />;
+}
+
+function EventsIcon({tintColor}) {
+  return <Icon name="ios-calendar" size={32} color={tintColor} />;
 }
 
 const Routes = createAppContainer(
@@ -91,12 +101,14 @@ const Routes = createAppContainer(
                 Schedules,
                 SelectClass,
                 ViewClassOverview,
-                PostNews,
-                Notifications,
-                SendNotification,
-                Users,
-                ViewStudent,
-                Questions,
+                AdminPostNews,
+                AdminNotifications,
+                AdminSendNotification,
+                AdminUsers,
+                AdminViewStudent,
+                AdminQuestions,
+                AdminEventsHome,
+                AdminVotingEvent,
               },
               {
                 defaultNavigationOptions: {
@@ -116,6 +128,20 @@ const Routes = createAppContainer(
               tabBarLabel: 'Aluno',
               tabBarIcon: StudentIcon,
             },
+          },
+          Events: {
+            screen: createStackNavigator(
+              {
+                EventsHome,
+                VotingEvent,
+              },
+              {
+                navigationOptions: {
+                  tabBarLabel: 'Eventos',
+                  tabBarIcon: EventsIcon,
+                },
+              },
+            ),
           },
           Profile,
         },
@@ -145,6 +171,10 @@ const Routes = createAppContainer(
 );
 
 StudentIcon.propTypes = {
+  tintColor: PropTypes.string.isRequired,
+};
+
+EventsIcon.propTypes = {
   tintColor: PropTypes.string.isRequired,
 };
 

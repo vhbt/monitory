@@ -23,4 +23,5 @@ export const GradientButton = styled(LinearGradient).attrs(props => ({
   border-radius: 4px;
   justify-content: center;
   align-items: center;
+  opacity: ${props => (props.disabled ? 0.5 : 1)};
 `;

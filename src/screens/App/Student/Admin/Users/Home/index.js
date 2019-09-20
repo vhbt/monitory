@@ -159,7 +159,9 @@ function Home({navigation}) {
         renderItem={({item}) => (
           <UserCard
             colors={colors}
-            onPress={() => navigation.navigate('ViewStudent', {student: item})}>
+            onPress={() =>
+              navigation.navigate('AdminViewStudent', {student: item})
+            }>
             <Text black medium>
               {item.nome_usual} ({item.matricula})
             </Text>

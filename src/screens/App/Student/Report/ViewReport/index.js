@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {FlatList} from 'react-native';
+import {View, FlatList} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import {withTheme} from 'styled-components';
 import PropTypes from 'prop-types';
 
+import Text from '../../../../../components/Text';
 import GradesCard from '../../../../../components/GradesCard';
 
 import {suap_api} from '../../../../../services/api';
@@ -17,6 +18,7 @@ function Report({navigation}) {
   const colors = getThemeColors();
 
   const [grades, setGrades] = useState([]);
+  const [totalAttendence, setTotalAttendence] = useState([]);
 
   useEffect(() => {
     async function getGrades() {
@@ -30,6 +32,13 @@ function Report({navigation}) {
           formattedDisciplina: grade.disciplina.split('-')[1].split('(')[0],
         }));
 
+        const total = data.reduce(
+          (prev, curr) =>
+            prev + Math.floor(curr.percentual_carga_horaria_frequentada),
+          0,
+        );
+
+        setTotalAttendence(Math.floor(total / data.length - 0.4));
         setGrades(data);
       } catch (err) {
         if (err.response.status === 404) {
@@ -89,28 +98,77 @@ function Report({navigation}) {
         keyExtractor={item => item.codigo_diario}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={renderGradesShimmerRows(5)}
-        ListTop
-        renderItem={({item}) => (
-          <GradesCard
-            key={item.codigo_diario}
-            title={item.formattedDisciplina}
-            colors={['#323643', '#323643']}
-            white
-            grades={[
-              [item.nota_etapa_1.nota, 1],
-              [item.nota_etapa_2.nota, 2],
-              [item.nota_etapa_3.nota, 3],
-              [item.nota_etapa_4.nota, 4],
-              [item.media_disciplina, 'M'],
-              [item.nota_avaliacao_final.nota, 'F'],
-              [item.media_final_disciplina, 'Media Final'],
-            ]}
-            attendance={item.percentual_carga_horaria_frequentada}
-            status={item.situacao}
-            style={{marginBottom: 10, height: 130, borderRadius: 4}}
-            onPress={() => navigation.navigate('ViewFullReport', {item})}
-          />
-        )}
+        ListHeaderComponent={
+          <View
+            style={{
+              marginVertical: 10,
+              alignSelf: 'center',
+              justifyContent: 'center',
+            }}>
+            <ShimmerPlaceholder
+              autorun
+              style={{width: 135, height: 18}}
+              colorShimmer={[
+                colors.background2,
+                colors.background2,
+                colors.background,
+              ]}
+              visible={grades.length > 0}>
+              <Text black>Presença total: {totalAttendence}%</Text>
+            </ShimmerPlaceholder>
+          </View>
+        }
+        renderItem={({item}) => {
+          const semiannual = item.quantidade_avaliacoes === 2;
+          const secondhalf = item.segundo_semestre;
+
+          const semiannualGrades = secondhalf
+            ? [
+                [null, 1],
+                [null, 2],
+                [item.nota_etapa_1.nota, 3],
+                [item.nota_etapa_2.nota, 4],
+                [item.media_disciplina, 'M'],
+                [item.nota_avaliacao_final.nota, 'F'],
+                [item.media_final_disciplina, 'Media Final'],
+              ]
+            : [
+                [item.nota_etapa_1.nota, 1],
+                [item.nota_etapa_2.nota, 2],
+                [null, 3],
+                [null, 4],
+                [item.media_disciplina, 'M'],
+                [item.nota_avaliacao_final.nota, 'F'],
+                [item.media_final_disciplina, 'Media Final'],
+              ];
+
+          const gradesTags = semiannual
+            ? semiannualGrades
+            : [
+                [item.nota_etapa_1.nota, 1],
+                [item.nota_etapa_2.nota, 2],
+                [item.nota_etapa_3.nota, 3],
+                [item.nota_etapa_4.nota, 4],
+                [item.media_disciplina, 'M'],
+                [item.nota_avaliacao_final.nota, 'F'],
+                [item.media_final_disciplina, 'Media Final'],
+              ];
+
+          return (
+            <GradesCard
+              key={item.codigo_diario}
+              title={item.formattedDisciplina}
+              colors={['#323643', '#323643']}
+              white
+              grades={gradesTags}
+              semiannual={item.quantidade_avaliacoes === 2}
+              attendance={item.percentual_carga_horaria_frequentada}
+              status={item.situacao}
+              style={{marginBottom: 10, height: 130, borderRadius: 4}}
+              onPress={() => navigation.navigate('ViewFullReport', {item})}
+            />
+          );
+        }}
       />
     </Container>
   );

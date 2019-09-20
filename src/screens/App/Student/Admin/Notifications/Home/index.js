@@ -75,7 +75,10 @@ function Home({navigation}) {
 
   function renderNotificationDetailsModal() {
     return showNotificationDetails ? (
-      <Modal animationType="slide" visible={!!showNotificationDetails}>
+      <Modal
+        animationType="slide"
+        visible={!!showNotificationDetails}
+        onRequestClose={() => setShowNotificationDetails('')}>
         <ModalContainer>
           <CloseModalButton onPress={() => setShowNotificationDetails('')}>
             <Icon name="ios-close" size={48} color={colors.black} />
@@ -184,7 +187,7 @@ function Home({navigation}) {
         <Button
           gradient
           style={{height: 44, lignSelf: 'stretch', marginTop: 15}}
-          onPress={() => navigation.navigate('SendNotification')}>
+          onPress={() => navigation.navigate('AdminSendNotification')}>
           <Text white>Nova Notificação</Text>
         </Button>
       </View>

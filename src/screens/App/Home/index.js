@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {View, FlatList, Image, Alert, Modal, ScrollView} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {format, parseISO} from 'date-fns';
@@ -17,10 +17,8 @@ import Button from '../../../components/Button';
 import ImportantWarning from '../../../components/ImportantWarning';
 import NewsCard from '../../../components/NewsCard';
 import LoadingNews from '../../../components/NewsCard/loading';
-import Switch from '../../../components/Switch';
 
 import {api} from '../../../services/api';
-import {toggleDarkMode} from '../../../store/modules/app/actions';
 
 import {
   Container,
@@ -33,7 +31,6 @@ import {
 } from './styles';
 
 function Home({navigation, theme}) {
-  const dispatch = useDispatch();
   const [showNews, setShowNews] = useState(null);
   const [showHomeQuestionModal, setShowHomeQuestionModal] = useState(null);
   const [news, setNews] = useState(null);
@@ -44,10 +41,7 @@ function Home({navigation, theme}) {
   const [loading, setLoading] = useState(false);
 
   const user = useSelector(state => state.profile.user);
-  const app = useSelector(state => state.app);
   const isAdmin = user.admin;
-
-  const [darkMode, setDarkMode] = useState(app.darkMode || false);
 
   async function getNews() {
     const response = await api.get('/news?limit=8&page=1');
@@ -123,7 +117,8 @@ function Home({navigation, theme}) {
       <Modal
         animationType="slide"
         visible={Boolean(showNews)}
-        style={{backgroundColor: theme.background}}>
+        style={{backgroundColor: theme.background}}
+        onRequestClose={() => setShowNews('')}>
         <KeyboardAwareScrollView
           showsVerticalScrollIndicator={false}
           style={{backgroundColor: theme.background}}>
@@ -137,7 +132,7 @@ function Home({navigation, theme}) {
             </CloseModalButton>
           </View>
           <View style={{flex: 1, marginHorizontal: 15, marginTop: 5}}>
-            <Text h2 black bold style={{textAlign: 'justify'}}>
+            <Text h2 black bold>
               {showNews && showNews.title}
             </Text>
             <Text gray>Postado: {showNews && showNews.formattedDate}</Text>
@@ -149,7 +144,7 @@ function Home({navigation, theme}) {
                 <Text white>Deletar</Text>
               </Button>
             ) : null}
-            <Text black style={{marginTop: 10, textAlign: 'justify'}}>
+            <Text black style={{marginTop: 5, marginBottom: 15}}>
               {showNews && showNews.content}
             </Text>
           </View>
@@ -190,7 +185,11 @@ function Home({navigation, theme}) {
 
   function renderHomeQuestion() {
     return (
-      <Modal animationType="slide" visible={showHomeQuestionModal} transparent>
+      <Modal
+        animationType="slide"
+        visible={showHomeQuestionModal}
+        onRequestClose={handleCloseHomeQuestionModal}
+        transparent>
         <QuestionModalBackdrop>
           <QuestionModalContainer>
             <CloseModalButton onPress={handleCloseHomeQuestionModal}>

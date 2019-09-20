@@ -27,10 +27,6 @@ function App() {
 
   const {darkMode} = appState;
 
-  function onIds(id) {
-    dispatch(setOneSignalPlayerId(id));
-  }
-
   useEffect(() => {
     setJSExceptionHandler(error => {
       dispatch(resetLoading());
@@ -52,6 +48,11 @@ function App() {
         Alert.alert(title, body);
       }
     });
+
+    function onIds(id) {
+      dispatch(setOneSignalPlayerId(id));
+    }
+
     OneSignal.addEventListener('ids', onIds);
 
     function showUpdateMessage(currentVersion, storeVersion, storeName) {

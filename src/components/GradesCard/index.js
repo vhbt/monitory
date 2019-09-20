@@ -12,6 +12,7 @@ export default function GradesCard({
   style,
   white,
   grades,
+  semiannual,
   attendance,
   status,
   onPress,
@@ -45,14 +46,14 @@ export default function GradesCard({
                   {grade[1]}
                 </Text>
                 <Text white style={{textAlign: 'center'}}>
-                  {grade[0] || '-'}
+                  {grade[0] !== null ? String(grade[0]) : '-'}
                 </Text>
               </View>
             </Tag>
           ))}
         </View>
         <Text gray style={{marginTop: 20, marginBottom: 10}}>
-          Presença: {attendance}% | Situação: {status}
+          Presença: {Math.floor(attendance)}% | Situação: {status}
         </Text>
       </ButtonContainer>
     </Container>
@@ -67,6 +68,7 @@ GradesCard.propTypes = {
   grades: PropTypes.arrayOf(
     PropTypes.oneOfType(PropTypes.number, PropTypes.string),
   ).isRequired,
+  semiannual: PropTypes.bool.isRequired,
   attendance: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,

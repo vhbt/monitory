@@ -3,7 +3,7 @@ import produce from 'immer';
 const INITIAL_STATE = {
   firstTime: true,
   oneSignalPlayerId: null,
-  darkMode: false,
+  darkMode: true,
 };
 
 export default function app(state = INITIAL_STATE, action) {

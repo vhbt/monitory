@@ -95,7 +95,7 @@ export default function Profile({navigation}) {
               items={classYear}
               selectedValue={String(selectedClassYear)}
               onValueChange={value => setSelectedClassYear(value)}
-              style={{marginBottom: 10}}
+              style={{marginBottom: 10, color: 'red'}}
             />
             <Picker
               label="Turno"

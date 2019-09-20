@@ -7,6 +7,7 @@ export const Container = styled.View`
 `;
 
 export const QuestionCard = styled.TouchableOpacity`
+  margin-bottom: 10px;
   padding: 10px;
   background-color: ${props => props.colors.card};
   border-radius: 4px;

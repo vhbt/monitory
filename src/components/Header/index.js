@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import CodePush from 'react-native-code-push';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
+import DeviceInfo from 'react-native-device-info';
 
 import Text from '../Text';
 
@@ -32,7 +33,7 @@ export default function Header() {
           );
         })
         .catch(() =>
-          Alert.alert('Erro!', 'Não foi possível se conectar ao Code Push.'),
+          Alert.alert('Psiu!', `label: X, version: ${DeviceInfo.getVersion()}`),
         );
       setInfoClicks(0);
       return;

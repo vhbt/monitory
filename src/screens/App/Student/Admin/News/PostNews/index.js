@@ -80,6 +80,7 @@ function PostNews({navigation}) {
       setLoading(false);
     } catch (err) {
       showMessage({type: 'danger', message: err.response.data.detail});
+    } finally {
       setLoading(false);
     }
   }

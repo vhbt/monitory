@@ -26,6 +26,8 @@ function ViewFullReport({navigation}) {
     nota_avaliacao_final,
   } = navigation.getParam('item');
 
+  console.tron.log(navigation.getParam('item'));
+
   const colors = getThemeColors();
 
   const labels_notas_semestre = segundo_semestre ? ['3', '4'] : ['1', '2'];
@@ -52,16 +54,16 @@ function ViewFullReport({navigation}) {
     if (qnt_avaliacoes === 2) {
       const notaFinal = (bi1.nota * 2 + bi2.nota * 3) / 5;
 
-      if (bi1.nota && bi2.nota) {
-        if (notaFinal > 62) return 'Aprovado';
+      if (bi1.nota !== null && bi2.nota !== null) {
+        if (notaFinal >= 60) return 'Aprovado';
 
         if (notaFinal >= 20) {
-          const nM1 = 100 - (2 * bi1.nota) / 3;
-          const nM2 = 150 - (3 * bi2.nota) / 2;
+          const nM1 = 100 - (2 * bi1) / 3;
+          const nM2 = 150 - (3 * bi2) / 2;
 
           const needed = Math.floor(Math.min(nM1, nM2));
-          if (nota_avaliacao_final.nota) {
-            if (nota_avaliacao_final.nota >= needed) {
+          if (nota_avaliacao_final) {
+            if (nota_avaliacao_final >= needed) {
               return `Aprovado na final`;
             }
             return 'Reprovado';
@@ -71,19 +73,32 @@ function ViewFullReport({navigation}) {
 
         return 'Reprovado';
       }
-      return 'Cursando';
+      if (bi1.nota !== null) {
+        const needed = Math.ceil(300 - (2 * bi1) / 3);
+
+        return `Aprovado caso tire ${needed} no 2 BI`;
+      }
     }
 
     const notaFinal =
       (bi1.nota * 2 + bi2.nota * 2 + bi3.nota * 3 + bi4.nota * 3) / 10;
 
-    if (bi1.nota && bi2.nota && bi3.nota && bi4.nota) {
+    if (notaFinal > 60) {
+      return 'Aprovado';
+    }
+
+    if (
+      bi1.nota !== null &&
+      bi2.nota !== null &&
+      bi3.nota !== null &&
+      bi4.nota !== null
+    ) {
       if (notaFinal > 150) return 'Aprovado';
       if (notaFinal >= 20) {
-        const nM1 = 300 - bi1.nota - (3 * bi3.nota) / 2 - (3 * bi4.nota) / 2;
-        const nM2 = 300 - bi1.nota - (3 * bi3.nota) / 2 - (3 * bi4.nota) / 2;
-        const nM3 = 200 - bi4.nota - (2 * bi1.nota) / 3 - (2 * bi2.nota) / 3;
-        const nM4 = 200 - bi3.nota - (2 * bi1.nota) / 3 - (2 * bi2.nota) / 3;
+        const nM1 = 300 - bi1.nota - (3 * bi3) / 2 - (3 * bi4) / 2;
+        const nM2 = 300 - bi1.nota - (3 * bi3) / 2 - (3 * bi4) / 2;
+        const nM3 = 200 - bi4.nota - (2 * bi1) / 3 - (2 * bi2) / 3;
+        const nM4 = 200 - bi3.nota - (2 * bi1) / 3 - (2 * bi2) / 3;
 
         const needed = Math.ceil(Math.min(nM1, nM2, nM3, nM4));
         if (nota_avaliacao_final.nota) {
@@ -96,6 +111,33 @@ function ViewFullReport({navigation}) {
       }
       return 'Reprovado';
     }
+    if (
+      bi1.nota !== null &&
+      bi2.nota !== null &&
+      bi3.nota === null &&
+      bi4.nota === null
+    ) {
+      const needed = Math.ceil((600 - (bi1.nota * 2 + bi2.nota * 2)) / 3);
+
+      if (needed <= 100) {
+        return `Aprovado caso tire ${needed} no 3 BI`;
+      }
+
+      return `Aprovado caso tire uma soma de 104 no 3 BI e 4 BI`;
+    }
+    if (
+      bi1.nota !== null &&
+      bi2.nota !== null &&
+      bi3.nota !== null &&
+      bi4.nota === null
+    ) {
+      const needed = Math.ceil(
+        (600 - (bi1.nota * 2 + bi2.nota * 2 + bi3.nota * 3)) / 3,
+      );
+
+      return `Aprovado caso tire ${needed} no 4 BI`;
+    }
+
     return 'Cursando';
   }
 
@@ -112,40 +154,44 @@ function ViewFullReport({navigation}) {
           <Text black>
             Carga horária: {carga_horaria_cumprida}h / {carga_horaria}h
           </Text>
-          <Text black>Presença: {percentual_carga_horaria_frequentada}%</Text>
-          <Text black>Média Final: {media_final_disciplina}</Text>
-          <Text black medium style={{marginTop: 15}}>
+          <Text black>
+            Presença: {Math.floor(percentual_carga_horaria_frequentada)}%
+          </Text>
+          <Text black>Média Final: {media_final_disciplina || 0}</Text>
+          <Text black semibold style={{marginTop: 15}}>
             Situação atual
           </Text>
-          <Text black>{calcFinal()}</Text>
+          <Text black style={{flexWrap: 'wrap'}}>
+            {calcFinal()}
+          </Text>
           <Text />
         </View>
-        <Text black medium style={{marginTop: 15}}>
+        <Text black semibold style={{marginTop: 15}}>
           Desempenho (Bimestre)
         </Text>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           {segundo_semestre && qnt_avaliacoes === 2 ? (
             <>
-              <Text gray>3 BI: {bi3.nota || 'X'}</Text>
-              <Text gray>4 BI: {bi4.nota || 'X'}</Text>
+              <Text gray>3 BI: {bi3.nota !== null ? bi3.nota : 'X'}</Text>
+              <Text gray>4 BI: {bi4.nota !== null ? bi4.nota : 'X'}</Text>
               <Text />
               <Text />
             </>
           ) : null}
           {!segundo_semestre && qnt_avaliacoes === 2 ? (
             <>
-              <Text gray>1 BI: {bi1.nota || 'X'}</Text>
-              <Text gray>2 BI: {bi2.nota || 'X'}</Text>
+              <Text gray>1 BI: {bi1.nota !== null ? bi1.nota : 'X'}</Text>
+              <Text gray>2 BI: {bi2.nota !== null ? bi2.nota : 'X'}</Text>
               <Text />
               <Text />
             </>
           ) : null}
           {!segundo_semestre && qnt_avaliacoes === 4 ? (
             <>
-              <Text gray>1 BI: {bi1.nota || 'X'}</Text>
-              <Text gray>2 BI: {bi2.nota || 'X'}</Text>
-              <Text gray>3 BI: {bi3.nota || 'X'}</Text>
-              <Text gray>4 BI: {bi4.nota || 'X'}</Text>
+              <Text gray>1 BI: {bi1.nota !== null ? bi1.nota : 'X'}</Text>
+              <Text gray>2 BI: {bi2.nota !== null ? bi2.nota : 'X'}</Text>
+              <Text gray>3 BI: {bi3.nota !== null ? bi3.nota : 'X'}</Text>
+              <Text gray>4 BI: {bi4.nota !== null ? bi4.nota : 'X'}</Text>
             </>
           ) : null}
         </View>
@@ -172,7 +218,7 @@ function ViewFullReport({navigation}) {
             },
           }}
         />
-        <Text black medium style={{marginTop: 15}}>
+        <Text black semibold style={{marginTop: 15}}>
           Faltas (Bimestre)
         </Text>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>

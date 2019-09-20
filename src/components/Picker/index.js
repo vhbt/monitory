@@ -2,39 +2,40 @@ import React, {forwardRef} from 'react';
 import {Platform} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import PropTypes from 'prop-types';
+import {withTheme} from 'styled-components';
 
 import Text from '../Text';
 
-import {getThemeColors} from '../../constants/theme';
-
 import {PickerView, PickerComponent} from './styles';
 
-function Picker({label, items, selectedValue, onValueChange, style}, ref) {
+function Picker(
+  {label, items, selectedValue, onValueChange, style, theme},
+  ref,
+) {
   const options = [];
 
   items.forEach(item => {
     options.push({label: item, value: item});
   });
 
-  const colors = getThemeColors();
-
   return (
     <>
       <Text gray>{label}</Text>
-      <PickerView style={style} colors={colors}>
+      <PickerView style={style}>
         {Platform.OS === 'ios' ? (
           <RNPickerSelect
             onValueChange={onValueChange}
             items={options}
             value={selectedValue}
             style={{
-              inputIOS: {paddingTop: 15, color: colors.black},
-              placeholder: {color: colors.black},
+              inputIOS: {paddingTop: 15, color: theme.black},
+              inputAndroid: {paddingTop: 15, color: theme.black},
+              placeholder: {color: theme.black},
             }}
           />
         ) : (
           <PickerComponent
-            style={{color: colors.black}}
+            style={{color: theme.black}}
             selectedValue={selectedValue}
             onValueChange={onValueChange}
             ref={ref}>
@@ -43,7 +44,7 @@ function Picker({label, items, selectedValue, onValueChange, style}, ref) {
                 key={item}
                 label={item}
                 value={item}
-                style={{color: colors.black}}
+                style={{color: theme.black}}
               />
             ))}
           </PickerComponent>
@@ -59,10 +60,13 @@ Picker.propTypes = {
   selectedValue: PropTypes.string.isRequired,
   onValueChange: PropTypes.func.isRequired,
   style: PropTypes.oneOfType(PropTypes.string, PropTypes.number),
+  theme: PropTypes.shape({
+    black: PropTypes.string,
+  }).isRequired,
 };
 
 Picker.defaultProps = {
   style: {},
 };
 
-export default forwardRef(Picker);
+export default withTheme(forwardRef(Picker));

@@ -1,71 +1,84 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {SafeAreaView, ScrollView} from 'react-native';
+import {View, SafeAreaView, ScrollView} from 'react-native';
 import {withTheme} from 'styled-components';
 import PropTypes from 'prop-types';
 
 import Text from '../../../../components/Text';
 import Button from '../../../../components/Button';
 
-import {getThemeColors} from '../../../../constants/theme';
-
 import {Container} from './styles';
 
-function Home({navigation}) {
+function Home({navigation, theme}) {
   const user = useSelector(state => state.profile.user);
   const isAdmin = user.admin;
 
-  const colors = getThemeColors();
+  const adminScreens = [
+    {
+      text: 'Postar Notícia',
+      screen: 'AdminPostNews',
+    },
+    {
+      text: 'Notificações',
+      screen: 'AdminNotifications',
+    },
+    {
+      text: 'Alunos',
+      screen: 'AdminUsers',
+    },
+    {
+      text: 'Feedbacks',
+      screen: 'AdminQuestions',
+    },
+    {
+      text: 'Gerenciar Eventos',
+      screen: 'AdminEventsHome',
+    },
+  ];
+
+  function renderAdminButtons() {
+    const button = [];
+
+    adminScreens.forEach(item => {
+      button.push(
+        <Button
+          colors={[theme.accent, theme.accent]}
+          style={{height: 44, alignSelf: 'stretch', marginTop: 5}}
+          onPress={() => navigation.navigate(item.screen)}>
+          <Text white>{item.text}</Text>
+        </Button>,
+      );
+    });
+
+    return <>{button}</>;
+  }
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Container style={{flex: 1}} colors={colors}>
+      <Container style={{flex: 1}}>
         <ScrollView showsHorizontalScrollIndicator={false}>
           <Text h1 black semibold>
             Central do Aluno
           </Text>
-          <Button
-            style={{height: 44, alignSelf: 'stretch', marginTop: 30}}
-            onPress={() => navigation.navigate('SelectReport')}>
-            <Text white>Meu Boletim</Text>
-          </Button>
-          <Button
-            style={{height: 44, alignSelf: 'stretch', marginTop: 5}}
-            onPress={() => navigation.navigate('Schedules')}>
-            <Text white>Meus Horários</Text>
-          </Button>
-          <Button
-            style={{height: 44, alignSelf: 'stretch', marginTop: 5}}
-            onPress={() => navigation.navigate('SelectClass')}>
-            <Text white>Turmas Virtuais</Text>
-          </Button>
+          <View style={{marginTop: 25}}>
+            <Button
+              style={{height: 44, alignSelf: 'stretch', marginTop: 5}}
+              onPress={() => navigation.navigate('SelectReport')}>
+              <Text white>Meu Boletim</Text>
+            </Button>
+            <Button
+              style={{height: 44, alignSelf: 'stretch', marginTop: 5}}
+              onPress={() => navigation.navigate('Schedules')}>
+              <Text white>Meus Horários</Text>
+            </Button>
+            <Button
+              style={{height: 44, alignSelf: 'stretch', marginTop: 5}}
+              onPress={() => navigation.navigate('SelectClass')}>
+              <Text white>Turmas Virtuais</Text>
+            </Button>
+          </View>
           {isAdmin ? (
-            <>
-              <Button
-                colors={[colors.accent, colors.accent]}
-                style={{height: 44, alignSelf: 'stretch', marginTop: 30}}
-                onPress={() => navigation.navigate('PostNews')}>
-                <Text white>Postar Notícia</Text>
-              </Button>
-              <Button
-                colors={[colors.accent, colors.accent]}
-                style={{height: 44, alignSelf: 'stretch', marginTop: 5}}
-                onPress={() => navigation.navigate('Notifications')}>
-                <Text white>Notificações</Text>
-              </Button>
-              <Button
-                colors={[colors.accent, colors.accent]}
-                style={{height: 44, alignSelf: 'stretch', marginTop: 5}}
-                onPress={() => navigation.navigate('Users')}>
-                <Text white>Alunos</Text>
-              </Button>
-              <Button
-                colors={[colors.accent, colors.accent]}
-                style={{height: 44, alignSelf: 'stretch', marginTop: 5}}
-                onPress={() => navigation.navigate('Questions')}>
-                <Text white>Feedbacks</Text>
-              </Button>
-            </>
+            <View style={{marginTop: 25}}>{renderAdminButtons()}</View>
           ) : null}
         </ScrollView>
       </Container>
@@ -85,6 +98,9 @@ Home.navigationOptions = ({screenProps}) => ({
 Home.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
+  }).isRequired,
+  theme: PropTypes.shape({
+    accent: PropTypes.string,
   }).isRequired,
 };
 

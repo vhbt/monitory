@@ -59,7 +59,13 @@ function Home() {
 
   function renderAnswers() {
     return (
-      <Modal animationType="slide" visible={Boolean(showAnswers)}>
+      <Modal
+        animationType="slide"
+        visible={Boolean(showAnswers)}
+        onRequestClose={() => {
+          setShowAnswers(null);
+          setLoading(false);
+        }}>
         <View
           style={{
             flex: 1,

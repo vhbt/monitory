@@ -72,7 +72,10 @@ function SelectSchedules() {
 
   function renderImage() {
     return (
-      <Modal animationType="slide" visible={Boolean(showImage)}>
+      <Modal
+        animationType="slide"
+        visible={Boolean(showImage)}
+        onRequestClose={() => setShowImage(false)}>
         <ImageViewer
           imageUrls={[{url: showImage}]}
           enableSwipeDown
